@@ -3,6 +3,7 @@ import config
 
 from nandha import bot
 from nandha.database.users import add_user
+from nandha.database.chats import add_chat
 from pyrogram import filters, enums
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 

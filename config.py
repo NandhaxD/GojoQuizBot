@@ -11,11 +11,13 @@ if bool(os.getenv('ENV')) == True:
      OWNER_ID = int(os.getenv('OWNER_ID'))
      BOT_TOKEN = str(os.getenv('BOT_TOKEN'))
      API_ID = int(os.getenv('API_ID'))
+     DB_URL = str(os.getenv('DB_URL'))
      API_HASH = str(os.getenv('API_HASH'))
 else:
     API_ID = 1234567
     API_HASH = ''
     BOT_TOKEN = ''
+    DB_URL = ''
      
   
      

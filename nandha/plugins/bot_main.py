@@ -14,7 +14,7 @@ async def start(_, message):
        await add_user(user_id)
        name = message.from_user.first_name
        return await message.reply_photo(photo=config.START_IMAGE,
-              captain="Welcome {name}! I'm Gojo Satoru, a quiz bot here to train you and boost your knowledge. Join our support channel. Thank you for using!".format(name=name),
+              caption="Welcome {name}! I'm Gojo Satoru, a quiz bot here to train you and boost your knowledge. Join our support channel. Thank you for using!".format(name=name),
        reply_markup=InlineKeyboardMarkup(
               [[InlineKeyboardButton(text='Support', url=config.SUPPORT_URL),
                InlineKeyboardButton(text='Channel', url=config.CHANNEL_URL)]]), quote=True)

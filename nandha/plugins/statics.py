@@ -10,7 +10,7 @@ from nandha import bot
 @bot.on_message(filters.command('statics', prefixes=config.PREFIXES))
 async def statics(_, message):
       if message.from_user.id != config.OWNER_ID:
-            return await message.reply('Only owner can use this command', quote=True)
+            return await message.reply('Only owner can use this command.', quote=True)
       users = len(await get_users())
       chats = len(await get_chats())
       return await message.reply(

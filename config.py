@@ -4,7 +4,7 @@ import os
 NAME = 'GojoQuizeBot'
 SUPPORT_URL = 'nandhasupport.t.me'
 CHANNEL_URL = 'nandhabots.t.me'
-
+PREFIXES = ['.','?','!','/','~']
 
 # checks if the env is true then program takes variable from environment else here.
 if bool(os.getenv('ENV')) == True:
@@ -15,9 +15,9 @@ if bool(os.getenv('ENV')) == True:
      API_HASH = str(os.getenv('API_HASH'))
 else:
     API_ID = 1234567
-    API_HASH = ''
-    BOT_TOKEN = ''
-    DB_URL = ''
+    API_HASH = '<youre hash>' # my.telegram.org
+    BOT_TOKEN = '<youre bot token>' # my.telegram.org
+    DB_URL = '<db url>' #mongodb.com
      
   
      

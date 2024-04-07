@@ -29,6 +29,6 @@ except pymongo_errors.ConnectionFailure:
      sys.exit()
 
 
-DATABASE = DB['GOJO']
+DATABASE = DB['GOJO-QUIZE']
 
 

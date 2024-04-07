@@ -14,9 +14,9 @@ async def statics(_, message):
       users = len(await get_users())
       chats = len(await get_chats())
       return await message.reply(
-         f'Users: {users}\n'
-         f'Chats: {chats}\n'
-         '@Nandhabots'
+         f'<b>Users</b>: <code>{users}</code>\n'
+         f'<b>Chats</b>: <code>{chats}</code>\n\n'
+         'By @Nandhabots'
       )
       
 

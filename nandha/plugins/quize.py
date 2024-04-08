@@ -46,6 +46,7 @@ async def customize(_, query):
         button = [[
               InlineKeyboardButton(text='Math Quize', callback_data=f'math:{user_id}'),
               InlineKeyboardButton(text='Physics Quize', callback_data=f'physics:{user_id}'),
+        ],[
               InlineKeyboardButton(text='Chemistry Quize', callback_data=f'chemistry:{user_id}'),
               InlineKeyboardButton(text='Zoolagy Quize', callback_data=f'zoolagy:{user_id}')
         ] , [

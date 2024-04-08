@@ -16,6 +16,17 @@ async def is_chat_riddle(chat_id: int):
         return None
 
 
+async def set_chat_time(chat_id: int, time: int):
+    json = {'chat_id': chat_id}
+    updated_json = {
+        '$set': {
+            'data.riddle.math.time': time,
+            'data.riddle.math.switch': 'on'
+        }}
+    riddle = db.update_one(json, updated_json)
+    return True
+    
+                        
 async def get_chat_time(chat_id: int):
     json = {'chat_id': chat_id}
     riddle = db.find_one(json)

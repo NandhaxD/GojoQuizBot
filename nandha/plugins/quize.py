@@ -44,12 +44,12 @@ async def customize(_, query):
             return await query.answer("🔐 Sorry this not for you. try you're own to customize.", show_alert=True)
       else:  
         button = [[
-              Inlinekeyboardbutton(text='Math Quize', callback_data=f'math:{user_id}'),
-              Inlinekeyboardbutton(text='Physics Quize', callback_data=f'physics:{user_id}'),
-              Inlinekeyboardbutton(text='Chemistry Quize', callback_data=f'chemistry:{user_id}'),
-              Inlinekeyboardbutton(text='Zoolagy Quize', callback_data=f'zoolagy:{user_id}')
+              InlineKeyboardButton(text='Math Quize', callback_data=f'math:{user_id}'),
+              InlineKeyboardButton(text='Physics Quize', callback_data=f'physics:{user_id}'),
+              InlineKeyboardButton(text='Chemistry Quize', callback_data=f'chemistry:{user_id}'),
+              InlineKeyboardButton(text='Zoolagy Quize', callback_data=f'zoolagy:{user_id}')
         ] , [
-                    Inlinekeyboardbutton(text='Back ⬅️', callback_data='back')
+                    InlineKeyboardButton(text='Back ⬅️', callback_data='back')
               
               
         

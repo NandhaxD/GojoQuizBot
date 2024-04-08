@@ -61,6 +61,7 @@ async def commingsoon(_, query):
       return await query.answer('I have no idea about what i next add for riddle so please if you have some idea kindly share to @Nandha', show_alert=True)
 
 
+"""
 @bot.on_callback_query(filters.regex('^rmath'))
 async def riddle_math(_, query):
       user_id = query.from_user.id
@@ -73,7 +74,7 @@ async def riddle_math(_, query):
          await add_chat(chat_id)
          is_riddle = await is_riddle_math_chat(chat_id)
          get_timeline = await get_riddle_math_chat_timeline(chat_id)
-         
+"""         
 
 
 

@@ -20,11 +20,11 @@ async def riddle_math(_, query):
          riddle = await is_chat_riddle(chat_id)
          time = await get_chat_time(chat_id)
          button = [[
-           InlineKeyboardButton(text='60 seconds', callback_data='mrtime:60'),
-           InlineKeyboardButton(text='1 hour ', callback_data='mrtime:3600'),],
-                   [InlineKeyboardButton(text='3 hours', callback_data='mrtime:10800'),
-                    InlineKeyboardButton(text='6 hours', callback_data='mrtime:21600'), ],
-                   [ InlineKeyboardButton(text='back ⬅️', callback_data='mrriddle')
+           InlineKeyboardButton(text='60 seconds', callback_data='rmtime:60'),
+           InlineKeyboardButton(text='1 hour ', callback_data='rmtime:3600'),],
+                   [InlineKeyboardButton(text='3 hours', callback_data='rmtime:10800'),
+                    InlineKeyboardButton(text='6 hours', callback_data='rmtime:21600'), ],
+                   [ InlineKeyboardButton(text='back ⬅️', callback_data='cb_riddle')
            
 ]]
          return await query.message.edit(

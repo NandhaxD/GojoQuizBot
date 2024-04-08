@@ -28,6 +28,6 @@ async def riddle_math(_, query):
            
 ]]
          return await query.message.edit(
-           f"Hello! Now you can set up a time for your chat. Click the button below to do so.\n\n <b> You're current chat riddle: {riddle}\nYou're current chat time: {time}",
+           f"Hello! Now you can set up a time for your chat. Click the button below to do so.\n\n<b>You're current chat riddle</b>: {riddle}\n<b>You're current chat time</b>: {time}",
            reply_markup=InlineKeyboardMarkup(button))
        

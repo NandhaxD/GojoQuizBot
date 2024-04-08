@@ -53,7 +53,7 @@ async def customize(_, query):
         
 ]]
         return await query.message.edit(
-              "Here is a list of riddles for your chat ✨. You can set up a maximum of three riddles in one chat group. Click on the customize button for quick setup."
+              "Here is a list of riddles for your chat ✨. You can set up a maximum of three riddles in one chat group. Click on the riddle type button for quick setup."
         , reply_markup=InlineKeyboardMarkup(button))
        
 

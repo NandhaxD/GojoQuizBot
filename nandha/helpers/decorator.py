@@ -8,9 +8,9 @@ async def is_stuffs(chat_id: int, user_id: int):
      is_admin = user.status == enums.ChatMemberStatus.ADMINISTRATOR
      is_owner = user.status == enums.ChatMemberStatus.OWNER
      if (is_admin or is_owner) is True:
-           return True, user
+           return [True, user]
      else:
-           return False
+           return [False]
 
 
 def admin_only(func): 
@@ -23,7 +23,7 @@ def admin_only(func):
                       'This command only work in groups.'
                  )            
              user = await is_stuffs(chat_id, user_id)
-             if not bool(user[0]) is True:
+             if bool(user[0]) not True:
                     return await message.edit(
                          "You're not admin."
                     )

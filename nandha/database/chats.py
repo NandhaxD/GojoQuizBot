@@ -8,11 +8,25 @@ async def get_chats() -> list:
    return chats_id
   
 
+
 async def add_chat(chat_id: int):
-    json = {'chat_id': chat_id}
+    json_data = {
+    'chat_id': chat_id,
+    'data': {
+        'riddle': {
+            'math': {'is_on': 'off', 'timeline': None}
+        },
+        'quize': {
+            'math': {'is_on': 'off', 'timeline': None},
+            'phy': {'is_on': 'off', 'timeline': None},
+            'chem': {'is_on': 'off', 'timeline': None},
+            'zoo': {'is_on': 'off', 'timeline': None}
+        }
+    }
+    }
     chats_id = await get_chats()
     if not chat_id in chats_id:
-        db.insert_one(json)
+        db.insert_one(json_data)
         return True
     else:
         return

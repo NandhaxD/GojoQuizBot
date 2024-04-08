@@ -22,7 +22,7 @@ async def quize(_, message):
       user_id = message.from_user.id
       
       button = [[
-      InlineKeyboardButton(text='Customize', callback_data=f'quize:{user_id}')
+      InlineKeyboardButton(text='Customize', callback_data=f'cb_quize:{user_id}')
             
 ]]
       
@@ -33,7 +33,7 @@ async def quize(_, message):
       
         
                                   
-@bot.on_callback_query(filters.regex('^quize'))
+@bot.on_callback_query(filters.regex('^cb_quize'))
 async def customize(_, query):
       user_id = query.from_user.id
       admin_id = int(query.data.split(':')[1])

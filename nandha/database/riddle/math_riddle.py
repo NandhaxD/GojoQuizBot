@@ -7,7 +7,7 @@ db = DATABASE['CHATS']
 
 
 
-async def get_chat_switch(chat_id: int):
+async def is_chat_riddle(chat_id: int):
     json = {'chat_id': chat_id}
     riddle = db.find_one(json)
     if riddle:

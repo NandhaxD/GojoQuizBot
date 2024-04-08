@@ -36,6 +36,8 @@ async def riddle_math(_, query):
 @bot.on_callback_query(filters.regex('^rmtime'))
 async def set_riddle_chat_time(_, query):
        user_id = query.from_user.id
+       chat_id = query.message.chat.id
+      
        admin_id = int(query.data.split(':')[1])
        if user_id != admin_id:
              return await query.answer("🔐 Sorry this not for you. try you're own to customize.", show_alert=True)

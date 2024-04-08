@@ -3,6 +3,7 @@
 
 from pyrogram import filters 
 from nandha.database.riddle.math_riddle import is_chat_riddle, get_chat_time
+from nandha.database.chats import add_chat
 from nandha import bot
 
 

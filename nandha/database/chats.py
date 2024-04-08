@@ -14,13 +14,13 @@ async def add_chat(chat_id: int):
     'chat_id': chat_id,
     'data': {
         'riddle': {
-            'math': {'is_on': 'off', 'timeline': None}
+            'math': {'switch': 'off', 'time': None}
         },
         'quize': {
-            'math': {'is_on': 'off', 'timeline': None},
-            'phy': {'is_on': 'off', 'timeline': None},
-            'chem': {'is_on': 'off', 'timeline': None},
-            'zoo': {'is_on': 'off', 'timeline': None}
+            'math': {'switch': 'off', 'time': None},
+            'phy': {'switch': 'off', 'time': None},
+            'chem': {'switch': 'off', 'time': None},
+            'zoo': {'switch': 'off', 'time': None}
         }
     }
     }

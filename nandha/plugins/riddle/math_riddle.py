@@ -26,7 +26,7 @@ async def riddle_math(_, query):
            InlineKeyboardButton(text='1 hour ', callback_data='rmtime:3600'),],
                    [InlineKeyboardButton(text='3 hours', callback_data='rmtime:10800'),
                     InlineKeyboardButton(text='6 hours', callback_data='rmtime:21600'), ],
-                   [ InlineKeyboardButton(text='back ⬅️', callback_data='cb_riddle')
+                   [ InlineKeyboardButton(text='back ⬅️', callback_data=f'cb_riddle:{user_id}')
            
 ]]
          return await query.message.edit(

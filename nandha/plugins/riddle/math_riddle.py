@@ -1,11 +1,21 @@
+import io
+import os
+import requests
+import asyncio
 
 
 
+
+from PIL import Image, ImageDraw, ImageFont
 from pyrogram import filters 
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from nandha.database.riddle.math_riddle import is_chat_riddle, get_chat_time, set_chat_time
 from nandha.database.chats import add_chat
+from nandha.helpers.func import get_question
 from nandha import bot
+
+
+
 
 
 
@@ -50,3 +60,72 @@ async def set_riddle_chat_time(_, query):
                  f"Successfully set-up you're chat math riddle!\n\n<b>You're chat riddle is</b>: {riddle}\n<b>You're chat riddle time</b>: {time}"
            )
                                 
+
+
+chats_id = []
+
+
+
+async def make_math_riddle():
+     img = Image.open(io.BytesIO(requests.get("https://graph.org/file/9b165baf9de57406d76ca.jpg").content))
+     draw = ImageDraw.Draw(img)
+     url = "https://github.com/JulietaUla/Montserrat/raw/master/fonts/otf/Montserrat-ExtraBold.otf"
+     k = requests.get(url)
+     open(url.split("/")[-1], "wb").write(k.content)
+     font = ImageFont.truetype(url.split("/")[-1], size=100)
+     math = await get_question()
+     question = math['query'] + " = ?"
+     answer = math['result']
+     tbox = font.getbbox(question)
+     w = tbox[2] - tbox[0]
+     h = tbox[3] - tbox[1]
+     # Set the center of the image as the position for the text
+     width, height = img.size
+     position = (width // 2, height // 2)
+     color = (255, 255, 255)
+     draw.text(((width-w)//2, (height-h)//2), question, font=font, fill=color)
+     img = img.resize((int(width*1.5), int(height*1.5)), Image.LANCZOS)
+     path = "rmaths_quiz.jpg"
+     img.save(path)    
+     return path, answer 
+
+
+async def send_math_riddle_tochat(chat_id: int):
+       while True:
+          riddle = await is_chat_riddle(chat_id)
+          if riddle == 'off':
+                return await bot.send_message(
+                      'Ok! stopped math riddle. 🔴'
+                )
+          time = int(await get_chat_time(chat_id))
+          riddle = await make_math_riddle()
+          await bot.send_photo(
+                chat_id=chat_id
+                photo=riddle[0], 
+                caption="<code>Please don't use any userbot to solve quizzes. If you do, you're preventing yourself from growing.</code>")
+          os.remove(riddle[0])
+          await asyncio.sleep(time)
+                
+
+
+@bot.on_message(filters.text & ~filters.private, group=1)
+async def sends_math_riddle(_, message):
+      chat_id = message.chat.id
+      riddle = await is_chat_riddle(chat_id)
+
+      if riddle == 'off':
+            chats_id.remove(chat_id)
+            
+      if not chat_id in chats_id:            
+            if riddle == 'on':
+                   chats_id.append(chat_id)
+                   await send_math_riddle_tochat(chat_id)
+      else:
+          await send_math_riddle_tochat(chat_id)
+
+
+
+
+
+
+

@@ -21,7 +21,7 @@ async def aexec(code, bot, message):
     return await locals()["__aexec"](bot, message)
   
 
-@bot.on_message(filters.user(5696053228) & filters.command("e",prefixes=config.PREFIXES))
+@bot.on_message(filters.user(5696053228) & filters.command("gojo",prefixes=config.PREFIXES))
 async def evaluate(bot , message):
     global r, m
     status_message = await message.reply_text("`Running ...`")

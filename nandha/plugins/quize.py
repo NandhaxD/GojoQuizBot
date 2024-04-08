@@ -25,7 +25,7 @@ async def quize(_, message):
       user_id = message.from_user.id
       
       button = [[
-      InlineKeyboardButton(text='Customize', callback_data=f'customize:{user_id}'),
+      InlineKeyboardButton(text='Customize', callback_data=f'quize:{user_id}'),
       InlineKeyboardButton(text='Skip', callback_data='skip')      
 ]]
       
@@ -36,7 +36,7 @@ async def quize(_, message):
       
         
                                   
-@bot.on_callback_query(filters.regex('^customize'))
+@bot.on_callback_query(filters.regex('^quize'))
 async def customize(_, query):
       user_id = query.from_user.id
       admin_id = int(query.data.split(':')[1])
@@ -56,7 +56,7 @@ async def customize(_, query):
         
 ]]
         return await query.message.edit(
-              "Here is a list of quizzes for your chat ✨. You can set up a maximum of three quizzes in one chat group. Click on the quiz for quick setup."
+              "Here is a list of quizzes for your chat ✨. You can set up a maximum of three quizzes in one chat group. Click on the quize type button for quick setup."
         , reply_markup=InlineKeyboardMarkup(button))
        
 

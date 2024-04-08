@@ -1,13 +1,8 @@
-import io
-import os
 import config
-import requests
-import asyncio
-import random 
 
 
 from nandha import bot
-from pyrogram import filters, enums
+from pyrogram import filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from nandha.database.chats import add_chat
 from nandha.helpers.decorator import admin_only
@@ -17,7 +12,7 @@ from nandha.helpers.decorator import admin_only
 
 @bot.on_message(filters.command('quize', prefixes=config.PREFIXES))
 @admin_only
-async def quize(_, message):
+async def quize_cmd(_, message):
       chat_id = message.chat.id
       user_id = message.from_user.id
       
@@ -34,7 +29,7 @@ async def quize(_, message):
         
                                   
 @bot.on_callback_query(filters.regex('^cb_quize'))
-async def customize(_, query):
+async def customize_quize(_, query):
       user_id = query.from_user.id
       admin_id = int(query.data.split(':')[1])
       if user_id != admin_id:

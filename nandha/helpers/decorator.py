@@ -10,5 +10,23 @@ async def is_stuffs(chat_id: int, user_id: int):
            return True, user
      else:
            return False
+
+
+def admin_only(func): 
+         async def wrapped(bot, message: Message): 
+             chat_id= message.chat.id 
+             user_id= message.from_user.id 
+              
+             if message.chat.type==enums.ChatType.PRIVATE: 
+                 return await message.edit(
+                      'This command only work in groups.'
+                 )            
+             is_admin = await is_stuffs(chat_id, user_id)
+             if not is_admin[0]:
+                    return await message.edit(
+                         "You're not admin."
+                    )
+             return await func(bot, message)                 
+         return wrapped
      
      

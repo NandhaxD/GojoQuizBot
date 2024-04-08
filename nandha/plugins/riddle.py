@@ -11,7 +11,8 @@ from nandha.helpers.decorator import admin_only
 
 
 @bot.on_message(filters.command('riddle', prefixes=config.PREFIXES))
-async def riddle(_, message):
+@admin_only
+async def riddle_cmd(_, message):
       chat_id = message.chat.id
       user_id = message.from_user.id
       

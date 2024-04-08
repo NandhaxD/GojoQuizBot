@@ -4,7 +4,7 @@ import os
 NAME = 'GojoQuizeBot'
 SUPPORT_URL = 'nandhasupport.t.me'
 CHANNEL_URL = 'nandhabots.t.me'
-PREFIXES = ['.','?','!','/','~']
+PREFIXES = ['@','.','?','!','/','~']
 
 START_IMAGE = 'https://graph.org/file/15a7cc4a22cad1f6189f0.jpg'
 

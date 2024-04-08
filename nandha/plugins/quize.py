@@ -9,7 +9,7 @@ import random
 from nandha import bot
 from pyrogram import filters, enums
 from nandha.database.chats import add_chat
-
+from nandha.helpers.decorator import admin_only
 
 @bot.on_message(filters.command('quize', prefixes=config.PREFIXES))
 @admin_only

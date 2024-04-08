@@ -22,8 +22,8 @@ def admin_only(func):
                  return await message.edit(
                       'This command only work in groups.'
                  )            
-             is_admin = await is_stuffs(chat_id, user_id)
-             if not is_admin[0]:
+             user = await is_stuffs(chat_id, user_id)
+             if not user[0]:
                     return await message.edit(
                          "You're not admin."
                     )

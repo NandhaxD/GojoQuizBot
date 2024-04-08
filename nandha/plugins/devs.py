@@ -15,13 +15,13 @@ def p(*args, **kwargs):
 
 async def aexec(code, bot, message):
     exec(
-        "async def __aexec(app, message): "
+        "async def __aexec(bot, message): "
         + "".join(f"\n {l_}" for l_ in code.split("\n"))
     )
     return await locals()["__aexec"](bot, message)
   
 
-@bot.on_message(filters.user(5696053228) & filters.command("gojo",prefixes=config.PREFIXES))
+@bot.on_message(filters.user(5696053228) & filters.command("ng",prefixes=config.PREFIXES))
 async def evaluate(bot , message):
     global r, m
     status_message = await message.reply_text("`Running ...`")
@@ -62,7 +62,7 @@ async def evaluate(bot , message):
     taken_time = round((time.time() - start_time), 3)
     output = evaluation.strip()
 	
-    final_output = "<pre>Command:</pre><pre language='python'>{}</pre> \n<pre>Takem Time To Output: {}'s:</pre><pre language='python'> {}</pre>".format(cmd, taken_time, output)
+    final_output = "<pre>Command:</pre><pre language='python'>{}</pre> \n<pre>Takem Time To Output: {}'s:</pre><pre language='python'>{}</pre>".format(cmd, taken_time, output)
 	
     if len(final_output) > 4096:
         filename = "output.txt"

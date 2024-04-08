@@ -46,4 +46,5 @@ async def set_riddle_chat_time(_, query):
            time = await get_chat_time(chat_id)   
            return await query.message.edit(
                  f"Successfully set-up you're chat riddle 😉!\n\n<b>You're chat riddle is</b>: {riddle}\n<b>You're chat riddle time</b>: {time}"
+           )
                                 

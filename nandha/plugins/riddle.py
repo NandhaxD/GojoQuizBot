@@ -1,13 +1,8 @@
-import io
-import os
-import config
-import requests
-import asyncio
-import random 
 
+import config
 
 from nandha import bot
-from pyrogram import filters, enums
+from pyrogram import filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from nandha.database.chats import add_chat
 from nandha.helpers.decorator import admin_only

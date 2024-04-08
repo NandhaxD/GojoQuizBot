@@ -60,21 +60,3 @@ async def customize(_, query):
 async def commingsoon(_, query):
       return await query.answer('I have no idea about what i next add for riddle so please if you have some idea kindly share to @Nandha', show_alert=True)
 
-
-"""
-@bot.on_callback_query(filters.regex('^rmath'))
-async def riddle_math(_, query):
-      user_id = query.from_user.id
-      chat_id = query.message.chat.id
-      
-      admin_id = int(query.data.split(':')[1])
-      if user_id != admin_id:
-            return await query.answer("🔐 Sorry this not for you. try you're own to customize.", show_alert=True)
-      else:
-         await add_chat(chat_id)
-         is_riddle = await is_riddle_math_chat(chat_id)
-         get_timeline = await get_riddle_math_chat_timeline(chat_id)
-"""         
-
-
-

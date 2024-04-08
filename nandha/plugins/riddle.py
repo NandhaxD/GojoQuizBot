@@ -8,7 +8,10 @@ from nandha.database.chats import add_chat
 from nandha.helpers.decorator import admin_only
 
 
-
+@bot.on_message(filters.command('poda'))
+async def say_poda(_, message):
+       return await message.reply('yaru da ne badu?')
+                                
 
 @bot.on_message(filters.command('riddle', prefixes=config.PREFIXES))
 @admin_only
@@ -28,7 +31,7 @@ async def riddle_cmd(_, message):
         
                                   
 @bot.on_callback_query(filters.regex('^cb_riddle'))
-async def customize(_, query):
+async def customize_riddle(_, query):
       user_id = query.from_user.id
       admin_id = int(query.data.split(':')[1])
       if user_id != admin_id:

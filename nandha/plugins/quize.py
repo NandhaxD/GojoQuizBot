@@ -27,7 +27,7 @@ async def quize(_, message):
 ]]
       
       await message.reply(
-            "Before setting up a quiz in your group, you need to establish a timeline for sending the quiz periodically, with breaks in between. Click the button below to set up the quiz timeline."
+            "Before setting up a quiz in your group, you need to establish a timeline for sending the quiz periodically, with breaks in between. Click the button below to set up the quiz time."
       , reply_markup=InlineKeyboardMarkup(button), quote=True)
                         
       
@@ -53,7 +53,7 @@ async def customize(_, query):
         
 ]]
         return await query.message.edit(
-              "Here is a list of quizzes for your chat ✨. You can set up a maximum of three quizzes in one chat group. Click on the quize type button for quick setup."
+              "Here is a list of quizzes for your chat ✨. You can set up a maximum of two quizzes in one chat group. Click on the quize type button for quick setup."
         , reply_markup=InlineKeyboardMarkup(button))
        
 

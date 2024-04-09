@@ -24,7 +24,7 @@ async def get_chat_question(chat_id: int):
            answer = riddle['data']['riddle']['math']['answer']
            return question, answer
        else:
-           return 
+           False
            
     
 async def clear_chat_riddle(chat_id: int):

@@ -29,7 +29,7 @@ async def send_math_riddles(_, message):
                     return
             else:
                  answer = int(riddle[1])
-                 mention = message.from_user.mention
+                 mention = message.from_user.mention if message.from_user or message.sender.chat.title if message.sender_chat else 'UnKown'
                  try:
                     text = int(message.text)                
                     if text == answer:

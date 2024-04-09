@@ -28,7 +28,7 @@ async def send_math_riddles(_, message):
             if riddle == False:
                     return
             else:
-                 answer = int(riddle['answer'])
+                 answer = int(riddle[1])
                  text = int(message.text)
                  mention = message.from_user.mention
                  if text == answer:

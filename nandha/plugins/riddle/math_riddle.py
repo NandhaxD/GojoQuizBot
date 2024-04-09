@@ -26,25 +26,25 @@ async def send_math_riddles(_, message):
         if not chat_id in chats_id:
                return
         else:
-            riddle = await get_chat_riddle(chat_id)
+            riddle = list(await get_chat_riddle(chat_id))
             if riddle == False:
                     return
             else:
-                 answer = int(list(riddle)[1])
-                 start_time = str(list(riddle)[2])
+                 answer = int(riddle[1])
+                 #start_time = str(riddle[2])
                  mention = message.from_user.mention if message.from_user else message.sender_chat.title if message.sender_chat else 'UnKown 🗿'
                  
                  try:
                     text = int(message.text)                
                     if text == int(answer):
                             
-                         end_time = str(message.date).split()[1]
-                         a_time = await taken_time(
-                                 start_time=start_time, 
-                                 end_time=end_time
-                         ) 
+                        # end_time = str(message.date).split()[1]
+                         #a_time = await taken_time(
+                         #        start_time=start_time, 
+                           #      end_time=end_time
+                        # ) 
                          await message.reply(
-                                 f"🥳 Congratulation {mention}, You have answered first the Math Quize 🥇 😎.\n\n🧠 Taken Time: {a_time}"
+                                 f"🥳 Congratulation {mention}, You have answered first the Math Quize 🥇 😎.\n\n🧠 Taken Time: None"
                          ) 
                          await clear_chat_riddle(chat_id)
                  except:
@@ -173,7 +173,7 @@ async def send_math_riddle_tochat(chat_id: int):
           msg = await bot.send_photo(
                 chat_id=chat_id,
                 photo=photo, 
-                caption="<code>🔥 Solve the Riddle 🔥.</code>")
+                caption="<code>.🔥 Solve the Riddle 🔥.</code>")
           await save_chat_riddle(
                   chat_id=chat_id,
                   question=question,

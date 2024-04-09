@@ -14,9 +14,17 @@ from nandha.database.chats import add_chat
 from nandha.helpers.func import get_question
 from nandha import bot
 
+chats_id = []
 
 
 
+@bot.on_message(filters.text & ~filters.private & ~filters.bot, group=3)
+async def send_math_riddles(_, message):
+        chat_id = message.chat.id
+        if not chat_id in chats_id:
+               return
+        else:
+            
 
 
 @bot.on_callback_query(filters.regex('^rmath'))
@@ -89,9 +97,7 @@ async def off_riddle_chat(_, query):
             return await query.message.edit(
                  f"Successfully turn offend you're chat math riddle!\n\n<b>You're chat riddle is</b>: {riddle}\n<b>You're chat riddle time</b>: {time}"
            )
-
-chats_id = []
-
+             
 
 async def make_math_riddle():
      img = Image.open(io.BytesIO(requests.get("https://graph.org/file/9b165baf9de57406d76ca.jpg").content))
@@ -126,31 +132,28 @@ async def send_math_riddle_tochat(chat_id: int):
                 )
           time = int(await get_chat_time(chat_id))
           riddle = await make_math_riddle()
-          await bot.send_photo(
+          msg = await bot.send_photo(
                 chat_id=chat_id
                 photo=riddle[0], 
                 caption="<code>Please don't use any userbot to solve quizzes. If you do, you're preventing yourself from growing.</code>")
           os.remove(riddle[0])
           await asyncio.sleep(time)
+          await msg.delete()
                 
 
 
 @bot.on_message(filters.text & ~filters.private, group=1)
 async def sends_math_riddle(_, message):
       chat_id = message.chat.id
-      riddle = await is_chat_riddle(chat_id)
-
-      if riddle == 'off':
-            chats_id.remove(chat_id)
-            
-      if not chat_id in chats_id:            
+      if not chat_id in chats_id:
+            riddle = await is_chat_riddle(chat_id)
             if riddle == 'on':
-                   chats_id.append(chat_id)
-                   await send_math_riddle_tochat(chat_id)
+                  chats_id.append(chat_id)
+                  return 
       else:
-          await send_math_riddle_tochat(chat_id)
+        return 
 
-
+      
 
 
 

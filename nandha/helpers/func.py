@@ -1,5 +1,17 @@
 import random
 
+from datetime import datetime
+
+
+async def taken_time(start_time: str, end_time: str):
+     time_format = "%M:%S"
+     time1 = datetime.strptime(start_time, time_format)
+     time2 = datetime.strptime(end_time, time_format)
+     # Calculate the difference
+     time_diff = time2 - time1
+     return time_diff
+
+
 
 async def get_question():     
      symbol = ['+','-','*']

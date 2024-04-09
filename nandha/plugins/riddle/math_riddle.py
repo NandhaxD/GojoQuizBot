@@ -39,11 +39,10 @@ async def send_math_riddles(_, message):
                             
                          end_time = str(message.date).split()[1]
                          answered_time = await taken_time(start_time=riddle[2], end_time=end_time) 
-                                 
-                         await clear_chat_riddle(chat_id)
                          await message.reply(
                                  f"🥳 Congratulation {mention} he have answered first the math quize 🥇 😎.\n\n🧠 Taken Time: {answered_time}"
-                         )                         
+                         ) 
+                         await clear_chat_riddle(chat_id)
                  except:
                       pass
                  

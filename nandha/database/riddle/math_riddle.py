@@ -16,7 +16,7 @@ async def save_chat_riddle(chat_id: int, question, answer):
     db.update_one(json, update)
     return True
 
-async def get_chat_question(chat_id: int):
+async def get_chat_riddle(chat_id: int):
        json = {'chat_id': chat_id}
        riddle = db.find_one(json)
        if riddle:

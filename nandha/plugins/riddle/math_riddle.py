@@ -38,9 +38,20 @@ async def riddle_math(_, query):
                    [ InlineKeyboardButton(text='back ⬅️', callback_data=f'cb_riddle:{user_id}')
            
 ]]
-         return await query.message.edit(
-           f"Hello! Now you can set up a time for your chat. Click the button below to do so.\n\n<b>You're chat riddle is</b>: {riddle}\n<b>You're chat riddle time</b>: {time}",
-           reply_markup=InlineKeyboardMarkup(button))
+            
+         off_button = [[
+               InlineKeyboardButton(text='off', callback_data=f'rmoff:{user_id}'),
+               InlineKeyboardButton(text='back ⬅️', callback_data=f'cb_riddle:{user_id}')
+ ]]
+         if riddle == 'on':
+               return await query.message.edit(
+                     "Hello! This chat has already set up the math riddle time. You need to turn off the current math riddle and try again.",
+                     reply_markup=InlineKeyboardMarkup())
+                     
+         else:
+            return await query.message.edit(
+                f"Hello! Now you can set up a time for your chat. Click the button below to do so.\n\n<b>You're chat riddle is</b>: {riddle}\n<b>You're chat riddle time</b>: {time}",
+                reply_markup=InlineKeyboardMarkup(button))
 
 
 @bot.on_callback_query(filters.regex('^rmtime'))
@@ -53,7 +64,7 @@ async def set_riddle_chat_time(_, query):
              return await query.answer("🔐 Sorry this not for you. try you're own to customize.", show_alert=True)
        else:
            time = int(query.data.split(':')[2])
-           await set_chat_time(chat_id, time)
+           await on_chat(chat_id, time)
            riddle = await is_chat_riddle(chat_id)
            time = await get_chat_time(chat_id)   
            return await query.message.edit(
@@ -62,8 +73,24 @@ async def set_riddle_chat_time(_, query):
                                 
 
 
-chats_id = []
 
+@bot.on_callback_query(filters.regex('^rmoff'))
+async def off_riddle_chat(_, query):
+       user_id = query.from_user.id
+       chat_id = query.message.chat.id
+      
+       admin_id = int(query.data.split(':')[1])
+       if user_id != admin_id:
+             return await query.answer("🔐 Sorry this not for you. try you're own to customize.", show_alert=True)
+       else:
+            await off_chat(chat_id)
+            riddle = await is_chat_riddle(chat_id)
+            time = await get_chat_time(chat_id)   
+            return await query.message.edit(
+                 f"Successfully turn offend you're chat math riddle!\n\n<b>You're chat riddle is</b>: {riddle}\n<b>You're chat riddle time</b>: {time}"
+           )
+
+chats_id = []
 
 
 async def make_math_riddle():

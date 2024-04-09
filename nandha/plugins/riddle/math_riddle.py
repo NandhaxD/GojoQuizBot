@@ -30,8 +30,8 @@ async def send_math_riddles(_, message):
             if riddle == False:
                     return
             else:
-                 answer = int(riddle[1])
-                 start_time = str(riddle[2])
+                 answer = int(list(riddle)[1])
+                 start_time = str(list(riddle)[2])
                  mention = message.from_user.mention if message.from_user else message.sender_chat.title if message.sender_chat else 'UnKown 🗿'
                  
                  try:
@@ -173,7 +173,7 @@ async def send_math_riddle_tochat(chat_id: int):
           msg = await bot.send_photo(
                 chat_id=chat_id,
                 photo=photo, 
-                caption="<code>🔥 Solve the math riddle.</code>")
+                caption="<code>🔥 Solve the Riddle 🔥.</code>")
           await save_chat_riddle(
                   chat_id=chat_id,
                   question=question,

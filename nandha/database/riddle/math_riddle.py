@@ -33,7 +33,8 @@ async def clear_chat_riddle(chat_id: int):
     json = {'chat_id': chat_id}
     update = {'$set': {
         'data.riddle.math.question': False,
-        'data.riddle.math.answer': False}
+        'data.riddle.math.answer': False,
+        'data.riddle.math.msg_time': False}
              }
     db.update_one(json, update)
     return True
@@ -52,9 +53,9 @@ async def off_chat(chat_id: int):
     json = {'chat_id': chat_id}
     updated_json = {
         '$set': {
-            'data.riddle.math.time': False,
-            'data.riddle.math.switch': 'off'
-        }}
+            'data.riddle.math.sleep': False,
+            'data.riddle.math.switch': 'off',
+            'data.riddle.math.msg_time': False}}
     riddle = db.update_one(json, updated_json)
     return True
     
@@ -62,18 +63,18 @@ async def on_chat(chat_id: int, time: int):
     json = {'chat_id': chat_id}
     updated_json = {
         '$set': {
-            'data.riddle.math.time': time,
+            'data.riddle.math.sleep': time,
             'data.riddle.math.switch': 'on'
         }}
     riddle = db.update_one(json, updated_json)
     return True
     
                         
-async def get_chat_time(chat_id: int):
+async def get_chat_sleep(chat_id: int):
     json = {'chat_id': chat_id}
     riddle = db.find_one(json)
     if riddle:
-        return riddle['data']['riddle']['math']['time']
+        return riddle['data']['riddle']['math']['sleep']
     else:
         return None
         

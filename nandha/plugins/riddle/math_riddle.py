@@ -134,7 +134,7 @@ async def make_math_riddle():
      img = img.resize((int(width*1.5), int(height*1.5)), Image.LANCZOS)
      path = "rmaths_quiz.jpg"
      img.save(path)    
-     return path, answer 
+     return path, answer, question 
 
 
 async def send_math_riddle_tochat(chat_id: int):
@@ -146,6 +146,10 @@ async def send_math_riddle_tochat(chat_id: int):
                 )
           time = int(await get_chat_time(chat_id))
           riddle = await make_math_riddle()
+
+          question = riddle[2]
+          answer = riddle[1]
+          photo = riddle[0]   
           await save_chat_riddle(
                   chat_id=chat_id,
                   question=question,
@@ -153,9 +157,9 @@ async def send_math_riddle_tochat(chat_id: int):
           )
           msg = await bot.send_photo(
                 chat_id=chat_id,
-                photo=riddle[0], 
+                photo=photo, 
                 caption="<code>Please don't use any userbot to solve quizzes. If you do, you're preventing yourself from growing.</code>")
-          os.remove(riddle[0])
+          os.remove(photo)
           await asyncio.sleep(time)
           await clear_chat_riddle(chat_id)
           try:      

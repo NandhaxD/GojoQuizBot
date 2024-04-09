@@ -18,9 +18,11 @@ chats_id = []
 
 
 
-@bot.on_message(filters.text & ~filters.private & ~filters.bot, group=-3)
+@bot.on_message(filters.text & ~filters.private & ~filters.bot, group=-2)
 async def send_math_riddles(_, message):
         chat_id = message.chat.id
+        s_time = time.time()
+        
         if not chat_id in chats_id:
                return
         else:
@@ -33,9 +35,12 @@ async def send_math_riddles(_, message):
                  try:
                     text = int(message.text)                
                     if text == answer:
+                         a_time = round(s_time-time.time(), 3)
+                                 
                          await clear_chat_riddle(chat_id)
                          await message.reply(
-                                 f'🥳 {mention} answered the riddle 🧠.')                         
+                                 f'🥳 {mention} Answered the riddle 🧠.\nAnswered time {a_time}'
+                         )                         
                  except:
                       pass
                  
@@ -64,7 +69,7 @@ async def riddle_math(_, query):
 ]]
             
          off_button = [[
-               InlineKeyboardButton(text='off', callback_data=f'rmoff:{user_id}'),
+               InlineKeyboardButton(text='off 🔴', callback_data=f'rmoff:{user_id}'),
                InlineKeyboardButton(text='back ⬅️', callback_data=f'cb_riddle:{user_id}')
  ]]
          if riddle == 'on':
@@ -171,7 +176,7 @@ async def send_math_riddle_tochat(chat_id: int):
                 pass
 
 
-@bot.on_message(filters.text & ~filters.private, group=1)
+@bot.on_message(filters.all & ~filters.private, group=1)
 async def sends_math_riddle(_, message):
       chat_id = message.chat.id
       if not chat_id in chats_id:

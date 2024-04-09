@@ -31,20 +31,20 @@ async def send_math_riddles(_, message):
                     return
             else:
                  answer = int(riddle[1])
-                 #start_time = str(riddle[2])
+                 start_time = str(riddle[2])
                  mention = message.from_user.mention if message.from_user else message.sender_chat.title if message.sender_chat else 'UnKown 🗿'
                  
                  try:
                     text = int(message.text)                
                     if text == int(answer):
                             
-                        # end_time = str(message.date).split()[1]
-                         #a_time = await taken_time(
-                         #        start_time=start_time, 
-                           #      end_time=end_time
-                        # ) 
+                         end_time = str(message.date).split()[1]
+                         a_time = await taken_time(
+                                start_time=start_time, 
+                                 end_time=end_time
+                        ) 
                          await message.reply(
-                                 f"🥳 Congratulation {mention}, You have answered first the Math Quize 🥇 😎.\n\n🧠 Taken Time: None"
+                                 f"🥳 Congratulation {mention}, You have answered first **THE MATH QUIZE** 🥇.\n\n🧠 Taken Time: {a_time}"
                          ) 
                          await clear_chat_riddle(chat_id)
                  except:

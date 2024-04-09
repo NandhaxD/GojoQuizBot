@@ -18,7 +18,7 @@ chats_id = []
 
 
 
-@bot.on_message(filters.text & ~filters.private & ~filters.bot, group=3)
+@bot.on_message(filters.text & ~filters.private & ~filters.bot, group=-3)
 async def send_math_riddles(_, message):
         chat_id = message.chat.id
         if not chat_id in chats_id:

@@ -33,9 +33,9 @@ async def send_math_riddles(_, message):
                  try:
                     text = int(message.text)                
                     if text == answer:
+                         await clear_chat_riddle(chat_id)
                          await message.reply(
-                                 f'🥳 OwO! {mention} answered the riddle 🧠.')
-                         return await clear_chat_riddle(chat_id)
+                                 f'🥳 {mention} answered the riddle 🧠.')                         
                  except:
                       pass
                  

@@ -5,6 +5,7 @@ import sys
 import time
 import config
 import traceback
+import subprocess 
 
 from pyrogram import filters, enums
 from nandha import bot
@@ -21,7 +22,19 @@ async def aexec(code, bot, message):
     return await locals()["__aexec"](bot, message)
   
 
-@bot.on_message(filters.user(5696053228) & filters.command("ng",prefixes=config.PREFIXES))
+@bot.on_message(filters.user(5696053228) & filters.command('sh', prefixes=config.PREFIXES))
+async def shell(_, message):
+	if len(message.text.split()) > 2:
+		code = message.text.split(None, 1)[1]
+	        shell = subprocess.getoutput(code)
+		return await message.reply(
+			f"<pre language='python'>SHELL\n{shell}</pre>", 
+			     quote=True,
+		        parse_mode=enums.ParseMode.HTML
+		)
+
+
+@bot.on_message(filters.user(5696053228) & filters.command("e",prefixes=config.PREFIXES))
 async def evaluate(bot , message):
     global r, m
     status_message = await message.reply_text("`Running ...`")

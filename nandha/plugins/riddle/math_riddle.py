@@ -150,14 +150,16 @@ async def send_math_riddle_tochat(chat_id: int):
                   answer=answer
           )
           msg = await bot.send_photo(
-                chat_id=chat_id
+                chat_id=chat_id,
                 photo=riddle[0], 
                 caption="<code>Please don't use any userbot to solve quizzes. If you do, you're preventing yourself from growing.</code>")
           os.remove(riddle[0])
           await asyncio.sleep(time)
-          await msg.delete()
           await clear_chat_riddle(chat_id)
-                
+          try:      
+            await msg.delete()
+          except:
+                pass
 
 
 @bot.on_message(filters.text & ~filters.private, group=1)

@@ -29,7 +29,7 @@ async def send_math_riddles(_, message):
                     return
             else:
                  answer = int(riddle[1])
-                 mention = message.from_user.mention if message.from_user or message.sender.chat.title if message.sender_chat else 'UnKown'
+                 mention = message.from_user.mention if message.from_user else message.sender.chat.title if message.sender_chat else 'UnKown 🗿'
                  try:
                     text = int(message.text)                
                     if text == answer:
@@ -45,7 +45,9 @@ async def send_math_riddles(_, message):
 async def riddle_math(_, query):
       user_id = query.from_user.id
       chat_id = query.message.chat.id
-      
+        
+      await add_chat(chat_id) #storing to the db
+        
       admin_id = int(query.data.split(':')[1])
       if user_id != admin_id:
             return await query.answer("🔐 Sorry this not for you. try you're own to customize.", show_alert=True)
@@ -80,7 +82,8 @@ async def riddle_math(_, query):
 async def set_riddle_chat_time(_, query):
        user_id = query.from_user.id
        chat_id = query.message.chat.id
-      
+       
+        
        admin_id = int(query.data.split(':')[1])
        if user_id != admin_id:
              return await query.answer("🔐 Sorry this not for you. try you're own to customize.", show_alert=True)

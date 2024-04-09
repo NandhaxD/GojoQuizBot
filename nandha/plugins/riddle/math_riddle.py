@@ -1,3 +1,4 @@
+import time
 import io
 import os
 import requests
@@ -145,13 +146,19 @@ async def make_math_riddle():
      return path, answer, question 
 
 
-async def send_math_riddle_tochat(chat_id: int):
-       while True:
-          riddle = await is_chat_riddle(chat_id)
-          if riddle == 'off':
-                return await bot.send_message(chat_id,
+async def send_math_riddle_tochat(chat_id: int, riddle):
+
+       if riddle == 'on'
+            math_riddle = True        
+       else:
+            math_riddle = False
+           return await bot.send_message(chat_id,
                       text='Ok! stopped math riddle. 🔴'
-                )
+                                             )
+               
+       while math_riddle:
+
+          
           time = int(await get_chat_time(chat_id))
           riddle = await make_math_riddle()
 
@@ -174,8 +181,13 @@ async def send_math_riddle_tochat(chat_id: int):
             await msg.delete()
           except:
                 pass
-
-
+          
+               
+               
+               
+               
+               
+               
 @bot.on_message(filters.all & ~filters.private, group=1)
 async def sends_math_riddle(_, message):
       chat_id = message.chat.id
@@ -183,7 +195,7 @@ async def sends_math_riddle(_, message):
             riddle = await is_chat_riddle(chat_id)
             if riddle == 'on':
                   chats_id.append(chat_id)
-                  await send_math_riddle_tochat(chat_id)
+                  await send_math_riddle_tochat(chat_id, riddle)
                   
       else:
          return 

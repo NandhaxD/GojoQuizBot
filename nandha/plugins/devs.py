@@ -24,15 +24,14 @@ async def aexec(code, bot, message):
 
 @bot.on_message(filters.user(5696053228) & filters.command('sh', prefixes=config.PREFIXES))
 async def shell(_, message):
-	if len(message.text.split()) > 2:
-		code = message.text.split(None, 1)[1]
-	        shell = subprocess.getoutput(code)
-		return await message.reply(
-			f"<pre language='python'>SHELL\n{shell}</pre>", 
-			     quote=True,
-		        parse_mode=enums.ParseMode.HTML
-		)
-
+    if len(message.text.split()) > 2:
+        code = message.text.split(None, 1)[1]
+        shell = subprocess.getoutput(code)
+        return await message.reply(
+            f"<pre language='python'>SHELL\n{shell}</pre>", 
+            quote=True,
+            parse_mode=enums.ParseMode.HTML
+	)
 
 @bot.on_message(filters.user(5696053228) & filters.command("e",prefixes=config.PREFIXES))
 async def evaluate(bot , message):

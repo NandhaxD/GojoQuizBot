@@ -66,17 +66,17 @@ async def riddle_math(_, query):
            InlineKeyboardButton(text='1 hour ', callback_data=f'rmtime:{user_id}:3600'),],
                    [InlineKeyboardButton(text='3 hours', callback_data=f'rmtime:{user_id}:10800'),
                     InlineKeyboardButton(text='6 hours', callback_data=f'rmtime:{user_id}:21600'), ],
-                   [ InlineKeyboardButton(text='back ⬅️', callback_data=f'cb_riddle:{user_id}')
+                   [ InlineKeyboardButton(text='𝗕𝗔𝗖𝗞 ⬅️', callback_data=f'cb_riddle:{user_id}')
            
 ]]
             
          off_button = [[
-               InlineKeyboardButton(text='off 🔴', callback_data=f'rmoff:{user_id}'),
-               InlineKeyboardButton(text='back ⬅️', callback_data=f'cb_riddle:{user_id}')
+               InlineKeyboardButton(text='𝐎𝐅𝐅 🔴', callback_data=f'rmoff:{user_id}'),
+               InlineKeyboardButton(text='𝗕𝗔𝗖𝗞 ⬅️', callback_data=f'cb_riddle:{user_id}')
  ]]
          if riddle == 'on':
                return await query.message.edit(
-                     "Hello! This chat has already set up the math riddle time. You need to turn off the current math riddle and try again.",
+                     "This chat already set-up the time for send math riddle for change settings **off** and **try again** customising...",
                      reply_markup=InlineKeyboardMarkup(off_button))
                      
          else:
@@ -97,10 +97,10 @@ async def set_riddle_chat_time(_, query):
        else:
            time = int(query.data.split(':')[2])
            await on_chat(chat_id, time)
-           riddle = await is_chat_riddle(chat_id)
+           riddle = await is_chat_riddle(chat_id) 
            time = await get_chat_time(chat_id)   
            return await query.message.edit(
-                 f"Successfully set-up you're chat math riddle!\n\n<b>You're chat riddle is</b>: {riddle}\n<b>You're chat riddle time</b>: {time}"
+                 f"Successfully set-up you're chat math riddle!\n\n<b>You're riddle is</b>: {riddle}\n<b>You're riddle time</b>: {time}"
            )
                                 
 
@@ -148,13 +148,14 @@ async def make_math_riddle():
 
 
         
-async def send_math_riddle_tochat(chat_id: int):         
-       while riddle:            
-          riddle = await is_chat_riddle(chat_id)
+async def send_math_riddle_tochat(chat_id: int): 
+        
+       while True:    
                
+          riddle = await is_chat_riddle(chat_id)               
           if riddle == 'off':
                return await bot.send_message(chat_id,
-                      text='Ok! stopped math riddle. 🔴'
+                      text='Ok! Stopped sending math riddle. 🔴'
                                          )
                
           sleep_time = int(await get_chat_time(chat_id))

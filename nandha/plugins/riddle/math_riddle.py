@@ -66,7 +66,7 @@ async def riddle_math(_, query):
          if riddle == 'on':
                return await query.message.edit(
                      "Hello! This chat has already set up the math riddle time. You need to turn off the current math riddle and try again.",
-                     reply_markup=InlineKeyboardMarkup())
+                     reply_markup=InlineKeyboardMarkup(off_button))
                      
          else:
             return await query.message.edit(
@@ -169,7 +169,7 @@ async def sends_math_riddle(_, message):
                   chats_id.append(chat_id)
                   return 
       else:
-        return 
+         return 
 
       
 

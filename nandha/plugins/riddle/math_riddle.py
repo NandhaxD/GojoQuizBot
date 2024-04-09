@@ -146,17 +146,19 @@ async def make_math_riddle():
      return path, answer, question 
 
 
-async def send_math_riddle_tochat(chat_id: int, riddle):
+async def send_math_riddle_tochat(chat_id: int):
 
+       riddle = await is_chat_riddle(chat_id)
+        
        if riddle == 'on':
-            math_riddle = True        
+            MATH_RIDDLE = True        
        else:
-            math_riddle = False
+            MATH_RIDDLE = False
             return await bot.send_message(chat_id,
                       text='Ok! stopped math riddle. 🔴'
                                              )
                
-       while math_riddle:
+       while MATH_RIDDLE:
 
           
           time = int(await get_chat_time(chat_id))

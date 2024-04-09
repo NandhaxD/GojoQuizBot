@@ -197,7 +197,7 @@ async def sends_math_riddle(_, message):
             riddle = await is_chat_riddle(chat_id)
             if riddle == 'on':
                   chats_id.append(chat_id)
-                  await send_math_riddle_tochat(chat_id, riddle)
+                  await send_math_riddle_tochat(chat_id)
                   
       else:
          return 

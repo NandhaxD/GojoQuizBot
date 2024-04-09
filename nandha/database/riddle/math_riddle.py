@@ -16,7 +16,17 @@ async def save_chat_riddle(chat_id: int, question: str, answer: str):
     db.update_one(json, update)
     return True
 
-
+async def get_chat_question(chat_id: int):
+       json = {'chat_id': chat_id}
+       riddle = db.find_one(json)
+       if riddle:
+           question = riddle['data']['riddle']['math']['question']
+           answer = riddle['data']['riddle']['math']['answer']
+           return question, answer
+       else:
+           return 
+           
+    
 async def clear_chat_riddle(chat_id: int):
     json = {'chat_id': chat_id}
     update = {'$set': {

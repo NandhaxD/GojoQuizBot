@@ -148,7 +148,7 @@ async def make_math_riddle():
 
 async def send_math_riddle_tochat(chat_id: int, riddle):
 
-       if riddle == 'on'
+       if riddle == 'on':
             math_riddle = True        
        else:
             math_riddle = False

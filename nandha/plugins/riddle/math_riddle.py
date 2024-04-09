@@ -12,7 +12,7 @@ from pyrogram import filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from nandha.database.riddle.math_riddle import is_chat_riddle, get_chat_time, off_chat, on_chat, save_chat_riddle, clear_chat_riddle, get_chat_riddle
 from nandha.database.chats import add_chat
-from nandha.helpers.func import get_question
+from nandha.helpers.func import get_question, taken_time
 from nandha import bot
 
 chats_id = []
@@ -21,9 +21,7 @@ chats_id = []
 
 @bot.on_message(filters.text & ~filters.private & ~filters.bot, group=-2)
 async def send_math_riddles(_, message):
-        chat_id = message.chat.id
-        
-        s_time = time.time()
+        chat_id = message.chat.id       
         
         if not chat_id in chats_id:
                return
@@ -33,15 +31,18 @@ async def send_math_riddles(_, message):
                     return
             else:
                  answer = int(riddle[1])
-                 mention = message.from_user.mention if message.from_user else message.sender.chat.title if message.sender_chat else 'UnKown 🗿'
+                 mention = message.from_user.mention if message.from_user else message.sender_chat.title if message.sender_chat else 'UnKown 🗿'
+                 
                  try:
                     text = int(message.text)                
                     if text == answer:
-                         a_time = round(time.time()-s_time, 3)
+                            
+                         end_time = str(message.date).split()[1]
+                         answered_time = await taken_time(riddle[2], end_time) 
                                  
                          await clear_chat_riddle(chat_id)
                          await message.reply(
-                                 f'🥳 **{mention}** Answered the riddle 🧠.\nAnswered time `{a_time}`'
+                                 f"🥳 Congratulation {mention} he have answered first the math quize 🥇 😎.\n\n🧠 Taken Time: {answered_time}"
                          )                         
                  except:
                       pass
@@ -62,10 +63,10 @@ async def riddle_math(_, query):
          riddle = await is_chat_riddle(chat_id)
          time = await get_chat_time(chat_id)
          button = [[
-           InlineKeyboardButton(text='60 seconds', callback_data=f'rmtime:{user_id}:60'),
-           InlineKeyboardButton(text='1 hour ', callback_data=f'rmtime:{user_id}:3600'),],
-                   [InlineKeyboardButton(text='3 hours', callback_data=f'rmtime:{user_id}:10800'),
-                    InlineKeyboardButton(text='6 hours', callback_data=f'rmtime:{user_id}:21600'), ],
+           InlineKeyboardButton(text='60 Seconds', callback_data=f'rmtime:{user_id}:60'),
+           InlineKeyboardButton(text='3 Minutes', callback_data=f'rmtime:{user_id}:90'),],
+                   [InlineKeyboardButton(text='1 Hours', callback_data=f'rmtime:{user_id}:3600'),
+                    InlineKeyboardButton(text='4 Hours', callback_data=f'rmtime:{user_id}:14400'), ],
                    [ InlineKeyboardButton(text='𝗕𝗔𝗖𝗞 ⬅️', callback_data=f'cb_riddle:{user_id}')
            
 ]]
@@ -154,8 +155,9 @@ async def send_math_riddle_tochat(chat_id: int):
                
           riddle = await is_chat_riddle(chat_id)               
           if riddle == 'off':
+               await clear_chat_riddle(chat_id)
                return await bot.send_message(chat_id,
-                      text='Ok! Stopped sending math riddle. 🔴'
+                      text='Ok! Stopped Maths riddle. 🔴'
                                          )
                
           sleep_time = int(await get_chat_time(chat_id))
@@ -165,15 +167,16 @@ async def send_math_riddle_tochat(chat_id: int):
           question = riddle[2]
           answer = riddle[1]
           photo = riddle[0]   
-          await save_chat_riddle(
-                  chat_id=chat_id,
-                  question=question,
-                  answer=answer
-          )
           msg = await bot.send_photo(
                 chat_id=chat_id,
                 photo=photo, 
-                caption="<code>✦ Solve the math riddle 🔥</code>")
+                caption="<code>🔥 Solve the math riddle.</code>")
+          await save_chat_riddle(
+                  chat_id=chat_id,
+                  question=question,
+                  answer=answer,
+                  msg_time=str(msg.date).split()[1]
+          )
           os.remove(photo)
           await asyncio.sleep(sleep_time)
           await clear_chat_riddle(chat_id)
@@ -198,8 +201,7 @@ async def sends_math_riddle(_, message):
                   await send_math_riddle_tochat(chat_id)
             elif riddle == 'off':
                  if chat_id in chats_id:
-                        chats_id.remove(chat_id)
-                                        
+                        chats_id.remove(chat_id)                                        
       else:
          return 
       

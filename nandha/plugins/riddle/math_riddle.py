@@ -22,6 +22,7 @@ chats_id = []
 @bot.on_message(filters.text & ~filters.private & ~filters.bot, group=-2)
 async def send_math_riddles(_, message):
         chat_id = message.chat.id
+        
         s_time = time.time()
         
         if not chat_id in chats_id:
@@ -146,23 +147,18 @@ async def make_math_riddle():
      return path, answer, question 
 
 
-async def send_math_riddle_tochat(chat_id: int):
-
-       riddle = await is_chat_riddle(chat_id)
         
-       if riddle == 'on':
-            MATH_RIDDLE = True  
+async def send_math_riddle_tochat(chat_id: int):         
+       while riddle:            
+          riddle = await is_chat_riddle(chat_id)
                
-       else:
-            MATH_RIDDLE = False
-            return await bot.send_message(chat_id,
+          if riddle == 'off':
+               return await bot.send_message(chat_id,
                       text='Ok! stopped math riddle. 🔴'
-                                             )
+                                         )
                
-       while MATH_RIDDLE:
-
-          
-          time = int(await get_chat_time(chat_id))
+          sleep_time = int(await get_chat_time(chat_id))
+               
           riddle = await make_math_riddle()
 
           question = riddle[2]
@@ -176,9 +172,9 @@ async def send_math_riddle_tochat(chat_id: int):
           msg = await bot.send_photo(
                 chat_id=chat_id,
                 photo=photo, 
-                caption="<code>Please don't use any userbot to solve quizzes. If you do, you're preventing yourself from growing.</code>")
+                caption="<code>✦ Solve the math riddle 🔥</code>")
           os.remove(photo)
-          await asyncio.sleep(time)
+          await asyncio.sleep(sleep_time)
           await clear_chat_riddle(chat_id)
           try:      
             await msg.delete()
@@ -199,7 +195,10 @@ async def sends_math_riddle(_, message):
             if riddle == 'on':
                   chats_id.append(chat_id)
                   await send_math_riddle_tochat(chat_id)
-                  
+            elif riddle == 'off':
+                 if chat_id in chats_id:
+                        chats_id.remove(chat_id)
+                                        
       else:
          return 
       

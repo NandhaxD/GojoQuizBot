@@ -121,8 +121,8 @@ async def make_math_riddle():
      open(url.split("/")[-1], "wb").write(k.content)
      font = ImageFont.truetype(url.split("/")[-1], size=100)
      math = await get_question()
-     question = math['query'] + " = ?"
-     answer = math['result']
+     question = math['question'] + " = ?"
+     answer = math['answer']
      tbox = font.getbbox(question)
      w = tbox[2] - tbox[0]
      h = tbox[3] - tbox[1]

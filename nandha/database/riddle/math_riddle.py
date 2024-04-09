@@ -7,11 +7,12 @@ db = DATABASE['CHATS']
 
 
 
-async def save_chat_riddle(chat_id: int, question, answer):
+async def save_chat_riddle(chat_id: int, question, answer, msg_time):
     json = {'chat_id': chat_id}
     update = {'$set': {
         'data.riddle.math.question': question,
-        'data.riddle.math.answer': answer}
+        'data.riddle.math.answer': answer,
+        'data.riddle.math.msg_time': msg_time}
              }
     db.update_one(json, update)
     return True

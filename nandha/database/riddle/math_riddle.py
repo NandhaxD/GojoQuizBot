@@ -17,7 +17,7 @@ async def is_chat_riddle(chat_id: int):
 
 
 
-async def off_chat(chat_id: int, time: int):
+async def off_chat(chat_id: int):
     json = {'chat_id': chat_id}
     updated_json = {
         '$set': {

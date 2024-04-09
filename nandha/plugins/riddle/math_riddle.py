@@ -10,7 +10,7 @@ import asyncio
 from PIL import Image, ImageDraw, ImageFont
 from pyrogram import filters 
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from nandha.database.riddle.math_riddle import is_chat_riddle, get_chat_time, off_chat, on_chat, save_chat_riddle, clear_chat_riddle, get_chat_riddle
+from nandha.database.riddle.math_riddle import is_chat_riddle, get_chat_sleep, off_chat, on_chat, save_chat_riddle, clear_chat_riddle, get_chat_riddle
 from nandha.database.chats import add_chat
 from nandha.helpers.func import get_question, taken_time
 from nandha import bot
@@ -38,7 +38,7 @@ async def send_math_riddles(_, message):
                     if text == answer:
                             
                          end_time = str(message.date).split()[1]
-                         answered_time = await taken_time(riddle[2], end_time) 
+                         answered_time = await taken_time(start_time=riddle[2], end_time=end_time) 
                                  
                          await clear_chat_riddle(chat_id)
                          await message.reply(
@@ -61,7 +61,7 @@ async def riddle_math(_, query):
             return await query.answer("🔐 Sorry this not for you. try you're own to customize.", show_alert=True)
       else:
          riddle = await is_chat_riddle(chat_id)
-         time = await get_chat_time(chat_id)
+         time = await get_chat_sleep(chat_id)
          button = [[
            InlineKeyboardButton(text='60 Seconds', callback_data=f'rmtime:{user_id}:60'),
            InlineKeyboardButton(text='3 Minutes', callback_data=f'rmtime:{user_id}:90'),],
@@ -82,7 +82,7 @@ async def riddle_math(_, query):
                      
          else:
             return await query.message.edit(
-                f"Hello! Now you can set up a time for your chat. Click the button below to do so.\n\n<b>You're chat riddle is</b>: {riddle}\n<b>You're chat riddle time</b>: {time}",
+                f"Hello! Now you can set up a time for your chat. Click the button below to do so.\n\n<b>You're chat riddle is</b>:{riddle}\n<b>You're chat riddle time</b>:{time}",
                 reply_markup=InlineKeyboardMarkup(button))
 
 
@@ -99,7 +99,7 @@ async def set_riddle_chat_time(_, query):
            time = int(query.data.split(':')[2])
            await on_chat(chat_id, time)
            riddle = await is_chat_riddle(chat_id) 
-           time = await get_chat_time(chat_id)   
+           time = await get_chat_sleep(chat_id)   
            return await query.message.edit(
                  f"Successfully set-up you're chat math riddle!\n\n<b>You're riddle is</b>: {riddle}\n<b>You're riddle time</b>: {time}"
            )
@@ -118,7 +118,7 @@ async def off_riddle_chat(_, query):
        else:
             await off_chat(chat_id)
             riddle = await is_chat_riddle(chat_id)
-            time = await get_chat_time(chat_id)   
+            time = await get_chat_sleep(chat_id)   
             return await query.message.edit(
                  f"Successfully turn offend you're chat math riddle!\n\n<b>You're chat riddle is</b>: {riddle}\n<b>You're chat riddle time</b>: {time}"
            )
@@ -160,7 +160,7 @@ async def send_math_riddle_tochat(chat_id: int):
                       text='Ok! Stopped Maths riddle. 🔴'
                                          )
                
-          sleep_time = int(await get_chat_time(chat_id))
+          sleep_time = int(await get_chat_sleep(chat_id))
                
           riddle = await make_math_riddle()
 

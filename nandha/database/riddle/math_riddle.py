@@ -22,7 +22,7 @@ async def get_chat_riddle(chat_id: int):
        if riddle:
            question = riddle['data']['riddle']['math']['question']
            answer = riddle['data']['riddle']['math']['answer']
-           taken_time = riddle['date']['riddle']['math']['taken_time']
+           taken_time = riddle['date']['riddle']['math']['msg_time']
            return question, answer, taken_time
        else:
            return False

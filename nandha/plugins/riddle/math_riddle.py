@@ -36,11 +36,11 @@ async def send_math_riddles(_, message):
                  try:
                     text = int(message.text)                
                     if text == answer:
-                         a_time = round(s_time-time.time(), 3)
+                         a_time = round(time.time()-s_time, 3)
                                  
                          await clear_chat_riddle(chat_id)
                          await message.reply(
-                                 f'🥳 {mention} Answered the riddle 🧠.\nAnswered time {a_time}'
+                                 f'🥳 **{mention}** Answered the riddle 🧠.\nAnswered time `{a_time}`'
                          )                         
                  except:
                       pass
@@ -151,7 +151,8 @@ async def send_math_riddle_tochat(chat_id: int):
        riddle = await is_chat_riddle(chat_id)
         
        if riddle == 'on':
-            MATH_RIDDLE = True        
+            MATH_RIDDLE = True  
+               
        else:
             MATH_RIDDLE = False
             return await bot.send_message(chat_id,

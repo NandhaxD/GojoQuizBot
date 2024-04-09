@@ -9,7 +9,7 @@ import asyncio
 from PIL import Image, ImageDraw, ImageFont
 from pyrogram import filters 
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from nandha.database.riddle.math_riddle import is_chat_riddle, get_chat_time, set_chat_time
+from nandha.database.riddle.math_riddle import is_chat_riddle, get_chat_time, set_chat_time, save_chat_riddle, clear_chat_riddle, get_chat_riddle
 from nandha.database.chats import add_chat
 from nandha.helpers.func import get_question
 from nandha import bot
@@ -24,7 +24,19 @@ async def send_math_riddles(_, message):
         if not chat_id in chats_id:
                return
         else:
-            
+            riddle = await get_chat_riddle(chat_id)
+            if riddle == False:
+                    return
+            else:
+                 answer = int(riddle['answer'])
+                 text = int(message.text)
+                 mention = message.from_user.mention
+                 if text == answer:
+                         await message.reply(
+                                 f'🥳 OwO! {mention} answered the riddle 🧠.')
+                         return await clear_chat_riddle(chat_id)
+                    
+                 
 
 
 @bot.on_callback_query(filters.regex('^rmath'))
@@ -132,6 +144,11 @@ async def send_math_riddle_tochat(chat_id: int):
                 )
           time = int(await get_chat_time(chat_id))
           riddle = await make_math_riddle()
+          await save_chat_riddle(
+                  chat_id=chat_id,
+                  question=question,
+                  answer=answer
+          )
           msg = await bot.send_photo(
                 chat_id=chat_id
                 photo=riddle[0], 
@@ -139,6 +156,7 @@ async def send_math_riddle_tochat(chat_id: int):
           os.remove(riddle[0])
           await asyncio.sleep(time)
           await msg.delete()
+          await clear_chat_riddle(chat_id)
                 
 
 

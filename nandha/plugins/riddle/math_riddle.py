@@ -29,16 +29,15 @@ async def send_math_riddles(_, message):
                     return
             else:
                  answer = int(riddle[1])
-                 try:
-                    text = int(message.text)
-                 except:
-                      pass
                  mention = message.from_user.mention
-                 if text == answer:
+                 try:
+                    text = int(message.text)                
+                    if text == answer:
                          await message.reply(
                                  f'🥳 OwO! {mention} answered the riddle 🧠.')
                          return await clear_chat_riddle(chat_id)
-                    
+                 except:
+                      pass
                  
 
 

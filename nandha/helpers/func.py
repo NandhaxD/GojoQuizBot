@@ -4,12 +4,19 @@ from datetime import datetime
 
 
 async def taken_time(start_time: str, end_time: str):
-     time_format = "%M:%S"
-     time1 = datetime.strptime(start_time, time_format)
-     time2 = datetime.strptime(end_time, time_format)
-     # Calculate the difference
-     time_diff = time2 - time1
-     return time_diff
+    time_format = "%H:%M:%S"
+    time1 = datetime.strptime(start_time, time_format)
+    time2 = datetime.strptime(end_time, time_format)
+    # Calculate the difference in seconds
+    time_diff_seconds = (time2 - time1).total_seconds()
+    time_diff_seconds = round(time_diff_seconds, 3)
+    if time_diff_seconds > 60:
+            time_diff_minutes = time_diff_seconds / 60
+            time_diff_minutes = round(time_diff_minutes, 3)
+            return f"{time_diff_minutes}Min"
+    # Convert seconds to minutes
+    else:
+         return f"{time_diff_seconds}Sec"
 
 
 

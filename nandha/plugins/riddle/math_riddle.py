@@ -44,7 +44,7 @@ async def send_math_riddles(_, message):
                                  end_time=end_time
                         ) 
                          await message.reply(
-                                 f"🥳 Congratulation {mention}, You have answered first **THE MATH QUIZE** 🥇.\n\n🧠 Taken Time: {a_time}"
+                                 f"🥳 Congratulation {mention}, You have answered it first **THE MATH PUZZLE** 🥇.\n\n🧠 **Taken Time**: {a_time}"
                          ) 
                          await clear_chat_riddle(chat_id)
                  except:
@@ -75,17 +75,17 @@ async def riddle_math(_, query):
 ]]
             
          off_button = [[
-               InlineKeyboardButton(text='𝐎𝐅𝐅 🔴', callback_data=f'rmoff:{user_id}'),
+               InlineKeyboardButton(text='𝐎𝐅𝐅 🛑', callback_data=f'rmoff:{user_id}'),
                InlineKeyboardButton(text='𝗕𝗔𝗖𝗞 ⬅️', callback_data=f'cb_riddle:{user_id}')
  ]]
          if riddle == 'on':
                return await query.message.edit(
-                     "This chat already set-up the time for send math riddle for change settings **off** and **try again** customising...",
+                     "This chat already set-up the time for send math riddle to change settings **off** and **try again...**",
                      reply_markup=InlineKeyboardMarkup(off_button))
                      
          else:
             return await query.message.edit(
-                f"Hello! Now you can set up a time for your chat. Click the button below to do so.\n\n<b>You're chat riddle is</b>:{riddle}\n<b>You're chat riddle time</b>:{time}",
+                f"Hello! now you can set-up a time for your chat. Click the button below to do so.\n\n<b>Your chat riddle</b>: **{riddle.upper()} 🛑**\n<b>Your chat riddle time</b>:{time} ⏰",
                 reply_markup=InlineKeyboardMarkup(button))
 
 
@@ -97,14 +97,14 @@ async def set_riddle_chat_time(_, query):
         
        admin_id = int(query.data.split(':')[1])
        if user_id != admin_id:
-             return await query.answer("🔐 Sorry this not for you. try you're own to customize.", show_alert=True)
+             return await query.answer("🔐 Sorry this not for you. try your own to customize.", show_alert=True)
        else:
            time = int(query.data.split(':')[2])
            await on_chat(chat_id, time)
            riddle = await is_chat_riddle(chat_id) 
            time = await get_chat_sleep(chat_id)   
            return await query.message.edit(
-                 f"Successfully set-up you're chat math riddle!\n\n<b>You're riddle is</b>: {riddle}\n<b>You're riddle time</b>: {time}"
+                 f"Successfully set-up your chat math riddle!\n\n<b>Your riddle is</b>: {riddle} 📢\n<b>Your riddle time</b>: {time} ⏰"
            )
                                 
 
@@ -123,7 +123,7 @@ async def off_riddle_chat(_, query):
             riddle = await is_chat_riddle(chat_id)
             time = await get_chat_sleep(chat_id)   
             return await query.message.edit(
-                 f"Successfully turn offend you're chat math riddle!\n\n<b>You're chat riddle is</b>: {riddle}\n<b>You're chat riddle time</b>: {time}"
+                 f"Successfully turn offend your chat math riddle!\n\n<b>Your chat riddle is</b>: {riddle} 🛑\n<b>Your chat riddle time</b>: {time} 🛑"
            )
              
 

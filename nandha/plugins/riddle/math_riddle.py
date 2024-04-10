@@ -43,10 +43,11 @@ async def send_math_riddles(_, message):
                                 start_time=start_time, 
                                  end_time=end_time
                         ) 
-                         await message.reply(
-                                 f"🥳 Congratulation {mention}, You have answered it first **THE MATH PUZZLE** 🥇.\n\n🧠 **Taken Time**: {a_time}"
-                         ) 
                          await clear_chat_riddle(chat_id)
+                            
+                         await message.reply(
+                                 f"🥳 Congratulation {mention}, You have answered first **THE MATH PUZZLE** 🥇.\n\n🧠 **Taken Time**: {a_time}"
+                         ) 
                  except:
                       pass
                  

@@ -8,26 +8,23 @@ from nandha.database.chats import add_chat
 from nandha.helpers.decorator import admin_only
 
 
-@bot.on_message(filters.command('poda'))
-async def say_poda(_, message):
-       return await message.reply('yaru da ne badu?')
+@bot.on_message(filters.command('settings'))
+@admin_only
+async def send_settings(_, message):
+       chat_id = message.chat.id
+       user_id = message.from_user.id
+
+       button = [[
+      InlineKeyboardButton(text='Riddle', callback_data=f'cb_riddle:{user_id}'),]
+                 [
+      InlineKeyboardButton(text='Quize', callback_data=f'cb_quize:{user_id}')
+              
+]]
+       return await message.reply(
+              'Click the below button for change settings ⚙️.'
+       )
                                 
 
-@bot.on_message(filters.command('riddle', prefixes=config.PREFIXES))
-@admin_only
-async def riddle_cmd(_, message):
-      chat_id = message.chat.id
-      user_id = message.from_user.id
-      
-      button = [[
-      InlineKeyboardButton(text='Customize', callback_data=f'cb_riddle:{user_id}')      
-]]
-      
-      await message.reply(
-            "Before setting up a riddle in your group, you need to establish a time for sending the riddle periodically, with breaks in between. Click the button below to set up the riddle time."
-      , reply_markup=InlineKeyboardMarkup(button), quote=True)
-                        
-      
         
                                   
 @bot.on_callback_query(filters.regex('^cb_riddle'))
@@ -51,7 +48,8 @@ async def customize_riddle(_, query):
 ]]
         return await query.message.edit(
               "Here is a list of riddles for your chat ✨. You can set up a maximum of two riddles in one chat group. Click on the riddle type button for quick setup."
-        , reply_markup=InlineKeyboardMarkup(button))
+        , reply_markup=InlineKeyboardMarkup(button)
+        )
        
 
 @bot.on_callback_query(filters.regex('^cs'))

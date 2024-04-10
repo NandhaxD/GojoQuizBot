@@ -17,7 +17,7 @@ async def start_message(name, message):
                InlineKeyboardButton(text='Channel', url=config.CHANNEL_URL)]]), quote=True)
               
 
-@bot.on_message(filters.command('start', prefixes=config.PREFIXES))
+@bot.on_message(~filters.bot & filters.command('start', prefixes=config.PREFIXES))
 async def start(_, message):
        chat_id = message.chat.id
        user_id = message.from_user.id

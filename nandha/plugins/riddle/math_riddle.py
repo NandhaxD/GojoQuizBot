@@ -194,12 +194,13 @@ async def send_math_riddle_tochat(chat_id: int):
                
                
                
-@bot.on_message((filters.text & filters.media & filters.incoming) & ~filters.private, group=2)
+@bot.on_message(filters.all & ~filters.private, group=2)
 async def sends_math_riddle(_, message):
       chat_id = message.chat.id
       if not chat_id in chats_id:
             riddle = await is_chat_riddle(chat_id)
             if riddle == 'on':
+                  await clear_chat_riddle(chat_id)
                   chats_id.append(chat_id)
                   await send_math_riddle_tochat(chat_id)
             elif riddle == 'off':

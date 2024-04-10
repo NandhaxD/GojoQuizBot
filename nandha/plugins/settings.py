@@ -8,7 +8,24 @@ from nandha.database.chats import add_chat
 from nandha.helpers.decorator import admin_only
 
  
-        
+ @bot.on_message(filters.command('settings'))
+@admin_only
+async def send_settings(_, message):
+       chat_id = message.chat.id
+       user_id = message.from_user.id
+
+       button = [[
+      InlineKeyboardButton(text='Riddle', callback_data=f'cb_riddle:{user_id}'),]
+                 [
+      InlineKeyboardButton(text='Quize', callback_data=f'cb_quize:{user_id}')
+              
+]]
+       return await message.reply(
+              'Click the below button for change settings ⚙️.', reply_markup=InlineKeyboardMarkup(button)
+       )
+                                
+
+
                                   
 @bot.on_callback_query(filters.regex('^cb_quize'))
 async def customize_quize(_, query):
@@ -40,22 +57,6 @@ async def customize_quize(_, query):
 
 # BELOW CODES RELATED TO RIDDLE 
 
-@bot.on_message(filters.command('settings'))
-@admin_only
-async def send_settings(_, message):
-       chat_id = message.chat.id
-       user_id = message.from_user.id
-
-       button = [[
-      InlineKeyboardButton(text='Riddle', callback_data=f'cb_riddle:{user_id}'),]
-                 [
-      InlineKeyboardButton(text='Quize', callback_data=f'cb_quize:{user_id}')
-              
-]]
-       return await message.reply(
-              'Click the below button for change settings ⚙️.'
-       )
-                                
 
         
                                   

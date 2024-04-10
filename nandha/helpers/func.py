@@ -9,8 +9,8 @@ from datetime import datetime
 
 async def restart():
     cmd = sys.argv #List of command-line arguments passed to the script.
-    execu = sys.executable #Path to the current Python interpreter executable.
-    os.execvp(execu, *cmd) # Executes the program using the given path and arguments.
+    executable = sys.executable #Path to the current Python interpreter executable.
+    os.execvp(executable, [ executable, *cmd ]) # Executes the program using the given path and arguments.
     return True
     
 async def taken_time(start_time: str, end_time: str):
@@ -30,10 +30,36 @@ async def taken_time(start_time: str, end_time: str):
 
 
 
-async def get_question():     
+async def get_question():  
+    
      symbol = ['+','-','*']
-     question = "({num1}{syb1}{num2}){syb2}{num3}".format(num1=random.randint(20, 44), syb1=random.choice(symbol), num2=random.randint(2, 9), syb2=random.choice(symbol), num3=random.randint (1, 30))     
-     answer = eval(question)
+     num1=random.randint(20, 44)
+     syb1=random.choice(symbol)
+     num2=random.randint(2, 9)
+     syb2=random.choice(symbol)
+     num3=random.randint (1, 30)
+    
+     question = "({num1}{syb1}{num2}){syb2}{num3}".format(
+         num1=num1, 
+         syb1=syb1,
+         num2=num2,
+         syb2=syb2, 
+         num3=num3
+     )     
+     ans = eval(question)
+     
+     if ans <= 0:
+              answer = ans*-1
+              question = "(({num1}{syb1}{num2}){syb2}{num3})(-1)".format(
+              num1=num1, 
+              syb1=syb1,
+              num2=num2,
+              syb2=syb2, 
+              num3=num3
+     )    
+     else:
+         question = question 
+         
      return {'question': question, 'answer': answer}
 
 

@@ -8,7 +8,7 @@ from nandha.database.chats import add_chat
 from nandha.helpers.decorator import admin_only
 
  
- @bot.on_message(filters.command('settings'))
+@bot.on_message(filters.command('settings'))
 @admin_only
 async def send_settings(_, message):
        chat_id = message.chat.id

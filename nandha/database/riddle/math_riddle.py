@@ -5,8 +5,6 @@ from nandha import DATABASE
 
 db = DATABASE['CHATS']
 
-
-
 async def save_chat_riddle(chat_id: int, question, answer, msg_time):
     json = {'chat_id': chat_id}
     update = {'$set': {
@@ -77,4 +75,57 @@ async def get_chat_sleep(chat_id: int):
         return riddle['data']['riddle']['math']['sleep']
     else:
         return None
+
+
+
+
+from nandha.database.users import add_user
+from nandha import DATABASE
+
+db = DATABASE['USERS']
+
+
+
+async def get_point_user_chat(chat_id: int, user_id: int):
+        user = {'user_id': user_id}
+        if user:
+            point = user['data']['riddle']['math'][str(chat_id)]
+            return int(point)
+        else:
+            return False
+
+    
+async def edit_point_user_chat(chat_id: int, user_id: int, point: int):
+        user = {'user_id': user_id}
+        if user:
+            update = {'$set':
+                      {
+                          f'data.riddle.math.{str(chat_id)}': point
+                      }}
+            db.update_one(user, update)
+            return True
+        else:
+            return False
+
+    
+
+async def add_point_user_chat(chat_id: int, user_id: int):
+        user = {'user_id': user_id}
+        if user:
+            point = await get_point_from_user(chat_id, user_id)
+            point += 1
+            update = {'$set':
+                      {
+                          f'data.riddle.math.{str(chat_id)}': point
+                      }}
+            db.update_one(user, update)
+            return True
+        else:
+             return False
+           
+           
+           
+     
+
+
         

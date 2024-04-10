@@ -10,6 +10,7 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 
 async def start_message(name, message):
+    
     return await message.reply_photo(photo=config.START_IMAGE,
               caption="Welcome {name}! I'm Gojo Satoru, a quiz bot here to train you and boost your knowledge. Join our support channel. Thank you for using!".format(name=name),
        reply_markup=InlineKeyboardMarkup(
@@ -24,7 +25,9 @@ async def start(_, message):
        name = message.from_user.first_name
        
        if message.chat.type == enums.ChatType.PRIVATE:
+           
            await add_user(user_id)
+           await message.react('⚡️')
            await start_message(name, message)               
        else:
            await add_chat(chat_id)

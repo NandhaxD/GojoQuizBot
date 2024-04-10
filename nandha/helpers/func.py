@@ -59,6 +59,7 @@ async def get_question():
      )    
      else:
          question = question 
+         answer = ans
          
      return {'question': question, 'answer': answer}
 

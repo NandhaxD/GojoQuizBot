@@ -25,6 +25,23 @@ async def send_settings(_, message):
        )
                                 
 
+@bot.on_callback_query(filters.regex('^settings'))
+async def cb_settings(_, query):
+      user_id = query.from_user.id
+      admin_id = int(query.data.split(':')[1])
+      if user_id != admin_id:
+            return await query.answer("🔐 Sorry this not for you. try you're own to customize.", show_alert=True)
+      else:  
+        button = [[
+      InlineKeyboardButton(text='Riddle', callback_data=f'cb_riddle:{user_id}')
+       ],[
+      InlineKeyboardButton(text='Quize', callback_data=f'cb_quize:{user_id}')
+              
+]]
+        return await query.message.edit(
+              "Click the below button for change settings ⚙️."
+        , reply_markup=InlineKeyboardMarkup(button))
+       
 
                                   
 @bot.on_callback_query(filters.regex('^cb_quize'))
@@ -41,7 +58,7 @@ async def customize_quize(_, query):
               InlineKeyboardButton(text='Chemistry Quize', callback_data=f'chemistry:{user_id}'),
               InlineKeyboardButton(text='Zoolagy Quize', callback_data=f'zoolagy:{user_id}')
         ] , [
-                    InlineKeyboardButton(text='Back ⬅️', callback_data='back')
+                    InlineKeyboardButton(text='Back ⬅️', callback_data=f'settings:{user_id}')
               
               
         
@@ -74,7 +91,7 @@ async def customize_riddle(_, query):
               InlineKeyboardButton(text='Comming Soon', callback_data=f'cs:{user_id}'),
               InlineKeyboardButton(text='Comming Soon', callback_data=f'cs:{user_id}')
         ] , [
-                    InlineKeyboardButton(text='Back ⬅️', callback_data='back')
+                    InlineKeyboardButton(text='Back ⬅️', callback_data=f'settings:{user_id}')
               
               
         
@@ -86,7 +103,7 @@ async def customize_riddle(_, query):
        
 
 @bot.on_callback_query(filters.regex('^cs'))
-async def commingsoon(_, query):
+async def comming_soon(_, query):
       return await query.answer('I have no idea about what i next add for riddle so please if you have some idea kindly share to @Nandha', show_alert=True)
   
      

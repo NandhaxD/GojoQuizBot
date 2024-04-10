@@ -160,8 +160,9 @@ async def send_math_riddle_tochat(chat_id: int):
           riddle = await is_chat_riddle(chat_id)               
           if riddle == 'off':
                await clear_chat_riddle(chat_id)
-               return await bot.send_message(chat_id,
-                      text='Ok! Stopped Maths riddle. 🔴'
+               return await bot.send_message(
+                      chat_id=chat_id,
+                      text='Ok! Stopped Math Riddle. 🔴'
                                          )
                
           sleep_time = int(await get_chat_sleep(chat_id))
@@ -174,7 +175,7 @@ async def send_math_riddle_tochat(chat_id: int):
           msg = await bot.send_photo(
                 chat_id=chat_id,
                 photo=photo, 
-                caption="<code>.🔥 Solve the Riddle 🔥.</code>")
+                caption="<code>🔥 Solve the Riddle 🔥</code>")
           await save_chat_riddle(
                   chat_id=chat_id,
                   question=question,

@@ -1,8 +1,18 @@
+
+
 import random
+import sys
+import os
 
 from datetime import datetime
 
 
+async def restart():
+    cmd = sys.argv #List of command-line arguments passed to the script.
+    execu = sys.executable #Path to the current Python interpreter executable.
+    os.execvp(execu, *cmd) # Executes the program using the given path and arguments.
+    return True
+    
 async def taken_time(start_time: str, end_time: str):
     time_format = "%H:%M:%S"
     time1 = datetime.strptime(start_time, time_format)

@@ -104,7 +104,7 @@ async def set_riddle_chat_time(_, query):
            riddle = await is_chat_riddle(chat_id) 
            time = await get_chat_sleep(chat_id) 
            button = [[
-                   InlineKeyyboardButton('𝗕𝗔𝗖𝗞 ⬅️', callback_data='rmtime')
+                   InlineKeyboardButton('𝗕𝗔𝗖𝗞 ⬅️', callback_data=f'rmath:{user_id}')
 
            ]]
            return await query.message.edit(

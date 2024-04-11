@@ -87,7 +87,8 @@ db = DATABASE['USERS']
 
 
 async def get_point_user_chat(chat_id: int, user_id: int):
-        user = {'user_id': user_id}
+        filter = {'user_id': user_id}
+        user = db.find_one(filter)
         if user:
             point = user['data']['riddle']['math'][str(chat_id)]
             return int(point)
@@ -96,7 +97,8 @@ async def get_point_user_chat(chat_id: int, user_id: int):
 
     
 async def edit_point_user_chat(chat_id: int, user_id: int, point: int):
-        user = {'user_id': user_id}
+        filter = {'user_id': user_id}
+        user = db.find_one(filter)
         if user:
             update = {'$set':
                       {
@@ -110,7 +112,8 @@ async def edit_point_user_chat(chat_id: int, user_id: int, point: int):
     
 
 async def add_point_user_chat(chat_id: int, user_id: int):
-        user = {'user_id': user_id}
+        filter = {'user_id': user_id}
+        user = db.find_one(filter)
         if user:
             point = await get_point_from_user(chat_id, user_id)
             point += 1

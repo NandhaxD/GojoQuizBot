@@ -62,7 +62,7 @@ async def rmath_leaderboard(_, query):
            for i, (user, points) in enumerate(sorted_user_riddle_points[:10]):
               text += f'{i+1}. {user}: `{points}`\n'
 
-           button = [[ InlineKeyboardButton('Back ⬅️', callback_data=f'riddlelb':{user_id}') ]]
+           button = [[ InlineKeyboardButton('Back ⬅️', callback_data=f'riddlelb:{user_id}') ]]
            return await query.message.edit(text,
                                     reply_markup=InlineKeyboardMarkup(button)
                                           )

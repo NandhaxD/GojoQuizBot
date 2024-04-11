@@ -5,6 +5,8 @@ import sys
 import os
 
 from datetime import datetime
+from PIL import Image, ImageDraw, ImageFont
+
 from nandha import DATABASE 
 from nandha.database.users import get_users
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
@@ -97,3 +99,26 @@ async def get_question():
      return {'question': question, 'answer': answer}
 
 
+
+async def make_math_riddle():
+     img = Image.open(io.BytesIO(requests.get(random.choice(config.MATH_RIDDLE_BG)).content))
+     draw = ImageDraw.Draw(img)
+     url = "https://github.com/JulietaUla/Montserrat/raw/master/fonts/otf/Montserrat-ExtraBold.otf"
+     k = requests.get(url)
+     open(url.split("/")[-1], "wb").write(k.content)
+     font = ImageFont.truetype(url.split("/")[-1], size=100)
+     math = await get_question()
+     question = math['question'] + " = ?"
+     answer = math['answer']
+     tbox = font.getbbox(question)
+     w = tbox[2] - tbox[0]
+     h = tbox[3] - tbox[1]
+     # Set the center of the image as the position for the text
+     width, height = img.size
+     position = (width // 2, height // 2)
+     color = (255, 255, 255)
+     draw.text(((width-w)//2, (height-h)//2), question, font=font, fill=color)
+     img = img.resize((int(width*1.5), int(height*1.5)), Image.LANCZOS)
+     path = "rmaths_quiz.jpg"
+     img.save(path)    
+     return path, answer, question 

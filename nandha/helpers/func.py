@@ -103,7 +103,7 @@ async def get_question():
 
 
 async def make_math_riddle():
-     img = Image.open(io.BytesIO(requests.get(random.choice(config.MATH_RIDDLE_BG)).content))
+     img = Image.open(io.BytesIO(requests.get(random.choice(config.RIDDLE_MATH_BG)).content))
      draw = ImageDraw.Draw(img)
      url = "https://github.com/JulietaUla/Montserrat/raw/master/fonts/otf/Montserrat-ExtraBold.otf"
      k = requests.get(url)

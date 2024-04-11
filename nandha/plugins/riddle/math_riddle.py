@@ -83,9 +83,10 @@ async def riddle_math(_, query):
                      reply_markup=InlineKeyboardMarkup(off_button))
                      
          else:
-            return await query.message.edit(
-                f"Hello! now you can set-up a time for your chat. Click the button below to do so.\n\n<b>Your chat riddle</b>: **{riddle.upper()} 🛑**\n<b>Your chat riddle time</b>:{time} ⏰",
-                reply_markup=InlineKeyboardMarkup(button))
+             return await query.message.edit(
+                f"Hello! now you can set-up a time for your chat. Click the button below to do so.\n\n<b>Your chat riddle</b>: **{str(riddle).upper()} 🛑**\n<b>Your chat riddle time</b>:{time} ⏰",
+                reply_markup=InlineKeyboardMarkup(button)
+             )
 
 
 @bot.on_callback_query(filters.regex('^rmtime'))

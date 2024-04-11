@@ -41,7 +41,8 @@ async def send_math_riddles(_, message):
                     if text == int(answer):
 
                          user_id = message.from_user.id
-                         return await ask_start_pm(user_id, message)
+                         if (await ask_start_pm(user_id, message)) == False:
+                                return 
                          end_time = str(message.date).split()[1]
                          a_time = await taken_time(
                                 start_time=start_time, 

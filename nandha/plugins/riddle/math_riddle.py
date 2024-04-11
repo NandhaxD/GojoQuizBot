@@ -133,7 +133,7 @@ async def off_riddle_chat(_, query):
            ]]
             return await query.message.edit(
                  f"Successfully turn offend your chat math riddle!\n\n<b>Your chat riddle is</b>: {riddle} 🛑\n<b>Your chat riddle time</b>: {time} 🛑",
-                    reply_markup=InlineKeyboardMarkup(buttton)
+                    reply_markup=InlineKeyboardMarkup(button)
            )
              
 

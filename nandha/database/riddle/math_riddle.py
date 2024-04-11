@@ -74,7 +74,7 @@ async def get_chat_sleep(chat_id: int):
     if riddle:
         return riddle['data']['riddle']['math']['sleep']
     else:
-        return None
+        return False
 
 
 

@@ -43,7 +43,7 @@ async def riddlelb(_, query):
             ]]
             name = query.message.chat.title
             return await query.message.edit(
-                   'Click here for know the chat top users in {name}.🏆',
+                   f'Click here for know the chat top users in {name}.🏆',
                    reply_markup=InlineKeyboardMarkup(button)
             )
             
@@ -63,7 +63,7 @@ async def rmath_leaderboard(_, query):
            sorted_user_riddle_points = await get_rmath_lb(chat_id)
            text = f'🏆 **Top Users in {name}**\n\n'
            for i, (user, points) in enumerate(sorted_user_riddle_points[:10]):
-              text += f'{i+1}. [{user}](tg://user?id={user_id}): `{points}`\n'
+              text += f'{i+1}. [{user}](tg://user?id={user}): `{points}`\n'
 
            button = [[ InlineKeyboardButton('Back ⬅️', callback_data=f'riddlelb:{user_id}') ]]
            return await query.message.edit(text,

@@ -44,7 +44,7 @@ async def is_chat_riddle(chat_id: int):
     if riddle:
          return riddle['data']['riddle']['math']['switch']        
     else:
-        return None
+        return False
 
 
 async def off_chat(chat_id: int):

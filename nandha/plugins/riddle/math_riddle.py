@@ -152,7 +152,7 @@ async def send_math_riddle_tochat(chat_id: int):
                await clear_chat_riddle(chat_id)
                return await bot.send_message(
                       chat_id=chat_id,
-                      text='Ok! Stopped Math Riddle. 🔴'
+                      text='Ok. Stopped Math Riddle. 🔴'
                                          )
                
           sleep_time = int(await get_chat_sleep(chat_id))

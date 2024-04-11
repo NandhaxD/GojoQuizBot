@@ -13,6 +13,7 @@ from nandha import bot
 @admin_only
 async def leaderboard(_, message):
          user_id = message.from_user.id
+         chat_id = message.chat.id
          
          button = [[
                 InlineKeyboardButton('Riddle', callback_data=f'riddlelb:{user_id}'),
@@ -45,8 +46,27 @@ async def riddlelb(_, query):
             
        
                      
+@bot.on_callback_query(filters.regex('^rmathlb'))
+async def rmath_leaderboard(_, query):
+       user_id = query.from_user.id
+       admin_id = int(query.data.split(':')[1])
+       if user_id != admin_id:
+              return await query.answer(
+                     'This command is not requested by you', show_alert=True
+              )
+       else:
+           chat_id = query.message.chat.id
+           name = query.message.chat.title
+           sorted_user_riddle_points = await get_rmath_lb(chat_id)
+           text = '🏆 Top Users in {name}\n'
+           for i, (user, points) in enumerate(sorted_user_riddle_points[:10]):
+              text += f'{i+1}. {user}: `{points}`\n'
 
-
+           button = [[ InlineKeyboardButton('Back ⬅️', callback_data=f'riddlelb':{user_id}') ]]
+           return await query.message.edit(text,
+                                    reply_markup=InlineKeyboardMarkup(button)
+                                          )
+       
 
        
 

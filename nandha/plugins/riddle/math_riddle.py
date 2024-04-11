@@ -11,6 +11,7 @@ from PIL import Image, ImageDraw, ImageFont
 from pyrogram import filters 
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from nandha.database.riddle.math_riddle import is_chat_riddle, get_chat_sleep, off_chat, on_chat, save_chat_riddle, clear_chat_riddle, get_chat_riddle
+from nandhadatabase.points import add_points, get_points
 from nandha.database.chats import add_chat
 from nandha.helpers.func import get_question, taken_time
 from nandha import bot
@@ -44,9 +45,10 @@ async def send_math_riddles(_, message):
                                  end_time=end_time
                         ) 
                          await clear_chat_riddle(chat_id)
-                            
+                         await add_points(chat_id, user_id, 'riddle', 'math')
+                         points = await get_points(chat_id, user_id, 'riddle', 'math')
                          await message.reply(
-                                 f"🥳 Congratulation {mention}, You have answered first **THE MATH PUZZLE** 🥇.\n\n🧠 **Taken Time**: {a_time}"
+                                 f"🥳 Congratulation {mention}, You have answered first **THE MATH PUZZLE** 🥇.\n\n🧠 **Solved Puzzles**: {points}\n🧠 **Taken Time**: {a_time}"
                          ) 
                  except:
                       pass
@@ -128,7 +130,7 @@ async def off_riddle_chat(_, query):
             riddle = await is_chat_riddle(chat_id)
             time = await get_chat_sleep(chat_id)  
             button = [[
-                   InlineKeyboardButton('𝗕𝗔𝗖𝗞 ⬅️', callback_data=f'rmtime:{user_id}')
+                   InlineKeyboardButton('Settings ⬅️', callback_data=f'settings:{user_id}')
 
            ]]
             return await query.message.edit(

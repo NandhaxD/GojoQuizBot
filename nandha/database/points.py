@@ -12,7 +12,7 @@ async def get_points(chat_id: int, user_id: int, module: str, type: str):
         else:
             return False
     
-async def edit_points(chat_id: int, user_id: int, point: int, module: str, type: str):
+async def edit_points(chat_id: int, user_id: int, module: str, type: str, point: int):
         filter = {'user_id': user_id}
         user = db.find_one(filter)
         if user:

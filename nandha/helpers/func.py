@@ -1,12 +1,32 @@
 
-
+import config
 import random
 import sys
 import os
 
 from datetime import datetime
+from nandha.database.users import get_users
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
+temp_users = []
 
+async def start_pm(user_id: int, message):
+    if len(temp_users) == 0:
+          users = await get_users()
+          temp_users.append(users)
+    if user_id in temp_users:
+        return True
+    else:
+         button = [[InlineKeyboardButton('Start PM', user_id=config.BOT_ID)]]
+         return await message.reply(
+             'Start bot in private and then try solving puzzles.',
+             reply_markup=InlineKeyboardMarkup(button))
+    
+    
+           
+     
+    
+    
 async def restart():
     cmd = sys.argv #List of command-line arguments passed to the script.
     executable = sys.executable #Path to the current Python interpreter executable.

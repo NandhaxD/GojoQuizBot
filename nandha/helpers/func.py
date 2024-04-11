@@ -1,8 +1,10 @@
 
 import config
+import requests 
 import random
 import sys
 import os
+import io
 
 from datetime import datetime
 from PIL import Image, ImageDraw, ImageFont

@@ -11,7 +11,7 @@ from PIL import Image, ImageDraw, ImageFont
 from pyrogram import filters 
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from nandha.database.riddle.math_riddle import is_chat_riddle, get_chat_sleep, off_chat, on_chat, save_chat_riddle, clear_chat_riddle, get_chat_riddle
-from nandhadatabase.points import add_points, get_points
+from nandha.database.points import add_points, get_points
 from nandha.database.chats import add_chat
 from nandha.helpers.func import get_question, taken_time
 from nandha import bot

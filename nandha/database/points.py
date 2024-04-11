@@ -25,7 +25,7 @@ async def edit_point_user_chat(chat_id: int, user_id: int, point: int, module: s
         else:
             return False
 
-async def add_point_user_chat(chat_id: int, user_id: int):
+async def add_point_user_chat(chat_id: int, user_id: int, module: str, type: str):
         filter = {'user_id': user_id}
         user = db.find_one(filter)
         if user:

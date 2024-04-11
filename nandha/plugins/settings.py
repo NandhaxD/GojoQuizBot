@@ -58,7 +58,7 @@ async def customize_quize(_, query):
               InlineKeyboardButton(text='Chemistry Quize', callback_data=f'chemistry:{user_id}'),
               InlineKeyboardButton(text='Zoolagy Quize', callback_data=f'zoolagy:{user_id}')
         ] , [
-                    InlineKeyboardButton(text='Back ⬅️', callback_data=f'settings:{user_id}')
+                    InlineKeyboardButton(text='𝗕𝗔𝗖𝗞 ⬅️', callback_data=f'settings:{user_id}')
               
               
         
@@ -91,7 +91,7 @@ async def customize_riddle(_, query):
               InlineKeyboardButton(text='Comming Soon', callback_data=f'cs:{user_id}'),
               InlineKeyboardButton(text='Comming Soon', callback_data=f'cs:{user_id}')
         ] , [
-                    InlineKeyboardButton(text='Back ⬅️', callback_data=f'settings:{user_id}')
+                    InlineKeyboardButton(text='𝗕𝗔𝗖𝗞 ⬅️', callback_data=f'settings:{user_id}')
               
               
         

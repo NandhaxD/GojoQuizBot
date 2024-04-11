@@ -12,6 +12,8 @@ from nandha import bot
 @bot.on_message(filters.command('leaderboard', prefixes=config.PREFIXES) & ~filters.private)
 @admin_only
 async def leaderboard(_, message):
+         user_id = message.from_user.id
+         
          button = [[
                 InlineKeyboardButton('Riddle', callback_data=f'riddlelb:{user_id}'),
                 InlineKeyboardButton('Quiz', callback_data=f'quizelb:{user_id}')

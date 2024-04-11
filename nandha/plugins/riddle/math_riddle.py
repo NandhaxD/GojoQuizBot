@@ -13,7 +13,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from nandha.database.riddle.math_riddle import is_chat_riddle, get_chat_sleep, off_chat, on_chat, save_chat_riddle, clear_chat_riddle, get_chat_riddle
 from nandha.database.points import add_points, get_points
 from nandha.database.chats import add_chat
-from nandha.helpers.func import get_question, taken_time
+from nandha.helpers.func import get_question, taken_time, ask_start_pm
 from nandha import bot
 
 chats_id = []
@@ -41,6 +41,7 @@ async def send_math_riddles(_, message):
                     if text == int(answer):
 
                          user_id = message.from_user.id
+                         return await ask_start_pm(user_id, message)
                          end_time = str(message.date).split()[1]
                          a_time = await taken_time(
                                 start_time=start_time, 

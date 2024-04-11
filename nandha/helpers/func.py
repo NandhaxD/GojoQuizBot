@@ -15,7 +15,7 @@ async def ask_start_pm(user_id: int, message):
     if len(temp_users) == 0:
           users = await get_users()
           temp_users.append(users)
-    if not user_id in temp_users:
+    elif not user_id in temp_users:
          button = [[InlineKeyboardButton('Start PM', user_id=config.BOT_ID)]]
          await message.reply(
              'Start bot in private and then try solving puzzles chat.',

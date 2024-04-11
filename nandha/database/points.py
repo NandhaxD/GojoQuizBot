@@ -3,7 +3,7 @@ from nandha import DATABASE
 
 db = DATABASE['USERS']
 
-async def get_point_user_chat(chat_id: int, user_id: int, module: str, type: str):
+async def get_points(chat_id: int, user_id: int, module: str, type: str):
         filter = {'user_id': user_id}
         user = db.find_one(filter)
         if user:
@@ -12,7 +12,7 @@ async def get_point_user_chat(chat_id: int, user_id: int, module: str, type: str
         else:
             return False
     
-async def edit_point_user_chat(chat_id: int, user_id: int, point: int, module: str, type: str):
+async def edit_points(chat_id: int, user_id: int, point: int, module: str, type: str):
         filter = {'user_id': user_id}
         user = db.find_one(filter)
         if user:
@@ -25,11 +25,11 @@ async def edit_point_user_chat(chat_id: int, user_id: int, point: int, module: s
         else:
             return False
 
-async def add_point_user_chat(chat_id: int, user_id: int, module: str, type: str):
+async def add_points(chat_id: int, user_id: int, module: str, type: str):
         filter = {'user_id': user_id}
         user = db.find_one(filter)
         if user:
-            point = await get_point_user_chat(chat_id, user_id, module, type)
+            point = await get_points(chat_id, user_id, module, type)
             point += 1
             update = {'$set':
                       {

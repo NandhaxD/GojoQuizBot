@@ -103,9 +103,14 @@ async def set_riddle_chat_time(_, query):
            time = int(query.data.split(':')[2])
            await on_chat(chat_id, time)
            riddle = await is_chat_riddle(chat_id) 
-           time = await get_chat_sleep(chat_id)   
+           time = await get_chat_sleep(chat_id) 
+           button = [[
+                   InlineKeyyboardButton('𝗕𝗔𝗖𝗞 ⬅️', callback_data='rmtime')
+
+           ]]
            return await query.message.edit(
-                 f"Successfully set-up your chat math riddle!\n\n<b>Your riddle is</b>: {riddle} 📢\n<b>Your riddle time</b>: {time} ⏰"
+                 f"Successfully set-up your chat math riddle!\n\n<b>Your riddle is</b>: {riddle} 📢\n<b>Your riddle time</b>: {time} ⏰",
+                   reply_markup=InlineKeyboardMarkup(buttton)
            )
                                 
 
@@ -122,9 +127,14 @@ async def off_riddle_chat(_, query):
        else:
             await off_chat(chat_id)
             riddle = await is_chat_riddle(chat_id)
-            time = await get_chat_sleep(chat_id)   
+            time = await get_chat_sleep(chat_id)  
+            button = [[
+                   InlineKeyyboardButton('𝗕𝗔𝗖𝗞 ⬅️', callback_data='rmtime')
+
+           ]]
             return await query.message.edit(
-                 f"Successfully turn offend your chat math riddle!\n\n<b>Your chat riddle is</b>: {riddle} 🛑\n<b>Your chat riddle time</b>: {time} 🛑"
+                 f"Successfully turn offend your chat math riddle!\n\n<b>Your chat riddle is</b>: {riddle} 🛑\n<b>Your chat riddle time</b>: {time} 🛑",
+                    reply_markup=InlineKeyboardMarkup(buttton)
            )
              
 

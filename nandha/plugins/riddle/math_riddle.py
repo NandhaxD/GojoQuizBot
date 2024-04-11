@@ -84,7 +84,7 @@ async def riddle_math(_, query):
                      
          else:
              return await query.message.edit(
-                f"Hello! now you can set-up a time for your chat. Click the button below to do so.\n\n<b>Your chat riddle</b>: **{str(riddle).upper()} 🛑**\n<b>Your chat riddle time</b>:{time} ⏰",
+                f"Hello! now you can set-up a time for your chat. Click the button below to do so.\n\n<b>Your chat riddle</b>: **{str(riddle).upper()} 🛑**\n<b>Your chat riddle time</b>: **{time}** ⏰",
                 reply_markup=InlineKeyboardMarkup(button)
              )
 
@@ -109,7 +109,7 @@ async def set_riddle_chat_time(_, query):
            ]]
            return await query.message.edit(
                  f"Successfully set-up your chat math riddle!\n\n<b>Your riddle is</b>: {riddle} 📢\n<b>Your riddle time</b>: {time} ⏰",
-                   reply_markup=InlineKeyboardMarkup(buttton)
+                   reply_markup=InlineKeyboardMarkup(button)
            )
                                 
 

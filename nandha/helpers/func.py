@@ -8,14 +8,9 @@ from datetime import datetime
 from nandha.database.users import get_users
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
-temp_users = []
-
 async def ask_start_pm(user_id: int, message):
-    global temp_users
-    if len(temp_users) == 0:
-          users = await get_users()
-          temp_users = temp_users + users
-    elif not user_id in temp_users:
+    users = await get_users()    
+    if not user_id in users:
          button = [[InlineKeyboardButton('Start PM', user_id=config.BOT_ID)]]
          await message.reply(
              'Start bot in private and then try solving puzzles chat.',

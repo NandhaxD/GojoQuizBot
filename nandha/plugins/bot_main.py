@@ -27,7 +27,6 @@ async def start(_, message):
        if message.chat.type == enums.ChatType.PRIVATE:
            
            await add_user(user_id)
-           await message.react('⚡️')
            await start_message(name, message)               
        else:
            await add_chat(chat_id)

@@ -58,8 +58,6 @@ async def riddle_math(_, query):
       user_id = query.from_user.id
       chat_id = query.message.chat.id
         
-      await add_chat(chat_id) #storing to the db
-        
       admin_id = int(query.data.split(':')[1])
       if user_id != admin_id:
             return await query.answer("🔐 Sorry this not for you. try you're own to customize.", show_alert=True)

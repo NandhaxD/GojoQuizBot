@@ -41,11 +41,8 @@ async def clear_chat_riddle(chat_id: int):
 async def is_chat_riddle(chat_id: int):
     json = {'chat_id': chat_id}
     riddle = db.find_one(json)
-    if riddle:
-         return riddle['data']['riddle']['math']['switch']        
-    else:
-        return False
-
+    if bool(riddle): return riddle['data']['riddle']['math']['switch']
+    else: return False
 
 async def off_chat(chat_id: int):
     json = {'chat_id': chat_id}

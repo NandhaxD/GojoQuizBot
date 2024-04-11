@@ -21,8 +21,8 @@ async def get_rmath_lb(chat_id: str):
        for user_data in db.find():
             user_id = user_data['user_id']
             data = user_data['data']
-       if 'riddle' in data and 'math' in data['riddle'] and chat_id in data['riddle']['math']:
-             points = data['riddle']['math'][chat_id]
+       if 'riddle' in data and 'math' in data['riddle'] and str(chat_id) in data['riddle']['math']:
+             points = data['riddle']['math'][str(chat_id)]
              user_points[user_id] = points
        sorted_user_points = sorted(user_points.items(), key=lambda x: x[1], reverse=True)
        return sorted_user_points

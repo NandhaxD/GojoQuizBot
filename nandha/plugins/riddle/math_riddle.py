@@ -36,9 +36,13 @@ async def send_math_riddles(_, message):
                  mention = message.from_user.mention if message.from_user else message.sender_chat.title if message.sender_chat else 'UnKown 🗿'
                  
                  try:
-                    text = int(message.text)                
+                    text = int(message.text)
+                 except:
+                      pass
+                 try:
                     if text == int(answer):
-                            
+
+                         user_id = message.from_user.id
                          end_time = str(message.date).split()[1]
                          a_time = await taken_time(
                                 start_time=start_time, 
@@ -50,8 +54,8 @@ async def send_math_riddles(_, message):
                          await message.reply(
                                  f"🥳 Congratulation {mention}, You have answered first **THE MATH PUZZLE** 🥇.\n\n🧠 **Solved Puzzles**: {points}\n🧠 **Taken Time**: {a_time}"
                          ) 
-                 except:
-                      pass
+                 except Exception as e:
+                         return await message.reply(str(e))
                  
 
 

@@ -19,12 +19,12 @@ def admin_only(func):
              user_id= message.from_user.id 
               
              if message.chat.type==enums.ChatType.PRIVATE: 
-                 return await message.edit(
+                 return await message.reply(
                       'This command only work in groups.'
                  )            
              user = await is_stuffs(chat_id, user_id)
              if bool(user[0]) is not True:
-                    return await message.edit(
+                    return await message.reply(
                          "You're not admin."
                     )
              return await func(bot, message)                 

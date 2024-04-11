@@ -5,8 +5,26 @@ import sys
 import os
 
 from datetime import datetime
+from nandha import DATABASE 
 from nandha.database.users import get_users
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+
+
+
+async def get_rmath_lb(chat_id: str):
+       db = DATABASE['USERS']
+       user_riddle_points = {}
+       for user_data in db.find():
+            user_id = user_data['user_id']
+            riddle_points = user_data['data']['riddle']['math'][str(chat_id)]
+            user_riddle_points[user_id] = riddle_points
+           
+       sorted_user_riddle_points = sorted(user_riddle_points.items(), key=lambda x: x[1], reverse=True)
+       return sorted_user_riddle_points
+
+    
+
+
 
 async def ask_start_pm(user_id: int, message):
     users = await get_users()    

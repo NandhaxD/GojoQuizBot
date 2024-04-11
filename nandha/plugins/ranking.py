@@ -22,7 +22,7 @@ async def leaderboard(_, message):
          await add_chat(chat_id)
          return await message.reply(
                 'To Check the top users in chat click below button.',
-                reply_mark=InlineKeyboardMarkup(button)
+                reply_markup=InlineKeyboardMarkup(button)
          )
 
 

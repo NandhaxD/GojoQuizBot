@@ -30,17 +30,20 @@ async def leaderboard(_, message):
 async def riddlelb(_, query):
        user_id = query.from_user.id
        admin_id = int(query.data.split(':')[1])
+
        if user_id != admin_id:
               return await query.answer(
                      'This command is not requested by you', show_alert=True
               )
        else:
+                
             button = [[
              InlineKeyboardButton('Math leaderboard', callback_data=f'rmathlb:{user_id}')
                    
             ]]
+            name = query.message.chat.title
             return await query.message.edit(
-                   'Click here for know the chat top users 🏆',
+                   'Click here for know the chat top users in {name}.🏆',
                    reply_markup=InlineKeyboardMarkup(button)
             )
             
@@ -58,9 +61,9 @@ async def rmath_leaderboard(_, query):
            chat_id = query.message.chat.id
            name = query.message.chat.title
            sorted_user_riddle_points = await get_rmath_lb(chat_id)
-           text = '🏆 Top Users in {name}\n'
+           text = f'🏆 **Top Users in {name}**\n\n'
            for i, (user, points) in enumerate(sorted_user_riddle_points[:10]):
-              text += f'{i+1}. {user}: `{points}`\n'
+              text += f'{i+1}. [{user}](tg://user?id={user_id}): `{points}`\n'
 
            button = [[ InlineKeyboardButton('Back ⬅️', callback_data=f'riddlelb:{user_id}') ]]
            return await query.message.edit(text,

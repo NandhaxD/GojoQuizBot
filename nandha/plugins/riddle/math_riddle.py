@@ -4,16 +4,12 @@ import os
 import requests
 import asyncio
 
-
-
-
-from PIL import Image, ImageDraw, ImageFont
 from pyrogram import filters 
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from nandha.database.riddle.math_riddle import is_chat_riddle, get_chat_sleep, off_chat, on_chat, save_chat_riddle, clear_chat_riddle, get_chat_riddle
 from nandha.database.points import add_points, get_points
 from nandha.database.chats import add_chat
-from nandha.helpers.func import get_question, taken_time, ask_start_pm
+from nandha.helpers.func import get_question, taken_time, ask_start_pm, make_math_riddle
 from nandha import bot
 
 chats_id = []
@@ -143,28 +139,7 @@ async def off_riddle_chat(_, query):
            )
              
 
-async def make_math_riddle():
-     img = Image.open(io.BytesIO(requests.get("https://graph.org/file/9b165baf9de57406d76ca.jpg").content))
-     draw = ImageDraw.Draw(img)
-     url = "https://github.com/JulietaUla/Montserrat/raw/master/fonts/otf/Montserrat-ExtraBold.otf"
-     k = requests.get(url)
-     open(url.split("/")[-1], "wb").write(k.content)
-     font = ImageFont.truetype(url.split("/")[-1], size=100)
-     math = await get_question()
-     question = math['question'] + " = ?"
-     answer = math['answer']
-     tbox = font.getbbox(question)
-     w = tbox[2] - tbox[0]
-     h = tbox[3] - tbox[1]
-     # Set the center of the image as the position for the text
-     width, height = img.size
-     position = (width // 2, height // 2)
-     color = (255, 255, 255)
-     draw.text(((width-w)//2, (height-h)//2), question, font=font, fill=color)
-     img = img.resize((int(width*1.5), int(height*1.5)), Image.LANCZOS)
-     path = "rmaths_quiz.jpg"
-     img.save(path)    
-     return path, answer, question 
+
 
 
         

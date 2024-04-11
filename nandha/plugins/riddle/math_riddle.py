@@ -128,7 +128,7 @@ async def off_riddle_chat(_, query):
             riddle = await is_chat_riddle(chat_id)
             time = await get_chat_sleep(chat_id)  
             button = [[
-                   InlineKeyyboardButton('𝗕𝗔𝗖𝗞 ⬅️', callback_data='rmtime')
+                   InlineKeyboardButton('𝗕𝗔𝗖𝗞 ⬅️', callback_data='rmtime')
 
            ]]
             return await query.message.edit(

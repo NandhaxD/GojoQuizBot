@@ -10,7 +10,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 temp_users = []
 
-async def start_pm(user_id: int, message):
+async def ask_start_pm(user_id: int, message):
     if len(temp_users) == 0:
           users = await get_users()
           temp_users.append(users)

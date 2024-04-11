@@ -37,9 +37,7 @@ async def send_math_riddles(_, message):
                  
                  try:
                     text = int(message.text)
-                 except:
-                      pass
-                 try:
+               
                     if text == int(answer):
 
                          user_id = message.from_user.id
@@ -55,7 +53,7 @@ async def send_math_riddles(_, message):
                                  f"🥳 Congratulation {mention}, You have answered first **THE MATH PUZZLE** 🥇.\n\n🧠 **Solved Puzzles**: {points}\n🧠 **Taken Time**: {a_time}"
                          ) 
                  except Exception as e:
-                         return await message.reply(str(e))
+                         pass
                  
 
 

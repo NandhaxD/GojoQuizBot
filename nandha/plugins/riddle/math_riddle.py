@@ -17,7 +17,7 @@ chats_id = []
 
 
 @bot.on_message(filters.text & ~filters.private, group=-2)
-async def send_math_riddles(_, message):
+async def check_user_rmath_ans(_, message):
         chat_id = message.chat.id       
         
         if not chat_id in chats_id:
@@ -152,7 +152,7 @@ async def send_math_riddle_tochat(chat_id: int):
                await clear_chat_riddle(chat_id)
                return await bot.send_message(
                       chat_id=chat_id,
-                      text='Ok. Stopped Math Riddle. 🔴'
+                      text='Ok. Stopped R-M 🔴'
                                          )
                
           sleep_time = int(await get_chat_sleep(chat_id))

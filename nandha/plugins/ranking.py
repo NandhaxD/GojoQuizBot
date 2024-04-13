@@ -21,7 +21,7 @@ async def leaderboard(_, message):
          ]]
          await add_chat(chat_id)
          return await message.reply(
-                'To Check the top users in chat click below button.',
+                'To Check The Top Users In Chat Click Below Button.',
                 reply_markup=InlineKeyboardMarkup(button)
          )
 
@@ -38,12 +38,12 @@ async def riddlelb(_, query):
        else:
                 
             button = [[
-             InlineKeyboardButton('Math leaderboard', callback_data=f'rmathlb:{user_id}')
+             InlineKeyboardButton('R-M Ranks', callback_data=f'rmathlb:{user_id}')
                    
             ]]
             name = query.message.chat.title
             return await query.message.edit(
-                   f'Click here for know the chat top users in {name}.🏆',
+                   f'Click Here For Know The Chat Top Users in {name}.🏆',
                    reply_markup=InlineKeyboardMarkup(button)
             )
             
@@ -61,7 +61,7 @@ async def rmath_leaderboard(_, query):
            chat_id = query.message.chat.id
            name = query.message.chat.title
            sorted_user_riddle_points = await get_rmath_lb(chat_id)
-           text = f'🏆 **Top Users in {name}**\n\n'
+           text = f'🏆 **Top R-M Users in {name}** 👥\n\n'
            for i, (user, points) in enumerate(sorted_user_riddle_points[:10]):
               text += f'{i+1}. [{user}](tg://user?id={user}): `{points}`\n'
 

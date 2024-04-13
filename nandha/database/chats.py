@@ -16,7 +16,7 @@ async def add_chat(chat_id: int):
         'riddle': {
             'math': {'switch': 'off', 'sleep': False, 'question': False, 'answer': False, 'msg_time': False}
         },
-        'quize': {
+        'quiz': {
             'math': {'switch': 'off', 'sleep': False},
             'phy': {'switch': 'off', 'sleep': False},
             'chem': {'switch': 'off', 'sleep': False},

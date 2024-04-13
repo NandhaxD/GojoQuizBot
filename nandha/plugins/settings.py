@@ -18,7 +18,7 @@ async def send_settings(_, message):
        button = [[
       InlineKeyboardButton(text='Riddle', callback_data=f'cb_riddle:{user_id}')
        ],[
-      InlineKeyboardButton(text='Quize', callback_data=f'cb_quize:{user_id}')
+      InlineKeyboardButton(text='Quiz', callback_data=f'cb_quize:{user_id}')
               
 ]]
        return await message.reply(
@@ -36,7 +36,7 @@ async def cb_settings(_, query):
         button = [[
       InlineKeyboardButton(text='Riddle', callback_data=f'cb_riddle:{user_id}')
        ],[
-      InlineKeyboardButton(text='Quize', callback_data=f'cb_quize:{user_id}')
+      InlineKeyboardButton(text='Quiz', callback_data=f'cb_quize:{user_id}')
               
 ]]
         return await query.message.edit(
@@ -45,7 +45,7 @@ async def cb_settings(_, query):
        
 
                                   
-@bot.on_callback_query(filters.regex('^cb_quize'))
+@bot.on_callback_query(filters.regex('^cb_quiz'))
 async def customize_quize(_, query):
       user_id = query.from_user.id
       admin_id = int(query.data.split(':')[1])
@@ -53,11 +53,11 @@ async def customize_quize(_, query):
             return await query.answer("🔐 Sorry this not for you. try you're own to customize.", show_alert=True)
       else:  
         button = [[
-              InlineKeyboardButton(text='Math Quize', callback_data=f'math:{user_id}'),
-              InlineKeyboardButton(text='Physics Quize', callback_data=f'physics:{user_id}'),
+              InlineKeyboardButton(text='Math Quiz', callback_data=f'math:{user_id}'),
+              InlineKeyboardButton(text='Physics Quiz', callback_data=f'physics:{user_id}'),
         ],[
-              InlineKeyboardButton(text='Chemistry Quize', callback_data=f'chemistry:{user_id}'),
-              InlineKeyboardButton(text='Zoolagy Quize', callback_data=f'zoolagy:{user_id}')
+              InlineKeyboardButton(text='Chemistry Quiz', callback_data=f'chemistry:{user_id}'),
+              InlineKeyboardButton(text='Zoology Quiz', callback_data=f'zoolagy:{user_id}')
         ] , [
                     InlineKeyboardButton(text='𝗕𝗔𝗖𝗞 ⬅️', callback_data=f'settings:{user_id}')
               
@@ -65,7 +65,7 @@ async def customize_quize(_, query):
         
 ]]
         return await query.message.edit(
-              "Here is a list of quizzes for your chat ✨. You can set up a maximum of two quizzes in one chat group. Click on the quize type button for quick setup."
+              "Here Is A List Of Quizzes For Your Chat ✨. You Can Set Up A Maximum Of Two Quizzes In One Chat Group. CLick On The Quize Type Button For Quick Setup."
         , reply_markup=InlineKeyboardMarkup(button))
        
 

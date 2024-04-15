@@ -26,7 +26,6 @@ if bool(os.getenv('ENV')) == True:
      API_ID = int(os.getenv('API_ID'))
      DB_URL = str(os.getenv('DB_URL'))
      API_HASH = str(os.getenv('API_HASH'))
-     BOT_ID = int(os.getenv('BOT_ID'))
 else:
     API_ID = 1234567
     API_HASH = '<youre hash>' # my.telegram.org

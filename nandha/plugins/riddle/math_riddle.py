@@ -9,7 +9,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from nandha.database.riddle.math_riddle import is_chat_riddle, get_chat_sleep, off_chat, on_chat, save_chat_riddle, clear_chat_riddle, get_chat_riddle
 from nandha.database.points import add_points, get_points
 from nandha.database.chats import add_chat
-from nandha.helpers.func import get_question, taken_time, ask_start_pm, make_math_riddle
+from nandha.helpers.func import get_question, taken_time, ask_start_pm, make_math_riddle, get_anime_gif
 from nandha import bot
 
 chats_id = []
@@ -47,8 +47,11 @@ async def check_user_rmath_ans(_, message):
                          await clear_chat_riddle(chat_id)
                          await add_points(chat_id, user_id, 'riddle', 'math')
                          points = await get_points(chat_id, user_id, 'riddle', 'math')
-                         await message.reply(
-                                 f"🥳 Congratulation {mention}, You have answered first 🥇 **THE MATH RIDDLE** 🥇.\n\n🧠 **Solved Puzzles**: {points}\n🧠 **Taken Time**: {a_time}"
+                         key = random.choice(('happy', 'smile', 'handshake'))
+                         url = await get_anime_gif(key)
+                            
+                         await message.reply_animation(animation=url,
+                                 caption=f"🥳 Congratulation {mention}, You have answered first 🥇 **THE MATH RIDDLE** 🥇.\n\n🧠 **Solved Puzzles**: {points}\n🧠 **Taken Time**: {a_time}"
                          ) 
                  except Exception as e:
                          pass
@@ -129,13 +132,8 @@ async def off_riddle_chat(_, query):
             await off_chat(chat_id)
             riddle = await is_chat_riddle(chat_id)
             time = await get_chat_sleep(chat_id)  
-            button = [[
-                   InlineKeyboardButton('Settings ⬅️', callback_data=f'settings:{user_id}')
-
-           ]]
             return await query.message.edit(
                  f"Successfully turned off your chat math riddle!\n\n<b>Your chat riddle is</b>: {riddle} 🛑\n<b>Your chat riddle time</b>: {time} 🛑",
-                    reply_markup=InlineKeyboardMarkup(button)
            )
              
 

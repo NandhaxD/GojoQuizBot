@@ -186,7 +186,7 @@ async def send_math_riddle_tochat(chat_id: int):
                
                
                
-@bot.on_message(filters.all & ~filters.bot & ~filters.private, group=2)
+@bot.on_message(filters.command('kk', prefixes="") & ~filters.bot & ~filters.private, group=2)
 async def sends_math_riddle(_, message):
       chat_id = message.chat.id
       if not chat_id in chats_id:

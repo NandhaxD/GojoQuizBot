@@ -48,7 +48,7 @@ async def check_user_rmath_ans(_, message):
                          await clear_chat_riddle(chat_id)
                          await add_points(chat_id, user_id, 'riddle', 'math')
                          points = await get_points(chat_id, user_id, 'riddle', 'math')
-                         key = random.choice(('happy', 'smile', 'handshake'))
+                         key = 'handshake'
                          url = await get_anime_gif(key)
                             
                          await message.reply_animation(animation=url,

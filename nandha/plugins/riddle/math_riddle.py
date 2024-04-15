@@ -71,13 +71,13 @@ async def riddle_math(_, query):
            InlineKeyboardButton(text='3 Minutes', callback_data=f'rmtime:{user_id}:90'),],
                    [InlineKeyboardButton(text='10 Minutes', callback_data=f'rmtime:{user_id}:600'),
                     InlineKeyboardButton(text='30 Monutes', callback_data=f'rmtime:{user_id}:1800'), ],
-                   [ InlineKeyboardButton(text='𝗕𝗔𝗖𝗞 ⬅️', callback_data=f'cb_riddle:{user_id}')
+                   [ InlineKeyboardButton(text='Back ⬅️', callback_data=f'cb_riddle:{user_id}')
            
 ]]
             
          off_button = [[
-               InlineKeyboardButton(text='𝐎𝐅𝐅 🛑', callback_data=f'rmoff:{user_id}'),
-               InlineKeyboardButton(text='𝗕𝗔𝗖𝗞 ⬅️', callback_data=f'cb_riddle:{user_id}')
+               InlineKeyboardButton(text='OFF 🛑', callback_data=f'rmoff:{user_id}'),
+               InlineKeyboardButton(text='Back ⬅️', callback_data=f'cb_riddle:{user_id}')
  ]]
          if riddle == 'on':
                return await query.message.edit(
@@ -106,7 +106,7 @@ async def set_riddle_chat_time(_, query):
            riddle = await is_chat_riddle(chat_id) 
            time = await get_chat_sleep(chat_id) 
            button = [[
-                   InlineKeyboardButton('Settings ⬅️', callback_data=f'settings:{user_id}')
+                   InlineKeyboardButton('Back ⬅️', callback_data=f'rmath:{user_id}')
 
            ]]
            return await query.message.edit(
@@ -149,11 +149,11 @@ async def send_math_riddle_tochat(chat_id: int):
                
           riddle = await is_chat_riddle(chat_id)               
           if riddle == 'off':
-               await clear_chat_riddle(chat_id)
-               return await bot.send_message(
+               await off_chat(chat_id)
+               await bot.send_message(
                       chat_id=chat_id,
-                      text='Ok. Stopped R-M 🔴'
-                                         )
+                      text='Ok. Stopped R-M 🔴')
+               break                       
                
           sleep_time = int(await get_chat_sleep(chat_id))
                

@@ -17,7 +17,7 @@ chats_id = []
 
 
 
-@bot.on_message(filters.text & ~filters.private, group=-2, ~filters.bot)
+@bot.on_message(filters.text & ~filters.private & ~filters.bot, group=-2 )
 async def check_user_rmath_ans(_, message):
         chat_id = message.chat.id       
         

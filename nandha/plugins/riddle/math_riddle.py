@@ -130,6 +130,7 @@ async def off_riddle_chat(_, query):
              return await query.answer("🔐 Sorry this not for you. try you're own to customize.", show_alert=True)
        else:
             await off_chat(chat_id)
+            await clear_chat_riddle(chat_id)
             riddle = await is_chat_riddle(chat_id)
             time = await get_chat_sleep(chat_id)  
             return await query.message.edit(

@@ -135,7 +135,7 @@ async def make_math_riddle(chat_id: int):
      color = (255, 255, 255)
      draw.text(((width-w)//2, (height-h)//2), question, font=font, fill=color)
      img = img.resize((int(width*1.5), int(height*1.5)), Image.LANCZOS)
-     path = f"{chat_id}.jpg"
+     path = f"{chat_id}rm.jpg"
      img.save(path)    
      return path, answer, question 
 

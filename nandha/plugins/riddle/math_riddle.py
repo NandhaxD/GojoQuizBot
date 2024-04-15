@@ -2,6 +2,7 @@ import time
 import io
 import os
 import requests
+import random
 import asyncio
 
 from pyrogram import filters 
@@ -16,7 +17,7 @@ chats_id = []
 
 
 
-@bot.on_message(filters.text & ~filters.private, group=-2)
+@bot.on_message(filters.text & ~filters.private, group=-2, ~filters.bot)
 async def check_user_rmath_ans(_, message):
         chat_id = message.chat.id       
         

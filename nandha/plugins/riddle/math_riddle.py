@@ -149,6 +149,8 @@ async def send_math_riddle_tochat(chat_id: int):
           riddle = await is_chat_riddle(chat_id)               
           if riddle == 'off':
                await off_chat(chat_id)
+               if chat_id in chats_id:
+                       chats_id.remove(chat_id)
                await bot.send_message(
                       chat_id=chat_id,
                       text='Ok. Stopped R-M 🔴')
@@ -186,7 +188,7 @@ async def send_math_riddle_tochat(chat_id: int):
                
                
                
-@bot.on_message(filters.command('kk', prefixes="") & ~filters.bot & ~filters.private, group=2)
+@bot.on_message(filters.all & ~filters.bot & ~filters.private, group=2)
 async def sends_math_riddle(_, message):
       chat_id = message.chat.id
       if not chat_id in chats_id:
@@ -195,11 +197,6 @@ async def sends_math_riddle(_, message):
                   chats_id.append(chat_id)
                   await clear_chat_riddle(chat_id)          
                   await send_math_riddle_tochat(chat_id)
-            elif riddle == 'off':
-                 await off_chat(chat_id)
-                 if chat_id in chats_id:
-                        chats_id.remove(chat_id)    
-                        return 
       else:
          return 
       

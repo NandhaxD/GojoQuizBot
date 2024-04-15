@@ -116,7 +116,7 @@ async def get_question():
 
 
 
-async def make_math_riddle():
+async def make_math_riddle(chat_id: int):
      img = Image.open(io.BytesIO(requests.get(random.choice(config.RIDDLE_MATH_BG)).content))
      draw = ImageDraw.Draw(img)
      url = "https://github.com/JulietaUla/Montserrat/raw/master/fonts/otf/Montserrat-ExtraBold.otf"
@@ -135,7 +135,7 @@ async def make_math_riddle():
      color = (255, 255, 255)
      draw.text(((width-w)//2, (height-h)//2), question, font=font, fill=color)
      img = img.resize((int(width*1.5), int(height*1.5)), Image.LANCZOS)
-     path = "rmaths_quiz.jpg"
+     path = f"{chat_id}.jpg"
      img.save(path)    
      return path, answer, question 
 

@@ -77,7 +77,7 @@ async def riddle_math(_, query):
             
          off_button = [[
                InlineKeyboardButton(text='OFF 🛑', callback_data=f'rmoff:{user_id}'),
-               InlineKeyboardButton(text='Back ⬅️', callback_data=f'cb_riddle:{user_id}')
+               InlineKeyboardButton(text='Back ⬅️', callback_data=f'rmath:{user_id}')
  ]]
          if riddle == 'on':
                return await query.message.edit(

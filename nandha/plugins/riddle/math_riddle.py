@@ -160,6 +160,7 @@ async def send_math_riddle_tochat(chat_id: int):
           question = riddle[2]
           answer = riddle[1]
           photo = riddle[0]   
+               
           msg = await bot.send_photo(
                 chat_id=chat_id,
                 photo=photo, 
@@ -190,13 +191,14 @@ async def sends_math_riddle(_, message):
       if not chat_id in chats_id:
             riddle = await is_chat_riddle(chat_id)
             if riddle == 'on':
-                  await clear_chat_riddle(chat_id)
                   chats_id.append(chat_id)
+                  await clear_chat_riddle(chat_id)          
                   await send_math_riddle_tochat(chat_id)
             elif riddle == 'off':
                  await off_chat(chat_id)
                  if chat_id in chats_id:
-                        chats_id.remove(chat_id)                                        
+                        chats_id.remove(chat_id)    
+                        return 
       else:
          return 
       

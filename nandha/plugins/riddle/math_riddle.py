@@ -156,7 +156,7 @@ async def send_math_riddle_tochat(chat_id: int):
                
           sleep_time = int(await get_chat_sleep(chat_id))
                
-          riddle = await make_math_riddle()
+          riddle = await make_math_riddle(chat_id)
 
           question = riddle[2]
           answer = riddle[1]

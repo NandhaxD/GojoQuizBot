@@ -32,8 +32,10 @@ else:
     API_HASH = '<youre hash>' # my.telegram.org
     BOT_TOKEN = '<youre bot token>' # my.telegram.org
     DB_URL = '<db url>' #mongodb.com
-    BOT_ID = 6384531312
-  
-     
+
+
+
+
+BOT_ID = int(BOT_TOKEN.split(':')[0])
 
 

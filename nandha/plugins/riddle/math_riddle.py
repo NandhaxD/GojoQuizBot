@@ -2,7 +2,6 @@ import time
 import io
 import os
 import requests
-import random
 import asyncio
 
 from pyrogram import filters 

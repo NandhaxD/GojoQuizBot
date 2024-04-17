@@ -37,8 +37,8 @@ async def riddletop(_, query):
        else:
                 
             button = [[
-             InlineKeyboardButton('R-M Group Users 👥', callback_data=f'rmathtop:{user_id}'),
-             InlineKeyboardButton('R-M Global Users 👥', callback_data=f'rmathgtop:{user_id}')
+             InlineKeyboardButton('Group R-M 👥', callback_data=f'rmathtop:{user_id}'),
+             InlineKeyboardButton('Global R-M 👥', callback_data=f'rmathgtop:{user_id}')
                    
             ]]
             name = query.message.chat.title
@@ -80,9 +80,7 @@ async def rmath_gtop(_, query):
                      'This command is not requested by you', show_alert=True
               )
        else:
-           chat_id = query.message.chat.id
-           sorted_user_riddle_points = await get_rmath_lb(chat_id)
-           text = f'🏆 **Global Top R-M Users** 👥\n\n'
+           text = f'🏆 **Top Global Riddle Math Users** 👥\n\n'
            sorted_leaderboard = await get_rmath_gtop()
            for i, (user_id, point) in enumerate(sorted_leaderboard.items()):
                   if i >= 10:

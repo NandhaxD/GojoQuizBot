@@ -1,6 +1,7 @@
 import time
 import io
 import os
+import config
 import requests
 import asyncio
 
@@ -9,7 +10,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from nandha.database.riddle.math_riddle import is_chat_riddle, get_chat_sleep, off_chat, on_chat, save_chat_riddle, clear_chat_riddle, get_chat_riddle
 from nandha.database.points import add_points, get_points
 from nandha.database.chats import add_chat
-from nandha.helpers.func import get_question, taken_time, ask_start_pm, make_math_riddle, get_anime_gif
+from nandha.helpers.func import get_question, taken_time, ask_start_pm, make_math_riddle
 from nandha import bot
 
 chats_id = []
@@ -47,10 +48,8 @@ async def check_user_rmath_ans(_, message):
                          await clear_chat_riddle(chat_id)
                          await add_points(chat_id, user_id, 'riddle', 'math')
                          points = await get_points(chat_id, user_id, 'riddle', 'math')
-                         key = 'handshake'
-                         url = await get_anime_gif(key)
-                            
-                         await message.reply_animation(animation=url,
+                         
+                         await message.reply_animation(animation=config.RIDDLE_ANSWER_GIF,
                                  caption=f"🥳 Congratulation {mention}, You have answered first 🥇 **THE MATH RIDDLE** 🥇.\n\n🧠 **Solved Puzzles**: {points}\n🧠 **Taken Time**: {a_time}"
                          ) 
                  except Exception as e:

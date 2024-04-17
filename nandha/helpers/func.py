@@ -49,7 +49,7 @@ async def ask_start_pm(user_id: int, message):
     if not user_id in users:
          button = [[InlineKeyboardButton('Start PM', user_id=config.BOT_ID)]]
          await message.reply(
-             'Start bot in private and then try solving puzzles chat.',
+             f'⛔ Hello, {message.from_user.mention} start the bot in private and start answering in {message.chat.title} 💫',
              reply_markup=InlineKeyboardMarkup(button))
          return False
     else:

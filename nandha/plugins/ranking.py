@@ -9,7 +9,7 @@ from nandha import bot
 
 
 
-@bot.on_message(filters.command('top', prefixes=config.PREFIXES) & ~filters.private)
+@bot.on_message(filters.command('tops', prefixes=config.PREFIXES) & ~filters.private)
 async def leaderboard(_, message):
          user_id = message.from_user.id
          chat_id = message.chat.id
@@ -60,7 +60,7 @@ async def rmath_top(_, query):
        else:
            chat_id = query.message.chat.id
            name = query.message.chat.title
-           sorted_user_riddle_points = await get_rmath_lb(chat_id)
+           sorted_user_riddle_points = await get_rmath_top(chat_id)
            text = f'🏆 **Top R-M Users in {name}** 👥\n\n'
            for i, (user, points) in enumerate(sorted_user_riddle_points[:10]):
               text += f'{i+1}. [{user}](tg://user?id={user}): `{points}`\n'
@@ -85,7 +85,7 @@ async def rmath_gtop(_, query):
            for i, (user_id, point) in enumerate(sorted_leaderboard.items()):
                   if i >= 10:
                      break
-                  text += f'{i+1}, [{user_id}](tg://user?id={user_id}): {point}'
+                  text += f'{i+1}, [{user_id}](tg://user?id={user_id}): {point}\n'
 
            button = [[ InlineKeyboardButton('Back ⬅️', callback_data=f'riddletop:{user_id}') ]]
            return await query.message.edit(text,

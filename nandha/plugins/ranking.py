@@ -15,8 +15,8 @@ async def leaderboard(_, message):
          chat_id = message.chat.id
          
          button = [[
-                InlineKeyboardButton('Riddle', callback_data=f'riddletop:{user_id}'),
-                InlineKeyboardButton('Quiz', callback_data=f'quiztop:{user_id}')
+                InlineKeyboardButton('🌟 Riddle', callback_data=f'riddletop:{user_id}'),
+                InlineKeyboardButton('💫 Quiz', callback_data=f'quiztop:{user_id}')
          ]]
          await add_chat(chat_id)
          return await message.reply(
@@ -37,8 +37,8 @@ async def riddletop(_, query):
        else:
                 
             button = [[
-             InlineKeyboardButton('Group R-M 👥', callback_data=f'rmathtop:{user_id}'),
-             InlineKeyboardButton('Global R-M 👥', callback_data=f'rmathgtop:{user_id}')
+             InlineKeyboardButton('Group R-M 👥', callback_data=f'rmathtop:{admin_id}'),
+             InlineKeyboardButton('Global R-M 👥', callback_data=f'rmathgtop:{admin_id}')
                    
             ]]
             name = query.message.chat.title
@@ -65,7 +65,7 @@ async def rmath_top(_, query):
            for i, (user, points) in enumerate(sorted_user_riddle_points[:10]):
               text += f'{i+1}. [{user}](tg://user?id={user}): `{points}`\n'
 
-           button = [[ InlineKeyboardButton('Back ⬅️', callback_data=f'riddlelb:{user_id}') ]]
+           button = [[ InlineKeyboardButton('Back ⬅️', callback_data=f'riddletop:{admin_id}') ]]
            return await query.message.edit(text,
                                     reply_markup=InlineKeyboardMarkup(button)
                                           )
@@ -80,14 +80,14 @@ async def rmath_gtop(_, query):
                      'This command is not requested by you', show_alert=True
               )
        else:
-           text = f'🏆 **Top Global Riddle Math Users** 👥\n\n'
+           text = f'🏆 **Global Top R-Math Users** 👥\n\n'
            sorted_leaderboard = await get_rmath_gtop()
            for i, (user_id, point) in enumerate(sorted_leaderboard.items()):
                   if i >= 10:
                      break
                   text += f'{i+1}, [{user_id}](tg://user?id={user_id}): {point}\n'
 
-           button = [[ InlineKeyboardButton('Back ⬅️', callback_data=f'riddletop:{user_id}') ]]
+           button = [[ InlineKeyboardButton('Back ⬅️', callback_data=f'riddletop:{admin_id}') ]]
            return await query.message.edit(text,
                                     reply_markup=InlineKeyboardMarkup(button)
                                           )

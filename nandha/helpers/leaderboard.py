@@ -9,21 +9,14 @@ async def get_rmath_gtop():
      for user in all_users:
          if 'data' in user and 'riddle' in user['data'] and 'math' in user['data']['riddle']:
               for chat_id, points in user['data']['riddle']['math'].items():
-                   
-                        name = user['data']['first_name'] if user['data'] and user['data']['first_name'] else None
-                        leaderboard[user['user_id']] += points
-                        pre_points = leaderboard[user['user_id']]
-                        leaderboard[user['user_id']] = {'first_name': name, 'points': pre_points}
-                        
-                   
+                 name = user['data']['first_name'] if user['data'] and user['data']['first_name'] else None
+                 leaderboard[user['user_id']] += points
+                 pre_points = leaderboard[user['user_id']]
+                 leaderboard[user['user_id']] = {'first_name': name, 'points': pre_points}             
      # Sort the leaderboard by points
      sorted_leaderboard = dict(sorted(leaderboard.items(), key=lambda x: x['points'], reverse=True))
      return sorted_leaderboard
   
-     
-
-
-
 async def get_rmath_top(chat_id: str):
        db = DATABASE['USERS']
        user_points = {}

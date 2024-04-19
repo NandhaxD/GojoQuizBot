@@ -63,10 +63,10 @@ async def rmath_top(_, query):
            sorted_user_riddle_points = await get_rmath_group(chat_id)
            text = f'🏆 **Top R-M Users in {name}** 👥\n\n'
            for i, (user, points) in enumerate(sorted_user_riddle_points[:10]):
-              if str(user).isdigit():                       
+              if bool(int(user)):                       
                  text += f'{i+1}. **[{user}](tg://user?id={user})**: `{points}`\n'
               else:
-                  text += f'{i+1}, **{user_id}**: `{points}`\n'
+                 text += f'{i+1}, **{user_id}**: `{points}`\n'
                        
 
            button = [[ InlineKeyboardButton('Back ⬅️', callback_data=f'riddletop:{admin_id}') ]]
@@ -89,8 +89,8 @@ async def rmath_gtop(_, query):
            for i, (user_id, points) in enumerate(sorted_leaderboard.items()):
                   if i >= 10:
                      break
-                  if str(user_id).isdigit():
-                       text += f'{i+1}, **[{user_id}](tg://user?id={user_id})**: {point}\n'
+                  if bool(int(user_id)):
+                       text += f'{i+1}, **[{user_id}](tg://user?id={user_id})**: {points}\n'
                   else:
                        text += f'{i+1}, **{user_id}**: `{points}`\n'
                        

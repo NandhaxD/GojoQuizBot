@@ -47,7 +47,7 @@ async def get_rmath_lb(chat_id: str):
 async def ask_start_pm(user_id: int, message):
     users = await get_users()    
     if not user_id in users:
-         button = [[InlineKeyboardButton('PM ME!', url='gojoquizbot.t.me/start=start')]]
+         button = [[InlineKeyboardButton('PM ME!', url='gojoquizbot.t.me?start=start')]]
          await message.reply(
              f'⛔ Hello, {message.from_user.mention} start the bot in private and then start answering in {message.chat.title} 💫',
              reply_markup=InlineKeyboardMarkup(button))

@@ -1,4 +1,5 @@
 import asyncio
+from nandha import bot
 
 async def main():
     await bot.start()

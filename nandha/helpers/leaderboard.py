@@ -33,7 +33,7 @@ async def get_rmath_top(chat_id: str):
             if 'riddle' in data and 'math' in data['riddle'] and str(chat_id) in data['riddle']['math']:
                   points = data['riddle']['math'][str(chat_id)]
                   name = data['first_name'] if data and data['first_name'] else None
-                  user_points[user_id] = {'first_name': name, 'points': pre_points}
+                  user_points[user_id] = {'first_name': name, 'points': points}
                   
        sorted_user_points = sorted(user_points.items(), key=lambda x: x['points'], reverse=True)
        return sorted_user_points

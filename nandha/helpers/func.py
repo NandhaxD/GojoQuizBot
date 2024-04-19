@@ -30,6 +30,10 @@ async def get_anime_gif(key):
 
 
 
+async def change_text(text):
+       return "Enabled" if text == True else "Disabled" if text == False else "None"
+              
+
 async def get_rmath_lb(chat_id: str):
        db = DATABASE['USERS']
        user_points = {}

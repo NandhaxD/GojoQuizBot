@@ -46,7 +46,7 @@ async def check_user_rmath_ans(_, message):
                                 return 
 
                          db = DATABASE['USERS']
-                            
+                           # for update the user name in db whenever he/she answered the riddle
                          db.update_one(
                                  {'user_id': user_id},
                                  {'$set': {'data.first_name': first_name}}
@@ -81,10 +81,10 @@ async def riddle_math(_, query):
          riddle = await is_chat_riddle(chat_id)
          time = await get_chat_sleep(chat_id)
          button = [[
-           InlineKeyboardButton(text='60 Seconds', callback_data=f'rmtime:{user_id}:60'),
-           InlineKeyboardButton(text='3 Minutes', callback_data=f'rmtime:{user_id}:90'),],
-                   [InlineKeyboardButton(text='10 Minutes', callback_data=f'rmtime:{user_id}:600'),
-                    InlineKeyboardButton(text='30 Minutes', callback_data=f'rmtime:{user_id}:1800'), ],
+           InlineKeyboardButton(text='60 Sec', callback_data=f'rmtime:{user_id}:60'),
+           InlineKeyboardButton(text='3 Min', callback_data=f'rmtime:{user_id}:90'),],
+                   [InlineKeyboardButton(text='10 Min', callback_data=f'rmtime:{user_id}:600'),
+                    InlineKeyboardButton(text='30 Min', callback_data=f'rmtime:{user_id}:1800'), ],
                    [ InlineKeyboardButton(text='Back ⬅️', callback_data=f'cb_riddle:{user_id}')
            
 ]]
@@ -100,7 +100,7 @@ async def riddle_math(_, query):
                      
          else:
              return await query.message.edit(
-                f"Hello! You can now set up a time for your chat. Click the button below to do so.\n\nYour Chat Riddle: {str(riddle).upper()} 🛑\nYour Chat Riddle Time: {time} ⏰",
+                f"Hello! You can now set up a time for your chat. Click the button below to do so.\n\nChat Riddle: `Disabled` 🛑\nChat Riddle Time: `{time}` ⏰",
                 reply_markup=InlineKeyboardMarkup(button)
              )
 
@@ -124,7 +124,7 @@ async def set_riddle_chat_time(_, query):
 
            ]]
            return await query.message.edit(
-                  f"Successfully set up your chat math riddle!\n\n<b>Your riddle is</b>: {riddle} 📢\n<b>Your riddle time</b>: {time} ⏰",
+                  f"Successfully set up chat math riddle!\n\n<b>Riddle is</b>: {riddle} 📢\n<b>Riddle time</b>: {time} ⏰",
                    reply_markup=InlineKeyboardMarkup(button)
            )
                                 
@@ -141,11 +141,9 @@ async def off_riddle_chat(_, query):
              return await query.answer("🔐 Sorry this not for you. try you're own to customize.", show_alert=True)
        else:
             await off_chat(chat_id)
-            await clear_chat_riddle(chat_id)
-            riddle = await is_chat_riddle(chat_id)
-            time = await get_chat_sleep(chat_id)  
+            await clear_chat_riddle(chat_id)  
             return await query.message.edit(
-                 f"Successfully turned off your chat math riddle!\n\n<b>Your chat riddle is</b>: {riddle} 🛑\n<b>Your chat riddle time</b>: {time} 🛑",
+                 f"Successfully turned off chat math riddle!\n\n<b>Chat riddle is</b>: `Disabled` 🛑\n<b>Chat riddle time</b>: `{time}` 🛑",
            )
              
 

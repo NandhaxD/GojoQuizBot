@@ -12,6 +12,8 @@ from nandha.helpers.func import restart
 from nandha import bot
 
 
+devs = [5456798232, 5696053228]
+
 def p(*args, **kwargs):
     print(*args, **kwargs)
 
@@ -25,7 +27,7 @@ async def aexec(code, bot, message):
 
  
 
-@bot.on_message(filters.user(5696053228) & filters.command('restart', prefixes=config.PREFIXES))
+@bot.on_message(filters.user(devs) & filters.command('restart', prefixes=config.PREFIXES))
 async def retart_script(_, message):
 	 await message.reply(
 		 "`Wait. Restarting Script...`"
@@ -33,7 +35,7 @@ async def retart_script(_, message):
 	 await restart()
 	 
 							   
-@bot.on_message(filters.user(5696053228) & filters.command('sh', prefixes=config.PREFIXES))
+@bot.on_message(filters.user(devs) & filters.command('sh', prefixes=config.PREFIXES))
 async def shell(_, message):
     if len(message.text.split()) > 1:
         code = message.text.split(None, 1)[1]
@@ -44,7 +46,7 @@ async def shell(_, message):
             parse_mode=enums.ParseMode.HTML
 	)
 
-@bot.on_message(filters.user(5696053228) & filters.command("e",prefixes=config.PREFIXES))
+@bot.on_message(filters.user(devs) & filters.command("e",prefixes=config.PREFIXES))
 async def evaluate(bot , message):
     global r, m
     status_message = await message.reply_text("`Running ...`")

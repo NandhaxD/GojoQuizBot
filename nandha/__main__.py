@@ -1,4 +1,4 @@
-import asyncio
+
 from nandha import bot
 
 async def main():
@@ -10,4 +10,4 @@ async def main():
     bot_id = info.id
 
 if __name__ == "__main__":
-    app.loop.run_until_complete(main())
+    bot.loop.run_until_complete(main())

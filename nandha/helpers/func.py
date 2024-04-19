@@ -9,7 +9,7 @@ import io
 from datetime import datetime
 from PIL import Image, ImageDraw, ImageFont
 
-from nandha import DATABASE 
+from nandha import DATABASE, botusername
 from nandha.database.users import get_users
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
@@ -47,7 +47,7 @@ async def get_rmath_lb(chat_id: str):
 async def ask_start_pm(user_id: int, message):
     users = await get_users()    
     if not user_id in users:
-         button = [[InlineKeyboardButton('Start PM', user_id=config.BOT_ID)]]
+         button = [[InlineKeyboardButton('PM ME!', url=f'{botusername}.t.me/start=start')]]
          await message.reply(
              f'⛔ Hello, {message.from_user.mention} start the bot in private and start answering in {message.chat.title} 💫',
              reply_markup=InlineKeyboardMarkup(button))

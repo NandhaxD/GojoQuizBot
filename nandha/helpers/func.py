@@ -31,7 +31,7 @@ async def get_anime_gif(key):
 
 
 async def change_text(text):
-       return "Enabled" if text == True else "Disabled" if text == False else "None"
+       return "Enabled" if text == True else "Disabled" if text == False else text
               
 
 async def get_rmath_lb(chat_id: str):

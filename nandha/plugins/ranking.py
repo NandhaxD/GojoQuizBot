@@ -63,7 +63,7 @@ async def rmath_top(_, query):
            sorted_user_riddle_points = await get_rmath_group(chat_id)
            text = f'🏆 **Top R-M Users in {name}** 👥\n\n'
            for i, (user, points) in enumerate(sorted_user_riddle_points[:10]):
-              if user.is_digit():                       
+              if user.isdigit():                       
                  text += f'{i+1}. **[{user}](tg://user?id={user})**: `{points}`\n'
               else:
                   text += f'{i+1}, **{user_id}**: `{point}`\n'
@@ -89,7 +89,7 @@ async def rmath_gtop(_, query):
            for i, (user_id, point) in enumerate(sorted_leaderboard.items()):
                   if i >= 10:
                      break
-                  if user_id.is_digit():
+                  if user_id.isdigit():
                        text += f'{i+1}, **[{user_id}](tg://user?id={user_id})**: {point}\n'
                   else:
                        text += f'{i+1}, **{user_id}**: `{point}`\n'

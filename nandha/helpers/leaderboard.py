@@ -12,9 +12,6 @@ async def get_rmath_gtop():
                    try:
                         name = user['data']['first_name']
                         leaderboard[user['user_id']] += points
-                        pre_point = leaderboard[user['user_id']]
-                        leaderboard[user['user_id']] = name, pre_point
-                        
                    except:    
                         leaderboard[user['user_id']] += points
 
@@ -36,7 +33,7 @@ async def get_rmath_top(chat_id: str):
                   points = data['riddle']['math'][str(chat_id)]
                   try:
                       name = data['first_name']
-                      user_points[user_id] = (name, points)
+                      user_points[user_id] = points
                   except:
                       user_points[user_id] = points
        sorted_user_points = sorted(user_points.items(), key=lambda x: x[1], reverse=True)

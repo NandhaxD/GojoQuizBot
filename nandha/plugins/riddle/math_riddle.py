@@ -11,7 +11,7 @@ from nandha.database.riddle.math_riddle import is_chat_riddle, get_chat_sleep, o
 from nandha.database.points import add_points, get_points
 from nandha.database.chats import add_chat
 from nandha.helpers.func import get_question, taken_time, ask_start_pm, make_math_riddle
-from nandha import bot
+from nandha import bot, DATABASE
 
 chats_id = []
 
@@ -30,16 +30,28 @@ async def check_user_rmath_ans(_, message):
             else:
                  answer = int(riddle[1])
                  start_time = str(riddle[2])
-                 mention = message.from_user.mention if message.from_user else message.sender_chat.title if message.sender_chat else 'UnKown 🗿'
-                 
+                    
+                 if message.sender_chat:
+                         return
+                                  
                  try:
                     text = int(message.text)
                
                     if text == int(answer):
-
+                         mention = message.from_user.mention
                          user_id = message.from_user.id
+                         first_name = message.from_user.first_name
+                         
                          if (await ask_start_pm(user_id, message)) == False:
                                 return 
+
+                         db = DATABASE['USERS']
+                            
+                         db.update_one(
+                                 {'user_id': user_id},
+                                 {'$set': {'data.first_name'}}
+                         )
+                            
                          end_time = str(message.date).split()[1]
                          a_time = await taken_time(
                                 start_time=start_time, 

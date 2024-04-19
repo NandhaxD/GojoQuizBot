@@ -10,4 +10,4 @@ async def main():
     bot_id = info.id
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    app.loop.run_until_complete(main())

@@ -49,7 +49,7 @@ async def check_user_rmath_ans(_, message):
                             
                          db.update_one(
                                  {'user_id': user_id},
-                                 {'$set': {'data.first_name'}}
+                                 {'$set': {'data.first_name': first_name}}
                          )
                             
                          end_time = str(message.date).split()[1]

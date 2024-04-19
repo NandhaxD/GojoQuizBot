@@ -3,7 +3,7 @@ import config
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from nandha.helpers.decorator import admin_only
-from nandha.helpers.leaderboard import get_rmath_top, get_rmath_gtop
+from nandha.helpers.leaderboard import get_rmath_group, get_rmath_global
 from nandha.database.chats import add_chat
 from nandha import bot
 
@@ -60,10 +60,14 @@ async def rmath_top(_, query):
        else:
            chat_id = query.message.chat.id
            name = query.message.chat.title
-           sorted_user_riddle_points = await get_rmath_top(chat_id)
+           sorted_user_riddle_points = await get_rmath_group(chat_id)
            text = f'🏆 **Top R-M Users in {name}** 👥\n\n'
            for i, (user, points) in enumerate(sorted_user_riddle_points[:10]):
-              text += f'{i+1}. [{user}](tg://user?id={user}): `{points}`\n'
+              if user.is_digit():                       
+                 text += f'{i+1}. **[{user}](tg://user?id={user})**: `{points}`\n'
+              else:
+                  text += f'{i+1}, **{user_id}**: `{point}`\n'
+                       
 
            button = [[ InlineKeyboardButton('Back ⬅️', callback_data=f'riddletop:{admin_id}') ]]
            return await query.message.edit(text,
@@ -81,11 +85,15 @@ async def rmath_gtop(_, query):
               )
        else:
            text = f'🏆 **Global Top R-Math Users** 👥\n\n'
-           sorted_leaderboard = await get_rmath_gtop()
+           sorted_leaderboard = await get_rmath_global()
            for i, (user_id, point) in enumerate(sorted_leaderboard.items()):
                   if i >= 10:
                      break
-                  text += f'{i+1}, [{user_id}](tg://user?id={user_id}): {point}\n'
+                  if user_id.is_digit():
+                       text += f'{i+1}, **[{user_id}](tg://user?id={user_id})**: {point}\n'
+                  else:
+                       text += f'{i+1}, **{user_id}**: `{point}`\n'
+                       
 
            button = [[ InlineKeyboardButton('Back ⬅️', callback_data=f'riddletop:{admin_id}') ]]
            return await query.message.edit(text,

@@ -84,7 +84,7 @@ async def riddle_math(_, query):
            InlineKeyboardButton(text='60 Seconds', callback_data=f'rmtime:{user_id}:60'),
            InlineKeyboardButton(text='3 Minutes', callback_data=f'rmtime:{user_id}:90'),],
                    [InlineKeyboardButton(text='10 Minutes', callback_data=f'rmtime:{user_id}:600'),
-                    InlineKeyboardButton(text='30 Monutes', callback_data=f'rmtime:{user_id}:1800'), ],
+                    InlineKeyboardButton(text='30 Minutes', callback_data=f'rmtime:{user_id}:1800'), ],
                    [ InlineKeyboardButton(text='Back ⬅️', callback_data=f'cb_riddle:{user_id}')
            
 ]]

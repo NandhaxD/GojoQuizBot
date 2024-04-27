@@ -15,6 +15,7 @@ from nandha import bot, DATABASE
 
 chats_id = []
 
+lock = asyncio.Lock()
 
 
 @bot.on_message(filters.text & ~filters.private & ~filters.bot, group=-2 )
@@ -151,45 +152,45 @@ async def off_riddle_chat(_, query):
 
 
         
-async def send_math_riddle_tochat(chat_id: int): 
-        
-       while True:    
+async def send_math_riddle_tochat(chat_id: int):         
+       async with lock:
+           while True:    
                
-          riddle = await is_chat_riddle(chat_id)               
-          if riddle == 'off':
-               await off_chat(chat_id)
-               if chat_id in chats_id:
-                       chats_id.remove(chat_id)
-               await bot.send_message(
+               riddle = await is_chat_riddle(chat_id)               
+               if riddle == 'off':
+                     await off_chat(chat_id)
+                     if chat_id in chats_id:
+                        tasks[chat_id].cancel()
+                        del tasks[chat_id]
+                     await bot.send_message(
                       chat_id=chat_id,
                       text='Ok. Stopped R-M 🔴')
-               break                       
+                                            
                
-          sleep_time = int(await get_chat_sleep(chat_id))
+               sleep_time = int(await get_chat_sleep(chat_id))
                
-          riddle = await make_math_riddle(chat_id)
+               riddle = await make_math_riddle(chat_id)
 
-          question = riddle[2]
-          answer = riddle[1]
-          photo = riddle[0]   
+               question = riddle[2]
+               answer = riddle[1]
+               photo = riddle[0]   
                
-          msg = await bot.send_photo(
-                chat_id=chat_id,
-                photo=photo, 
-                caption="<code>🔥 Solve the Riddle 🔥</code>")
-          await save_chat_riddle(
+               msg = await bot.send_photo(
+                    chat_id=chat_id,
+                    photo=photo, 
+                    caption="<code>🔥 Solve the Riddle 🔥</code>")
+               await save_chat_riddle(
                   chat_id=chat_id,
                   question=question,
                   answer=answer,
                   msg_time=str(msg.date).split()[1]
           )
-          os.remove(photo)
-          await asyncio.sleep(sleep_time)
-          await clear_chat_riddle(chat_id)
-          try:      
-            await msg.delete()
-          except:
-                pass
+               os.remove(photo)
+               await asyncio.sleep(sleep_time)
+               await clear_chat_riddle(chat_id)
+               try:      
+                 await msg.delete()
+               except: pass
           
                
                
@@ -203,9 +204,8 @@ async def sends_math_riddle(_, message):
       if not chat_id in chats_id:
             riddle = await is_chat_riddle(chat_id)
             if riddle == 'on':
-                  chats_id.append(chat_id)
-                  await clear_chat_riddle(chat_id)          
-                  await send_math_riddle_tochat(chat_id)
+                  await clear_chat_riddle(chat_id)
+                  chats_id[chat_id] = asyncio.create_task(send_math_riddle_tochat(chat_id))                  
       else:
          return 
       

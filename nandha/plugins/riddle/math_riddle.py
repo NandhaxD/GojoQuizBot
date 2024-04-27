@@ -13,7 +13,7 @@ from nandha.database.chats import add_chat
 from nandha.helpers.func import get_question, taken_time, ask_start_pm, make_math_riddle
 from nandha import bot, DATABASE
 
-chats_id = []
+chats_id = {}
 
 lock = asyncio.Lock()
 

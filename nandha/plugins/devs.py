@@ -39,41 +39,39 @@ async def retart_script(_, message):
 	 await restart()
 
 
+
+	   
 @bot.on_message(filters.command('bcast', prefixes=config.PREFIXES))
 @devs_only
 async def broadcast(_, message):
-	reply = message.reply_to_message
-	from_chat_id = message.chat.id
-	
-	if not reply:
-		return await message.reply(
-			'`Reply to the message for execute broadcast in all my chats.`'
-		)
-	else:
-	   done = 0
-	   message_id = reply.id
-	   chats_id = (await get_chats()) + (await get_users())
-	   msg = await message.reply(
-		   '`Broadcasting...`'
-	   )
-	   for chat_id in chats_id:
-	     try:
-	        await bot.forward_messages(chat_id, from_chat_id, message_ids=message_id)
-		done += 1
-	        if done % 5 == 0:
-		    await msg.edit(f'**Successfully forwarded to {done} chats ❤️**.')
-	     except:
-		return
-           undone = len(chats_id) - done
-	   return await message.reply(
-             f'**Successfully completed forwarded**.\n**Success forwards**: `{done}`.\n**Failed forwards**: `{undone}`'
-           )
-		
-		  
-		
-	   
-	   
+    reply = message.reply_to_message
+    from_chat_id = message.chat.id
 
+    if not reply:
+        return await message.reply(
+            '`Reply to the message for execute broadcast in all my chats.`'
+        )
+    else:
+        done = 0
+        message_id = reply.message_id
+        chats_id = (await get_chats()) + (await get_users())
+        msg = await message.reply(
+            '`Broadcasting...`'
+        )
+        for chat_id in chats_id:
+            try:
+                await bot.forward_messages(chat_id, from_chat_id, message_ids=message_id)
+                done += 1
+                if done % 5 == 0:
+                    await msg.edit_text(f'**Successfully forwarded to {done} chats ❤️**.')
+            except Exception as e:
+		  pass
+                #print(f"Failed to forward message to {chat_id}: {e}")
+        undone = len(chats_id) - done
+        return await message.reply(
+            f'**Successfully completed forwarded**.\n**Success forwards**: `{done}`.\n**Failed forwards**: `{undone}`'
+)
+	    
 							   
 @bot.on_message(filters.command('sh', prefixes=config.PREFIXES))
 @devs_only

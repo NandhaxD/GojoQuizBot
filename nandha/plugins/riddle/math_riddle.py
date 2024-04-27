@@ -15,7 +15,7 @@ from nandha import bot, DATABASE
 
 chats_id = {}
 
-lock = asyncio.Lock()
+
 
 
 @bot.on_message(filters.text & ~filters.private & ~filters.bot, group=-2 )
@@ -152,20 +152,22 @@ async def off_riddle_chat(_, query):
 
 
         
-async def send_math_riddle_tochat(chat_id: int):         
+async def send_math_riddle_tochat(chat_id: int):  
+        
+       lock = asyncio.Lock()
        async with lock:
-           while True:    
-               
+           while True:                   
                riddle = await is_chat_riddle(chat_id)               
                if riddle == 'off':
                    await clear_chat_riddle(chat_id)
                    if chat_id in chats_id:
-                        chats_id[chat_id].cancel()
-                        del chats_id[chat_id]
                         await bot.send_message(
                               chat_id=chat_id,
-                             text='Ok. Stopped R-M 🔴')                                           
-               
+                             text='**Ok. R-M** 🔴'
+                        )
+                        chats_id[chat_id].cancel()
+                        del chats_id[chat_id]
+                                                                      
                sleep_time = int(await get_chat_sleep(chat_id))
                
                riddle = await make_math_riddle(chat_id)

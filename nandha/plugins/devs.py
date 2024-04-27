@@ -64,8 +64,7 @@ async def broadcast(_, message):
                 done += 1
                 if done % 5 == 0:
                     await msg.edit_text(f'**Successfully forwarded to {done} chats ❤️**.')
-            except Exception as e:
-		  pass
+            except Exception as e: pass
                 #print(f"Failed to forward message to {chat_id}: {e}")
         undone = len(chats_id) - done
         return await message.reply(

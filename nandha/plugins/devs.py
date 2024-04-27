@@ -9,7 +9,7 @@ import subprocess
 
 from pyrogram import filters, enums
 from nandha.helpers.func import restart
-from nandha.helpers.decorators import devs_only
+from nandha.helpers.decorator import devs_only
 from nandha.database.chats import get_chats
 from nandha.database.users import get_users
 from nandha import bot

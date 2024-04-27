@@ -158,14 +158,13 @@ async def send_math_riddle_tochat(chat_id: int):
                
                riddle = await is_chat_riddle(chat_id)               
                if riddle == 'off':
-                     await off_chat(chat_id)
-                     if chat_id in chats_id:
-                        tasks[chat_id].cancel()
-                        del tasks[chat_id]
-                     await bot.send_message(
-                      chat_id=chat_id,
-                      text='Ok. Stopped R-M 🔴')
-                                            
+                   await clear_chat_riddle(chat_id)
+                   if chat_id in chats_id:
+                        chats_id[chat_id].cancel()
+                        del chats_id[chat_id]
+                        await bot.send_message(
+                              chat_id=chat_id,
+                             text='Ok. Stopped R-M 🔴')                                           
                
                sleep_time = int(await get_chat_sleep(chat_id))
                

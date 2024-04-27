@@ -12,6 +12,7 @@ from nandha.helpers.func import restart
 from nandha.helpers.decorator import devs_only
 from nandha.database.chats import get_chats
 from nandha.database.users import get_users
+
 from nandha import bot
 
 
@@ -20,12 +21,12 @@ from nandha import bot
 def p(*args, **kwargs):
     print(*args, **kwargs)
 
-async def aexec(code, bot, message):
+async def aexec(code, bot, m, r):
     exec(
-        "async def __aexec(bot, message): "
+        "async def __aexec(bot, m, r): "
         + "".join(f"\n {l_}" for l_ in code.split("\n"))
     )
-    return await locals()["__aexec"](bot, message)
+    return await locals()["__aexec"](bot, m, r)
   
 
  
@@ -34,13 +35,11 @@ async def aexec(code, bot, message):
 @devs_only
 async def retart_script(_, message):
 	 await message.reply(
-		 "`Wait. Restarting Script...`"
+		 "`Restarting Script...`"
 	 )
 	 await restart()
 
 
-
-	   
 @bot.on_message(filters.command('bcast', prefixes=config.PREFIXES))
 @devs_only
 async def broadcast(_, message):
@@ -71,6 +70,8 @@ async def broadcast(_, message):
         return await message.reply(
             f'**Successfully completed!**.\n**Success forwards**: `{done}`.\n**Failed forwards**: `{undone}`'
 )
+
+	   
 	    
 							   
 @bot.on_message(filters.command('sh', prefixes=config.PREFIXES))
@@ -108,7 +109,7 @@ async def evaluate(bot , message):
     redirected_error = sys.stderr = io.StringIO()
     stdout, stderr, exc = None, None, None
     try:
-        await aexec(cmd, bot, message)
+        await aexec(cmd, bot, m, r)
     except Exception:
         exc = traceback.format_exc()
     stdout = redirected_output.getvalue()

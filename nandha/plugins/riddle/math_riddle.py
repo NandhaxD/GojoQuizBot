@@ -4,6 +4,7 @@ import os
 import config
 import requests
 import asyncio
+import random
 
 from pyrogram import filters 
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
@@ -13,13 +14,15 @@ from nandha.database.chats import add_chat
 from nandha.helpers.func import get_question, taken_time, ask_start_pm, make_math_riddle
 from nandha import bot, DATABASE
 
-chats_id = []
+chats_id = {}
+
 
 
 
 @bot.on_message(filters.text & ~filters.private & ~filters.bot, group=-2 )
 async def check_user_rmath_ans(_, message):
-        chat_id = message.chat.id       
+        chat_id = message.chat.id
+        
         
         if not chat_id in chats_id:
                return
@@ -41,7 +44,8 @@ async def check_user_rmath_ans(_, message):
                          mention = message.from_user.mention
                          user_id = message.from_user.id
                          first_name = message.from_user.first_name
-                         
+                         msg_id = message.id
+                            
                          if (await ask_start_pm(user_id, message)) == False:
                                 return 
 
@@ -51,7 +55,14 @@ async def check_user_rmath_ans(_, message):
                                  {'user_id': user_id},
                                  {'$set': {'data.first_name': first_name}}
                          )
-                            
+                         try:
+                            await bot.send_reaction(
+                                 chat_id=chat_id, 
+                                 message_id=msg_id, 
+                                 emoji=random.choice(config.EMOJI), 
+                                 big=True
+                         )
+                         except: pass
                          end_time = str(message.date).split()[1]
                          a_time = await taken_time(
                                 start_time=start_time, 
@@ -124,7 +135,7 @@ async def set_riddle_chat_time(_, query):
 
            ]]
            return await query.message.edit(
-                  f"Successfully set up chat math riddle!\n\n<b>Riddle is</b>: {riddle} 📢\n<b>Riddle time</b>: {time} ⏰",
+                  f"Successfully set up chat math riddle!\n\n<b>Riddle is</b>: `Enabled` 📢\n<b>Riddle time</b>: `{time}` ⏰",
                    reply_markup=InlineKeyboardMarkup(button)
            )
                                 
@@ -142,54 +153,51 @@ async def off_riddle_chat(_, query):
        else:
             await off_chat(chat_id)
             await clear_chat_riddle(chat_id)  
-            return await query.message.edit(
+            await query.message.edit(
                  f"Successfully turned off chat math riddle!\n\n<b>Chat riddle is</b>: `Disabled` 🛑\n<b>Chat riddle time</b>: `{time}` 🛑",
            )
+            if chat_id in chats_id:
+                   await bot.send_message(
+                       chat_id=chat_id,
+                          text='**Ok. R-M** 🔴'
+                        )
+                   chats_id[chat_id].cancel()
+                   del chats_id[chat_id]
+                   return await clear_chat_riddle(chat_id)
              
 
 
 
 
         
-async def send_math_riddle_tochat(chat_id: int): 
+async def send_math_riddle_tochat(chat_id: int):  
         
-       while True:    
-               
-          riddle = await is_chat_riddle(chat_id)               
-          if riddle == 'off':
-               await off_chat(chat_id)
-               if chat_id in chats_id:
-                       chats_id.remove(chat_id)
-               await bot.send_message(
-                      chat_id=chat_id,
-                      text='Ok. Stopped R-M 🔴')
-               break                       
-               
-          sleep_time = int(await get_chat_sleep(chat_id))
-               
-          riddle = await make_math_riddle(chat_id)
+       lock = asyncio.Lock()
+       async with lock:
+           while True:                                 
+               sleep_time = int(await get_chat_sleep(chat_id))
+               riddle = await make_math_riddle(chat_id)
 
-          question = riddle[2]
-          answer = riddle[1]
-          photo = riddle[0]   
+               question = riddle[2]
+               answer = riddle[1]
+               photo = riddle[0]   
                
-          msg = await bot.send_photo(
-                chat_id=chat_id,
-                photo=photo, 
-                caption="<code>🔥 Solve the Riddle 🔥</code>")
-          await save_chat_riddle(
+               msg = await bot.send_photo(
+                    chat_id=chat_id,
+                    photo=photo, 
+                    caption="<code>🔥 Solve the Riddle 🔥</code>")
+               await save_chat_riddle(
                   chat_id=chat_id,
                   question=question,
                   answer=answer,
                   msg_time=str(msg.date).split()[1]
           )
-          os.remove(photo)
-          await asyncio.sleep(sleep_time)
-          await clear_chat_riddle(chat_id)
-          try:      
-            await msg.delete()
-          except:
-                pass
+               os.remove(photo)
+               await asyncio.sleep(sleep_time)
+               await clear_chat_riddle(chat_id)
+               try:      
+                 await msg.delete()
+               except: pass
           
                
                
@@ -203,9 +211,8 @@ async def sends_math_riddle(_, message):
       if not chat_id in chats_id:
             riddle = await is_chat_riddle(chat_id)
             if riddle == 'on':
-                  chats_id.append(chat_id)
-                  await clear_chat_riddle(chat_id)          
-                  await send_math_riddle_tochat(chat_id)
+                  await clear_chat_riddle(chat_id)
+                  chats_id[chat_id] = asyncio.create_task(send_math_riddle_tochat(chat_id))                  
       else:
          return 
       

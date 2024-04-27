@@ -125,7 +125,7 @@ async def set_riddle_chat_time(_, query):
 
            ]]
            return await query.message.edit(
-                  f"Successfully set up chat math riddle!\n\n<b>Riddle is</b>: {riddle} 📢\n<b>Riddle time</b>: {time} ⏰",
+                  f"Successfully set up chat math riddle!\n\n<b>Riddle is</b>: `Enabled` 📢\n<b>Riddle time</b>: `{time}` ⏰",
                    reply_markup=InlineKeyboardMarkup(button)
            )
                                 
@@ -143,9 +143,17 @@ async def off_riddle_chat(_, query):
        else:
             await off_chat(chat_id)
             await clear_chat_riddle(chat_id)  
-            return await query.message.edit(
+            await query.message.edit(
                  f"Successfully turned off chat math riddle!\n\n<b>Chat riddle is</b>: `Disabled` 🛑\n<b>Chat riddle time</b>: `{time}` 🛑",
            )
+            if chat_id in chats_id:
+                   await bot.send_message(
+                       chat_id=chat_id,
+                          text='**Ok. R-M** 🔴'
+                        )
+                   chats_id[chat_id].cancel()
+                   del chats_id[chat_id]
+                   return await clear_chat_riddle(chat_id)
              
 
 
@@ -156,20 +164,8 @@ async def send_math_riddle_tochat(chat_id: int):
         
        lock = asyncio.Lock()
        async with lock:
-           while True:                   
-               riddle = await is_chat_riddle(chat_id)               
-               if riddle == 'off':
-                   await clear_chat_riddle(chat_id)
-                   if chat_id in chats_id:
-                        await bot.send_message(
-                              chat_id=chat_id,
-                             text='**Ok. R-M** 🔴'
-                        )
-                        chats_id[chat_id].cancel()
-                        del chats_id[chat_id]
-                                                                      
+           while True:                                 
                sleep_time = int(await get_chat_sleep(chat_id))
-               
                riddle = await make_math_riddle(chat_id)
 
                question = riddle[2]

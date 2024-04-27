@@ -21,7 +21,7 @@ chats_id = {}
 @bot.on_message(filters.text & ~filters.private & ~filters.bot, group=-2 )
 async def check_user_rmath_ans(_, message):
         chat_id = message.chat.id
-        message_id = message.id
+        
         
         if not chat_id in chats_id:
                return
@@ -43,7 +43,8 @@ async def check_user_rmath_ans(_, message):
                          mention = message.from_user.mention
                          user_id = message.from_user.id
                          first_name = message.from_user.first_name
-                         
+                         msg_id = message.id
+                            
                          if (await ask_start_pm(user_id, message)) == False:
                                 return 
 
@@ -54,7 +55,9 @@ async def check_user_rmath_ans(_, message):
                                  {'$set': {'data.first_name': first_name}}
                          )
                          
-                         await bot.send_reaction(chat_id, message_id, emoji=config.EMOJI, big=True)                     
+                         await bot.send_reaction(
+                                 chat_id=chat_id, message_id=msg_id, emoji=config.EMOJI, big=True
+                         )                     
                          end_time = str(message.date).split()[1]
                          a_time = await taken_time(
                                 start_time=start_time, 

@@ -1,3 +1,6 @@
+
+import config
+
 from pyrogram import enums
 from pyrogram.types import Message
 from nandha import bot
@@ -13,8 +16,18 @@ async def is_stuffs(chat_id: int, user_id: int):
            return [False]
 
 
+def devs_only(func):
+     async def wrapped(bot: bot, message: Message):
+          chat_id = message.chat.id
+          user_id = message.from_user.id
+          if not user_id in config.DEVS_ID:
+              return
+          return await func(bot, message)
+     return wrapped
+          
+
 def admin_only(func): 
-         async def wrapped(bot, message: Message): 
+         async def wrapped(bot: bot, message: Message): 
              chat_id= message.chat.id 
              user_id= message.from_user.id 
               

@@ -30,7 +30,18 @@ async def aexec(code, bot, m, r):
   
 
  
-
+@bot.on_message(filters.command('statics', prefixes=config.PREFIXES))
+async def statics(_, message):
+      if message.from_user.id != config.OWNER_ID:
+            return await message.reply('Only owner can use this command.', quote=True)
+      users = len(await get_users())
+      chats = len(await get_chats())
+      return await message.reply(
+         f'<b>Users</b>: <code>{users}</code>\n'
+         f'<b>Chats</b>: <code>{chats}</code>\n\n'
+         '<b>By @NANDHABOTS**</b>'
+      )
+	
 @bot.on_message(filters.command('restart', prefixes=config.PREFIXES))
 @devs_only
 async def retart_script(_, message):

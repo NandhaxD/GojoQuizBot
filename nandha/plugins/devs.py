@@ -9,10 +9,13 @@ import subprocess
 
 from pyrogram import filters, enums
 from nandha.helpers.func import restart
+from nandha.helpers.decorators import devs_only
+from nandha.database.chats import get_chats
+from nandha.database.users import get_users
 from nandha import bot
 
 
-devs = [5456798232, 5696053228]
+
 
 def p(*args, **kwargs):
     print(*args, **kwargs)
@@ -27,15 +30,53 @@ async def aexec(code, bot, message):
 
  
 
-@bot.on_message(filters.user(devs) & filters.command('restart', prefixes=config.PREFIXES))
+@bot.on_message(filters.command('restart', prefixes=config.PREFIXES))
+@devs_only
 async def retart_script(_, message):
 	 await message.reply(
 		 "`Wait. Restarting Script...`"
 	 )
 	 await restart()
-	 
+
+
+@bot.on_message(filters.command('bcast', prefixes=config.PREFIXES))
+@devs_only
+async def broadcast(_, message):
+	reply = message.reply_to_message
+	from_chat_id = message.chat.id
+	
+	if not reply:
+		return await message.reply(
+			'`Reply to the message for execute broadcast in all my chats.`'
+		)
+	else:
+	   done = 0
+	   message_id = reply.id
+	   chats_id = (await get_chats()) + (await get_users())
+	   msg = await message.reply(
+		   '`Broadcasting...`'
+	   )
+	   for chat_id in chats_id:
+	        try:
+		   await bot.forward_messages(chat_id, from_chat_id, message_ids=message_id)
+		   done += 1
+		   if done % 5 == 0:
+			   await msg.edit(f'**Successfully forwarded to {done} chats ❤️**.')
+		except:
+		   return
+           undone = len(chats_id) - done
+	   return await message.reply(
+             f'**Successfully completed forwarded**.\n**Success forwards**: `{done}`.\n**Failed forwards**: `{undone}`'
+           )
+		
+		  
+		
+	   
+	   
+
 							   
-@bot.on_message(filters.user(devs) & filters.command('sh', prefixes=config.PREFIXES))
+@bot.on_message(filters.command('sh', prefixes=config.PREFIXES))
+@devs_only
 async def shell(_, message):
     if len(message.text.split()) > 1:
         code = message.text.split(None, 1)[1]
@@ -46,7 +87,8 @@ async def shell(_, message):
             parse_mode=enums.ParseMode.HTML
 	)
 
-@bot.on_message(filters.user(devs) & filters.command("e",prefixes=config.PREFIXES))
+@bot.on_message(filters.command("e",prefixes=config.PREFIXES))
+@devs_only
 async def evaluate(bot , message):
     global r, m
     status_message = await message.reply_text("`Running ...`")

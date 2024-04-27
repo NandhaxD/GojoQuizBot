@@ -1,13 +1,6 @@
 import os
-import random
 
 
-
-
-EMOJIS = ['⚡️', '😈', '👍', '🔥']
-
-
-# checks if the env is true then program takes variable from environment else here.
 if bool(os.getenv('ENV')) == True:
      OWNER_ID = int(os.getenv('OWNER_ID'))
      BOT_TOKEN = str(os.getenv('BOT_TOKEN'))
@@ -27,7 +20,7 @@ NAME = 'GojoQuizeBot'
 SUPPORT_URL = 'nandhasupport.t.me'
 CHANNEL_URL = 'nandhabots.t.me'
 PREFIXES = ['/', '\\']
-EMOJI = random.choice(EMOJIS)
+EMOJI = ['⚡️', '😈', '👍', '🔥']
 BOT_ID = int(BOT_TOKEN.split(':')[0])
 
 

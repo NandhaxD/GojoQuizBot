@@ -57,13 +57,13 @@ async def broadcast(_, message):
 		   '`Broadcasting...`'
 	   )
 	   for chat_id in chats_id:
-	        try:
-		   await bot.forward_messages(chat_id, from_chat_id, message_ids=message_id)
-		   done += 1
-		   if done % 5 == 0:
-			   await msg.edit(f'**Successfully forwarded to {done} chats ❤️**.')
-		except:
-		   return
+	     try:
+	        await bot.forward_messages(chat_id, from_chat_id, message_ids=message_id)
+		done += 1
+	        if done % 5 == 0:
+		    await msg.edit(f'**Successfully forwarded to {done} chats ❤️**.')
+	     except:
+		return
            undone = len(chats_id) - done
 	   return await message.reply(
              f'**Successfully completed forwarded**.\n**Success forwards**: `{done}`.\n**Failed forwards**: `{undone}`'

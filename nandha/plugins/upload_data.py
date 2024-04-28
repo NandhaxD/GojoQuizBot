@@ -1,6 +1,6 @@
 
 from nandha import bot, DATABASE
-from nandha.database.decorator import devs_only
+from nandha.helpers.decorator import devs_only
 from datetime import datetime, timedelta
 
 from pyrogram import filters, enums

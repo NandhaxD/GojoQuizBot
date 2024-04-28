@@ -16,6 +16,7 @@ requests = {}
 
 @app.on_message(filters.command('request', prefixes=config.PREFIXES))
 async def request(_, message):
+    m = message
     if m.chat.type != enums.ChatType.PRIVATE:
         return await m.reply_text("`Request Your Own Quiz On Dm`")
     else:

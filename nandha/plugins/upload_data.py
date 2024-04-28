@@ -3,7 +3,7 @@ from nandha import bot, DATABASE
 from nandha.helpers.decorator import devs_only
 from datetime import datetime, timedelta
 
-from pyrogram import filters, enums
+from pyrogram import filters, enums, types
 
 
 def text_json(text):
@@ -31,7 +31,7 @@ async def data_upload(_, message):
             "Invalid message format. Please use the format `#q question #1 option1 #2 option2 #3 option3 #4 option4 #e text #a num`"
         )
     button = [[
-       InlineKeyboardButton(
+       types.InlineKeyboardButton(
           text='Save ✅', callback_data=f'save:{config.OWNER_ID}:{text}')
     ]]
     await message.reply(
@@ -43,7 +43,7 @@ async def data_upload(_, message):
 **Option4**: {text[4]}
 **Explain**: {text[5]}
 **Answer**: {text[6]}
-        ''', reply_markup=pyrogram.types.InlineKeyboardMarkup(button))
+        ''', reply_markup=types.InlineKeyboardMarkup(button))
     close_t = datetime.now() + timedelta(seconds=60)
     explain = text[5]
     question = text[0]

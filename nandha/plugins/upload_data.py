@@ -27,7 +27,10 @@ async def upload_data(_, message):
     chat_id = message.chat.id 
     mention = message.from_user.mention
     user_id = message.from_user.id
-   
+
+    
+   if user_id in data:
+      return await message.reply('Already one question in process please wait.')
     # /upload -q {question} -1 {option1} -2 {option2} -3 {option3} -4 {option4} -a {answer}
     try:
         text = format_data(message.text)
@@ -73,6 +76,4 @@ async def upload_data(_, message):
         is_anonymous=False
     )):
        
-       if user_id in data:
-           return await message.reply('Already one question in process please wait.')
        data[user_id] = text

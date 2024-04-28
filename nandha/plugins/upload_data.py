@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 from pyrogram import filters, enums, types
 
 
-def format_text(text):
+def format_data(text):
    question = text.split('#q')[1].split("#1")[0]
    option1 = text.split('#1')[1].split('#2')[0]
    option2 = text.split('#2')[1].split('#3')[0]
@@ -30,7 +30,7 @@ async def upload_data(_, message):
 
     # /upload -q {question} -1 {option1} -2 {option2} -3 {option3} -4 {option4} -a {answer}
     try:
-        text = upload_data(message.text)
+        text = format_data(message.text)
     except IndexError:
         return await message.reply(
             "Invalid message format. Please use the format `#q question #1 option1 #2 option2 #3 option3 #4 option4 #e text #a num`"
@@ -52,7 +52,7 @@ async def upload_data(_, message):
 **Question Uploaded by {mention}**
         ''', reply_markup=types.InlineKeyboardMarkup(button))
     await message.reply(
-       f'**Thank you for participating, here you can see you post: {msg.link}**'
+       f'**Thank you for participating, here you can see your post: {msg.link}**'
     )
     close_t = datetime.now() + timedelta(seconds=60)
     explain = text[5]
@@ -62,7 +62,7 @@ async def upload_data(_, message):
     option3 = text[3]
     option4 = text[4]
     answer = int(text[6])
-    await bot.send_poll(
+    if bool(await bot.send_poll(
         chat_id=config.GROUP_ID,
         question=question,
         options=[option1, option2, option3, option4],
@@ -71,4 +71,8 @@ async def upload_data(_, message):
         close_date=close_t,
         type=enums.PollType.QUIZ,
         is_anonymous=False
-    )
+    ))
+       user_id = message.from_user.id
+       if user_id in data:
+           return await message.reply('Already one question in process please wait.')
+       data[user_id] = text

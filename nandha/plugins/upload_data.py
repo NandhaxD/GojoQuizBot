@@ -18,7 +18,7 @@ def format_data(text):
    explain = text.split('#e')[1].split('#a')[0]
    
    answer = text.split()[-1]
-   return question, option1, option2, option3, option4, explain, answer
+   return type, question, option1, option2, option3, option4, explain, answer
 
 
 data = {}
@@ -44,13 +44,14 @@ async def upload_data(_, message):
     msg = await bot.send_message(chat_id=config.GROUP_ID,
         text=f'''\n
 **Type**: {text[0]}   
-**Question**: {text[1]}
-**Option1**: {text[2]}
-**Option2**: {text[3]}
-**Option3**: {text[4]}
-**Option4**: {text[5]}
-**Explain**: {text[6]}
-**Answer**: {text[7]}
+
+**Question**: `{text[1]}`
+**Option1**: `{text[2]}`
+**Option2**: `{text[3]}`
+**Option3**: `{text[4]}`
+**Option4**: `{text[5]}`
+**Explain**: `{text[6]}`
+**Answer**: `{text[7]}`
 
 **Question Uploaded by {mention}**
         ''', reply_markup=types.InlineKeyboardMarkup(button))

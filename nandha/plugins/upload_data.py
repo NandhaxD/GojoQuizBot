@@ -71,7 +71,7 @@ async def upload_data(_, message):
         close_date=close_t,
         type=enums.PollType.QUIZ,
         is_anonymous=False
-    ))
+    )):
        user_id = message.from_user.id
        if user_id in data:
            return await message.reply('Already one question in process please wait.')

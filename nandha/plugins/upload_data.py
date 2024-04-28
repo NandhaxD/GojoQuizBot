@@ -50,7 +50,7 @@ async def data_upload(_, message):
     option2 = text[2]
     option3 = text[3]
     option4 = text[4]
-    answer = text[6]
+    answer = int(text[6])
     await bot.send_poll(
         chat_id=chat_id,
         question=question,

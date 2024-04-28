@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 from pyrogram import filters, enums, types
 
 
-def text_json(text):
+def format_text(text):
    question = text.split('#q')[1].split("#1")[0]
    option1 = text.split('#1')[1].split('#2')[0]
    option2 = text.split('#2')[1].split('#3')[0]
@@ -20,24 +20,27 @@ def text_json(text):
    return question, option1, option2, option3, option4, explain, answer
 
 
+data = {}
 
 @bot.on_message(filters.command('upload'))
 @devs_only
-async def data_upload(_, message):
+async def upload_data(_, message):
     chat_id = message.chat.id 
+    mention = message.from_user.mention
+
     # /upload -q {question} -1 {option1} -2 {option2} -3 {option3} -4 {option4} -a {answer}
     try:
-        text = text_json(message.text)
+        text = upload_data(message.text)
     except IndexError:
         return await message.reply(
             "Invalid message format. Please use the format `#q question #1 option1 #2 option2 #3 option3 #4 option4 #e text #a num`"
         )
     button = [[
        types.InlineKeyboardButton(
-          text='Save ✅', callback_data=f'save:{config.OWNER_ID}:{text}')
+          text='Save ✅', callback_data=f'save:{user_id}')
     ]]
-    await message.reply(
-        f'''\n
+    msg = await bot.send_message(chat_id=config.GROUP_ID,
+        text=f'''\n
 **Question**: {text[0]}
 **Option1**: {text[1]}
 **Option2**: {text[2]}
@@ -45,7 +48,12 @@ async def data_upload(_, message):
 **Option4**: {text[4]}
 **Explain**: {text[5]}
 **Answer**: {text[6]}
+
+**Question Uploaded by {mention}**
         ''', reply_markup=types.InlineKeyboardMarkup(button))
+    await message.reply(
+       f'**Thank you for participating, here you can see you post: {msg.link}**'
+    )
     close_t = datetime.now() + timedelta(seconds=60)
     explain = text[5]
     question = text[0]
@@ -55,7 +63,7 @@ async def data_upload(_, message):
     option4 = text[4]
     answer = int(text[6])
     await bot.send_poll(
-        chat_id=chat_id,
+        chat_id=config.GROUP_ID,
         question=question,
         options=[option1, option2, option3, option4],
         explanation=explain,

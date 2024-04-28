@@ -45,6 +45,11 @@ async def data_upload(_, message):
         ''')
     close_t = datetime.now() + timedelta(seconds=60)
     explain = text[5]
+    question = text[0]
+    option1 = text[1]
+    option2 = text[2]
+    option3 = text[3]
+    option4 = text[4]
     answer = text[6]
     await bot.send_poll(
         chat_id=chat_id,

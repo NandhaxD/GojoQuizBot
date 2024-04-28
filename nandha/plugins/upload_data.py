@@ -9,6 +9,7 @@ from pyrogram import filters, enums, types
 
 
 def format_data(text):
+   type = text.split('#type')[1].split('#q')[0]
    question = text.split('#q')[1].split("#1")[0]
    option1 = text.split('#1')[1].split('#2')[0]
    option2 = text.split('#2')[1].split('#3')[0]
@@ -29,8 +30,6 @@ async def upload_data(_, message):
     user_id = message.from_user.id
 
     
-    if user_id in data:
-       return await message.reply('Already one question in process please wait.')
     # /upload -q {question} -1 {option1} -2 {option2} -3 {option3} -4 {option4} -a {answer}
     try:
         text = format_data(message.text)
@@ -44,13 +43,14 @@ async def upload_data(_, message):
     ]]
     msg = await bot.send_message(chat_id=config.GROUP_ID,
         text=f'''\n
-**Question**: {text[0]}
-**Option1**: {text[1]}
-**Option2**: {text[2]}
-**Option3**: {text[3]}
-**Option4**: {text[4]}
-**Explain**: {text[5]}
-**Answer**: {text[6]}
+**Type**: {text[0]}   
+**Question**: {text[1]}
+**Option1**: {text[2]}
+**Option2**: {text[3]}
+**Option3**: {text[4]}
+**Option4**: {text[5]}
+**Explain**: {text[6]}
+**Answer**: {text[7]}
 
 **Question Uploaded by {mention}**
         ''', reply_markup=types.InlineKeyboardMarkup(button))
@@ -75,5 +75,8 @@ async def upload_data(_, message):
         type=enums.PollType.QUIZ,
         is_anonymous=False
     )):
-       
-       data[user_id] = text
+       if user_id in data:
+          data[user_id].append(text)
+       else:
+          data[user_id] = [text]
+    return await message.reply(data)

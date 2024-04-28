@@ -22,12 +22,12 @@ def format_data(text):
 
 data = {}
 
-@bot.on_message(filters.command('upload'))
-@devs_only
+@bot.on_message(filters.command('upload', prefixes=config.PREFIXES))
 async def upload_data(_, message):
     chat_id = message.chat.id 
     mention = message.from_user.mention
-
+    user_id = message.from_user.id
+   
     # /upload -q {question} -1 {option1} -2 {option2} -3 {option3} -4 {option4} -a {answer}
     try:
         text = format_data(message.text)
@@ -72,7 +72,7 @@ async def upload_data(_, message):
         type=enums.PollType.QUIZ,
         is_anonymous=False
     )):
-       user_id = message.from_user.id
+       
        if user_id in data:
            return await message.reply('Already one question in process please wait.')
        data[user_id] = text

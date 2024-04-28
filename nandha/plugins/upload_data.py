@@ -1,4 +1,6 @@
 
+import config
+
 from nandha import bot, DATABASE
 from nandha.helpers.decorator import devs_only
 from datetime import datetime, timedelta

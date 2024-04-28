@@ -59,13 +59,13 @@ async def upload_data(_, message):
        f'**Thank you for participating, here you can see your post: {msg.link}**'
     )
     close_t = datetime.now() + timedelta(seconds=60)
-    explain = text[5]
-    question = text[0]
-    option1 = text[1]
-    option2 = text[2]
-    option3 = text[3]
-    option4 = text[4]
-    answer = int(text[6])
+    explain = text[6]
+    question = text[1]
+    option1 = text[2]
+    option2 = text[3]
+    option3 = text[4]
+    option4 = text[5]
+    answer = int(text[7])
     if bool(await bot.send_poll(
         chat_id=config.GROUP_ID,
         question=question,

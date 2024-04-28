@@ -22,6 +22,8 @@ def text_json(text):
 @bot.on_message(filters.command('upload'))
 @devs_only
 async def data_upload(_, message):
+    chat_id = message.chat.id
+   
     # /upload -q {question} -1 {option1} -2 {option2} -3 {option3} -4 {option4} -a {answer}
     try:
         text = text_json(message.text)
@@ -32,7 +34,7 @@ async def data_upload(_, message):
 
     await message.reply(
         f'''\n
-        **Question**: {text[0]}
+                **Question**: {text[0]}
         **Option1**: {text[1]}
         **Option2**: {text[2]}
         **Option3**: {text[3]}

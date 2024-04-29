@@ -38,7 +38,7 @@ async def request(_, message):
     if m.chat.type != enums.ChatType.PRIVATE:
         return await m.reply_text("`Request Your Own Quiz On Dm`")
     else:
-        if not (await db.find_one({"user_id": m.from_user.id})):
+        if not (db.find_one({"user_id": m.from_user.id})):
             buttons = []
             text = "**Choose Your Quiz Type: **\n\n"
             for x in types:
@@ -58,7 +58,7 @@ async def delete(_, cq):
     if not cq.from_user.id in user_id:
         return await cq.answer("This Wasn't Requested By You")
     else:
-        if (await db.find_one({"user_id": cq.from_user.id})):
+        if (db.find_one({"user_id": cq.from_user.id})):
             await db.delete_one({"user_id": cq.from_user.id})
         await cq.message.delete()
 
@@ -145,7 +145,7 @@ async def review(_, cq):
     if cq.from_user.id != user_id:
         return await cq.answer("This Wasn't Requested By You")
     else:
-        if not (await db.find_one({"user_id": cq.from_user.id})):
+        if not (db.find_one({"user_id": cq.from_user.id})):
             return await cq.answer("Something Happened Sorry")
         else:
             uwu = await db.find_one({"user_id": cq.from_user.id})

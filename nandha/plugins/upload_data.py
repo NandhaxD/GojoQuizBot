@@ -13,6 +13,18 @@ quizdb = DATABASE['R_QUIZ']
 app = bot
 types = [{"text": "General", "info": "just genral quiz"}, {"text": "rare", "info": "uff rarest quiz"}]
 
+def format_data(text):
+   type = text.split('#type')[1].split('#q')[0]
+   question = text.split('#q')[1].split("#1")[0]
+   option1 = text.split('#1')[1].split('#2')[0]
+   option2 = text.split('#2')[1].split('#3')[0]
+   option3 = text.split('#3')[1].split('#4')[0]
+   option4 = text.split('#4')[1].split('#e')[0]
+   explain = text.split('#e')[1].split('#a')[0]
+   
+   answer = text.split()[-1]
+   return type, question, option1, option2, option3, option4, explain, answer
+    
 @app.on_message(filters.command('request', prefixes=config.PREFIXES))
 async def request(_, message):
     m = message
@@ -122,7 +134,7 @@ async def request(_, cq):
 
 @app.on_callback_query(filters.regex("review"))
 async def review(_, cq):
-    user_id = int(cq.data.split("_")[1])
+    user_id = int(cq.data.split(":")[1])
     if cq.from_user.id != user_id:
         return await cq.answer("This Wasn't Requested By You")
     else:
@@ -184,3 +196,14 @@ async def accept(_, cq):
         await cq.answer("Success New Quiz Added")
         await quizdb.insert_one(quiz)
         await db.delete_one({"user_id": r_user_id})
+
+@app.on_callback_query(filters.regex("edit"))
+async def edit(_, cq):
+    user_id = int(cq.data.split("_")[1])
+    if cq.from_user.id != DEVS_ID:
+        return None
+    else:
+        quiz = await db.find_one({"user_id": user_id})
+        await cq.answer("Check Your Dm", alert=True)
+        await cq.delete()
+        await app.send_message(cq.from_user.id, f"/upload -q {quiz["question"]} -t {quiz["type"]} -1 {quiz["options"][0]} -2 {quiz["options"][1]} -3 {quiz["options"][2]} -4 {quiz["options"][3]} -a {quiz["answer"]}")

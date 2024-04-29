@@ -31,13 +31,17 @@ async def request(_, message):
 
 @app.on_callback_query(filters.regex("delete"))
 async def delete(_, cq):
-    user_id = int(cq.data.split("_")[1])
-    if cq.from_user.id != user_id:
+    try:
+        user_id = [int(cq.data.split("_")[1])]
+    except:
+        user_id = DEVS_ID
+    if not cq.from_user.id in user_id:
         return await cq.answer("This Wasn't Requested By You")
     else:
         if (await db.find_one({"user_id": cq.from_user.id})):
             await db.delete_one({"user_id": cq.from_user.id})
         await cq.message.delete()
+
 
 @app.on_callback_query(filters.regex("request"))
 async def request(_, cq):

@@ -185,7 +185,7 @@ async def review(_, cq):
                 close_date=close_t,
                 type=enums.PollType.QUIZ,
                 is_anonymous=False
-            ))
+            )
             await cq.message.reply_text(
        f'**Thank You For Participating, Here You Can See Your Post: {msg.link}**'
             )

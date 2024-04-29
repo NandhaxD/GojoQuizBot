@@ -92,7 +92,7 @@ async def request(_, cq):
     if (ans.text).split()[0] == "/cancel":
         await ans.sent_message.edit_text("`Process Cancelled ✅`")
         exit()
-    while not ans.text.isdigit() or int(ans.text) > 4 or int(ans.text) == 0and not (ans.text).split()[0] == "/cancel": # if ans text == /cancel the process should be cancelled 
+    while not ans.text.isdigit() or int(ans.text) > 4 or int(ans.text) == and not (ans.text).split()[0] == "/cancel": # if ans text == /cancel the process should be cancelled 
         ans = await cq.message.chat.ask(f"**Now Tell Me Which Option Is The Corect One**\n\n`Note:- Send Your Option As Digit Like If Option 1 is correct send 1`", filters=filters.text)
     answer.append(int(ans.text))
 

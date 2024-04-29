@@ -236,8 +236,8 @@ async def upload_data(_, message):
         chat_id=message.from_user.id,
         question=quiz["question"],
         options=[quiz["option1"], quiz["option2"], quiz["option3"], quiz["option4"]],
-        explanation=quiz["explain",
-        correct_option_id=quiz["answer",
+        explanation=quiz["explain"],
+        correct_option_id=quiz["answer"],
         close_date=close_t,
         type=enums.PollType.QUIZ,
         is_anonymous=False

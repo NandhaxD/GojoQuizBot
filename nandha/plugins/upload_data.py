@@ -244,15 +244,15 @@ async def upload_data(_, message):
     ))
     await bot.send_message(message.from_user.id,
         text=f'''\n
-**Type**: {text[0]}   
+**Type**: {quiz["type"]}   
 
-**Question**: `{text[1]}`
-**Option1**: `{text[2]}`
-**Option2**: `{text[3]}`
-**Option3**: `{text[4]}`
-**Option4**: `{text[5]}`
-**Explain**: `{text[6]}`
-**Answer**: `{text[7]}`
+**Question**: `{quiz["question"]}`
+**Option1**: `{quiz["option1"]}`
+**Option2**: `{quiz["option2"]}`
+**Option3**: `{quiz["option3"]}`
+**Option4**: `{quiz["option4"]}`
+**Explain**: `{quiz["answer"]}`
+**Answer**: `{quiz["answer"]}`
 
-**Question Uploaded by {mention}**
+**Question Uploaded by {quiz["user_id"]}**
         ''', reply_markup=types.InlineKeyboardMarkup(button))

@@ -14,12 +14,24 @@ app = bot
 types = [{"text": "General", "info": "just genral quiz"}, {"text": "rare", "info": "uff rarest quiz"}]
 
 def format_data(text):
-    args = text.split(' -')[1:]
-    options = ['-1', '-2', '-3', '-4']
-kwargs = {k: v for k, v in (arg.split(' ') for arg in args) if k in ('-q', '-t', '-a')}
-    kwargs['options'] = {opt: arg.split(' ')[-1] for opt, arg in zip(options, args) if opt in kwargs}
+    args = text.split(' -')
+    kwargs = {}
+    for arg in args[1:]:
+        key, value = arg.split(' ')
+        if key == 'u':
+            kwargs['user_id'] = value
+        elif key == 'q':
+            kwargs['question'] = value
+        elif key == 't':
+            kwargs['type'] = value
+        elif key in ['1', '2', '3', '4']:
+            kwargs[f'option{key}'] = value
+        elif key == 'a':
+            kwargs['answer'] = value
+        elif key == 'e':
+            kwargs['explanation'] = value
     return kwargs
-
+    
 @app.on_message(filters.command('request', prefixes=config.PREFIXES))
 async def request(_, message):
     m = message
@@ -146,8 +158,8 @@ async def review(_, cq):
             option4 = uwu["options"][3]
             answer = int(uwu["answer"])
             keyboard = [[
-                InlineKeyboardButton("Edit 📝", callback_data=f"edit:{cq.from_user.id}"),
-                InlineKeyboardButton("Accept ✅", callback_data=f"accept:{cq.from_user.id}"),
+                InlineKeyboardButton("Edit 📝", callback_data=f"edit:{user_id}"),
+                InlineKeyboardButton("Accept ✅", callback_data=f"accept:{user_id}"),
                 InlineKeyboardButton("Decline 🚫", callback_data="delete")
             ]]
             msg = await bot.send_message(chat_id=config.GROUP_ID,
@@ -182,7 +194,7 @@ async def review(_, cq):
 @app.on_callback_query(filters.regex("accept"))
 async def accept(_, cq):
     r_user_id = int(cq.data.split(":")[1])
-    if cq.from_user.id != DEVS_ID:
+    if not cq.from_user.id in DEVS_ID:
         return await cq.answer("This Wasn't Requested By You")
     else:
         quiz = await db.find_one({"user_id": r_user_id})
@@ -195,10 +207,52 @@ async def accept(_, cq):
 @app.on_callback_query(filters.regex("edit"))
 async def edit(_, cq):
     user_id = int(cq.data.split("_")[1])
-    if cq.from_user.id != DEVS_ID:
+    if not cq.from_user.id in DEVS_ID:
         return None
     else:
         quiz = await db.find_one({"user_id": user_id})
         await cq.answer("Check Your Dm", alert=True)
         await cq.delete()
-        await app.send_message(cq.from_user.id, f"/upload -q {quiz["question"]} -t {quiz["type"]} -1 {quiz["options"][0]} -2 {quiz["options"][1]} -3 {quiz["options"][2]} -4 {quiz["options"][3]} -a {quiz["answer"]}")
+        await app.send_message(cq.from_user.id, f"/upload -u {user_id} -q {quiz["question"]} -t {quiz["type"]} -1 {quiz["options"][0]} -2 {quiz["options"][1]} -3 {quiz["options"][2]} -4 {quiz["options"][3]} -a {quiz["answer"]} -e {quiz["explanation"]}")
+
+@bot.on_message(filters.command('upload', prefixes=config.PREFIXES))
+async def upload_data(_, message):
+    if not message.from_user.id in DEVS_ID:
+        return None
+    try:
+        quiz = format_data(message.text)
+    except IndexError:
+        return await message.reply(
+            "Invalid message format. Please use the format `/upload -u userid -q question -t type -1 option1 -2 option2 -3 option3 -4 option4 -a answerno`"
+        )
+    button = [[
+          InlineKeyboardButton("Edit 📝", callback_data=f"edit:{cq.from_user.id}"),
+          InlineKeyboardButton("Save ✅", callback_data=f"accept:{quiz['user_id']}"),
+          InlineKeyboardButton("Cancel 🚫", callback_data="delete")
+    ]]
+    close_t = datetime.now() + timedelta(seconds=60)
+
+    await bot.send_poll(
+        chat_id=message.from_user.id,
+        question=quiz["question"],
+        options=[quiz["option1"], quiz["option2"], quiz["option3"], quiz["option4"]],
+        explanation=quiz["explain",
+        correct_option_id=quiz["answer",
+        close_date=close_t,
+        type=enums.PollType.QUIZ,
+        is_anonymous=False
+    ))
+    await bot.send_message(message.from_user.id,
+        text=f'''\n
+**Type**: {text[0]}   
+
+**Question**: `{text[1]}`
+**Option1**: `{text[2]}`
+**Option2**: `{text[3]}`
+**Option3**: `{text[4]}`
+**Option4**: `{text[5]}`
+**Explain**: `{text[6]}`
+**Answer**: `{text[7]}`
+
+**Question Uploaded by {mention}**
+        ''', reply_markup=types.InlineKeyboardMarkup(button))

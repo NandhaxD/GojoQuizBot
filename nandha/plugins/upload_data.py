@@ -8,6 +8,7 @@ from pyrogram import filters
 from pyrogram.types import *
 
 db = DATABASE['REQUESTS']
+quizdb = DATABASE['R_QUIZ']
 
 app = bot
 types = [{"text": "General", "info": "just genral quiz"}, {"text": "rare", "info": "uff rarest quiz"}]
@@ -32,7 +33,7 @@ async def request(_, message):
 @app.on_callback_query(filters.regex("delete"))
 async def delete(_, cq):
     try:
-        user_id = [int(cq.data.split("_")[1])]
+        user_id = [int(cq.data.split(":")[1])]
     except:
         user_id = DEVS_ID
     if not cq.from_user.id in user_id:
@@ -138,9 +139,9 @@ async def review(_, cq):
             option4 = uwu["options"][3]
             answer = int(uwu["answer"])
             keyboard = [[
-                InlineKeyboardButton("Edit 📝", callback_data=f"edit"),
-                InlineKeyboardButton("Accept ✅", callback_data=f"accept"),
-                InlineKeyboardButton("Decline 🚫", callback_data=f"delete")
+                InlineKeyboardButton("Edit 📝", callback_data=f"edit:{cq.from_user.id}"),
+                InlineKeyboardButton("Accept ✅", callback_data=f"accept:{cq.from_user.id}"),
+                InlineKeyboardButton("Decline 🚫", callback_data="delete")
             ]]
             msg = await bot.send_message(chat_id=config.GROUP_ID,
                 text=f"""\n
@@ -170,3 +171,16 @@ async def review(_, cq):
        f'**Thank You For Participating, Here You Can See Your Post: {msg.link}**'
             )
             await cq.delete()
+
+@app.on_callback_query(filters.regex("accept"))
+async def accept(_, cq):
+    r_user_id = int(cq.data.split(":")[1])
+    if cq.from_user.id != DEVS_ID:
+        return await cq.answer("This Wasn't Requested By You")
+    else:
+        quiz = await db.find_one({"user_id": r_user_id})
+        await cq.delete()
+        await app.send_message(r_user_id, "Added Your Quiz")
+        await cq.answer("Success New Quiz Added")
+        await quizdb.insert_one(quiz)
+        await db.delete_one({"user_id": r_user_id})

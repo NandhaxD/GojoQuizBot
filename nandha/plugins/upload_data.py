@@ -14,17 +14,12 @@ app = bot
 types = [{"text": "General", "info": "just genral quiz"}, {"text": "rare", "info": "uff rarest quiz"}]
 
 def format_data(text):
-   type = text.split('#type')[1].split('#q')[0]
-   question = text.split('#q')[1].split("#1")[0]
-   option1 = text.split('#1')[1].split('#2')[0]
-   option2 = text.split('#2')[1].split('#3')[0]
-   option3 = text.split('#3')[1].split('#4')[0]
-   option4 = text.split('#4')[1].split('#e')[0]
-   explain = text.split('#e')[1].split('#a')[0]
-   
-   answer = text.split()[-1]
-   return type, question, option1, option2, option3, option4, explain, answer
-    
+    args = text.split(' -')[1:]
+    options = ['-1', '-2', '-3', '-4']
+kwargs = {k: v for k, v in (arg.split(' ') for arg in args) if k in ('-q', '-t', '-a')}
+    kwargs['options'] = {opt: arg.split(' ')[-1] for opt, arg in zip(options, args) if opt in kwargs}
+    return kwargs
+
 @app.on_message(filters.command('request', prefixes=config.PREFIXES))
 async def request(_, message):
     m = message

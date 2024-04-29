@@ -7,9 +7,10 @@ from datetime import *
 from pyrogram import filters
 from pyrogram.types import *
 
+db = DATABASE['REQUESTS']
+
 app = bot
 types = [{"text": "General", "info": "just genral quiz"}, {"text": "rare", "info": "uff rarest quiz"}]
-requests = {}
 
 @app.on_message(filters.command('request', prefixes=config.PREFIXES))
 async def request(_, message):
@@ -17,7 +18,7 @@ async def request(_, message):
     if m.chat.type != enums.ChatType.PRIVATE:
         return await m.reply_text("`Request Your Own Quiz On Dm`")
     else:
-        if not requests[m.from_user.id]:
+        if not (await db.find_one({"user_id": m.from_user.id})):
             buttons = []
             text = "**Choose Your Quiz Type: **\n\n"
             for x in types:
@@ -34,8 +35,8 @@ async def delete(_, cq):
     if cq.from_user.id != user_id:
         return await cq.answer("This Wasn't Requested By You")
     else:
-        if requests[cq.from_user.id]:
-            requests.pop(cq.from_user.id)
+        if (await db.find_one({"user_id": cq.from_user.id})):
+            await db.delete_one({"user_id": cq.from_user.id})
         await cq.message.delete()
 
 @app.on_callback_query(filters.regex("request"))
@@ -57,8 +58,8 @@ async def request(_, cq):
     while num < 4:
         num += 1
         op = await cq.message.chat.ask(f"**Now Send Me Your Option {num} For The Quiz**\n\n`There Should 4 Options`", filters=filters.text)
-        if (oq.text).split()[0] == "/cancel":
-            await oq.sent_message.edit_text("`Process Cancelled ✅`")
+        if (op.text).split()[0] == "/cancel":
+            await op.sent_message.edit_text("`Process Cancelled ✅`")
             exit()
         options.append(op.text)
         await op.sent_message.delete()
@@ -67,7 +68,7 @@ async def request(_, cq):
     if (ans.text).split()[0] == "/cancel":
         await ans.sent_message.edit_text("`Process Cancelled ✅`")
         exit()
-    while not ans.text.isdigit() or int(ans.text) > 4 or int(ans.text) == 0 and not (ans.text).split()[0] == "/cancel": # if ans text == /cancel the process should be cancelled 
+    while not ans.text.isdigit() or int(ans.text) > 4 or int(ans.text) == 0and not (ans.text).split()[0] == "/cancel": # if ans text == /cancel the process should be cancelled 
         ans = await cq.message.chat.ask(f"**Now Tell Me Which Option Is The Corect One**\n\n`Note:- Send Your Option As Digit Like If Option 1 is correct send 1`", filters=filters.text)
     answer.append(int(ans.text))
 
@@ -77,6 +78,17 @@ async def request(_, cq):
         exit()
     explain.append(ex.text)
     await ex.sent_message.delete()
+
+    # Save quiz data in the database
+    quiz_data = {
+        "user_id": cq.from_user.id,
+        "question": question[0],
+        "type": type,
+        "options": options,
+        "explanation": explain[0],
+        "answer": answer[0]
+    }
+    db.insert_one(quiz_data)
 
     text = f"**Question**: `{question[0]}`**:-**\n\n"
     text += f"**• Type:** `{type}`\n"
@@ -94,15 +106,14 @@ async def request(_, cq):
     await bot.send_poll(
         chat_id=cq.from_user.id,
         question=question[0],
-        options=[options[0], options[1], options[2], options[3]],
+        options=options,
         explanation=explain[0],
-        correct_option_id=int(answer[0]),
+        correct_option_id=answer[0],
         close_date=close_t,
         type=enums.PollType.QUIZ,
         is_anonymous=False
     )
     await bot.send_message(cq.from_user.id, text, reply_markup=Inlinekeyboardmarkup(keyboard))
-    requests[cq.from_user.id] = {"question": question[0], "type": type, "options": options, "explanation": explain[0], "answer": int(answer[0])}
 
 @app.on_callback_query(filters.regex("review"))
 async def review(_, cq):
@@ -110,10 +121,10 @@ async def review(_, cq):
     if cq.from_user.id != user_id:
         return await cq.answer("This Wasn't Requested By You")
     else:
-        if not requests[cq.from_user.id]:
+        if not (await db.find_one({"user_id": cq.from_user.id})):
             return await cq.answer("Something Happened Sorry")
         else:
-            uwu = requests[cq.from_user.id]
+            uwu = await db.find_one({"user_id": cq.from_user.id})
             explain = uwu["explanation"]
             type = uwu["type"]
             question = uwu["question"]

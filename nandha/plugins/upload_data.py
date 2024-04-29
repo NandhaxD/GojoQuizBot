@@ -1,6 +1,3 @@
-
-
-
 import config
 
 from nandha import *
@@ -20,15 +17,16 @@ async def request(_, message):
     if m.chat.type != enums.ChatType.PRIVATE:
         return await m.reply_text("`Request Your Own Quiz On Dm`")
     else:
-        if requests[m.from_user.id]:
+        if not requests[m.from_user.id]:
+            buttons = []
+            text = "**Choose Your Quiz Type: **\n\n"
+            for x in types:
+                buttons.append([InlineKeyboardButton(x["text"], callback_data=f"request:{x['text']}")])
+                buttons.append([InlineKeyboardButton("Cancel 🚫", callback_data=f"delete:{m.from_user.id}")])            
+                text += f"• `{x['text']}` - `{x['info']}`\n"
+            await m.reply_text(text, reply_markup=Inlinekeyboardmarkup(buttons))
+        else:
             return await message.reply_text("`Already Creating Quiz Process Going On`")
-        buttons = []
-        text = "**Choose Your Quiz Type: **\n\n"
-        for x in types:
-            buttons.append([InlineKeyboardButton(x["text"], callback_data=f"request:{x['text']}")])
-            buttons.append([InlineKeyboardButton("Cancel 🚫", callback_data=f"delete:{m.from_user.id}")])            
-            text += f"• `{x['text']}` - `{x['info']}`\n"
-        await m.reply_text(text, reply_markup=Inlinekeyboardmarkup(buttons))
 
 @app.on_callback_query(filters.regex("delete"))
 async def delete(_, cq):

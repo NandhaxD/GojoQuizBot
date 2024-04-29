@@ -241,7 +241,7 @@ async def upload_data(_, message):
         close_date=close_t,
         type=enums.PollType.QUIZ,
         is_anonymous=False
-    ))
+       )
     await bot.send_message(message.from_user.id,
         text=f'''\n
 **Type**: {quiz["type"]}   

@@ -74,7 +74,7 @@ async def broadcast(_, message):
                 done += 1
                 if done % 5 == 0:
                     await msg.edit_text(f'**Successfully forwarded to {done} chats loop processing. ❤️**.')
-                await asyncio.sleep(5)
+                    await asyncio.sleep(5)
             except Exception as e:
                 pass
                 #print(f"Failed to forward message to {chat_id}: {e}")

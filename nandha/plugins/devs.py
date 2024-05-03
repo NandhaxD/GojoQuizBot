@@ -63,7 +63,7 @@ async def broadcast(_, message):
         )
     else:
         done = 0
-        message_id = reply.message_id
+        message_id = reply.id
         chats_id = (await get_chats()) + (await get_users())
         msg = await message.reply(
             '`Broadcasting...`'

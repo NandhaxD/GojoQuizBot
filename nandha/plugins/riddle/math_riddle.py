@@ -73,7 +73,7 @@ async def check_user_rmath_ans(_, message):
                          points = await get_points(chat_id, user_id, 'riddle', 'math')
                          
                          await message.reply_animation(animation=config.RIDDLE_ANSWER_GIF,
-                                 caption=f"🥳 Congratulation {mention}, You have answered first 🥇 **THE MATH RIDDLE** 🥇.\n\n🧠 **Solved Puzzles**: {points}\n🧠 **Taken Time**: {a_time}"
+                                 caption=f"🥳 **Congratulation {mention}, You have answered first 🥇 THE MATH RIDDLE** 🥇.\n\n🧠 **Solved Puzzles**: {points}\n🧠 **Taken Time**: {a_time}"
                          ) 
                  except Exception as e:
                          pass

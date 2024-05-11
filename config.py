@@ -19,8 +19,8 @@ else:
 DEVS_ID = [ 5456798232 ] + [OWNER_ID]
      
 NAME = 'GojoQuizeBot'
-SUPPORT_URL = 'NandhaSupport.t.me'
-CHANNEL_URL = 'Nandhabots.t.me'
+SUPPORT = 'NandhaSupport'
+CHANNEL = 'Nandhabots'
 GROUP_ID =  -1002039454048
 PREFIXES = ['/', '\\']
 EMOJI = ['❤️', '⚡️', '😈', '👍', '🔥']

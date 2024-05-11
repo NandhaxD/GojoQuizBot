@@ -39,7 +39,7 @@ async def statics(_, message):
       return await message.reply(
          f'<b>Users</b>: <code>{users}</code>\n'
          f'<b>Chats</b>: <code>{chats}</code>\n\n'
-         '<b>By @NANDHABOTS**</b>'
+         f'<b>By @{config.CHANNEL}</b>'
       )
 	
 @bot.on_message(filters.command('restart', prefixes=config.PREFIXES))

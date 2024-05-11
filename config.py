@@ -18,7 +18,7 @@ else:
 # default variable
 DEVS_ID = [ 5456798232 ] + [OWNER_ID]
      
-NAME = 'GojoQuizeBot'
+NAME = 'GojoQuizBot'
 SUPPORT = 'NandhaSupport'
 CHANNEL = 'Nandhabots'
 GROUP_ID =  -1002039454048

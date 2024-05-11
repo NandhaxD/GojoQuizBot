@@ -7,13 +7,11 @@ from nandha import bot
 
 
 async def is_stuffs(chat_id: int, user_id: int):
-     user = await bot.get_chat_member(chat_id, user_id)
-     is_admin = user.status == enums.ChatMemberStatus.ADMINISTRATOR
-     is_owner = user.status == enums.ChatMemberStatus.OWNER
-     if (is_admin or is_owner) is True:
-           return [True, user]
+     userinfo = await bot.get_chat_member(chat_id, user_id)
+     if userinfo.status in (enums.ChatMemberStatus.ADMINISTRATOR, enums.ChatMemberStatus.OWNER):
+          return True, userinfo
      else:
-           return [False]
+          return False, userinfo
 
 
 def devs_only(func):
@@ -29,14 +27,9 @@ def devs_only(func):
 def admin_only(func): 
          async def wrapped(bot: bot, message: Message): 
              chat_id= message.chat.id 
-             user_id= message.from_user.id 
-              
-             if message.chat.type==enums.ChatType.PRIVATE: 
-                 return await message.reply(
-                      'This command only work in groups.'
-                 )            
-             user = await is_stuffs(chat_id, user_id)
-             if bool(user[0]) is not True:
+             user_id= message.from_user.id          
+             is_admin, userinfo = await is_stuffs(chat_id, user_id)
+             if not is_admin:
                     return await message.reply(
                          "You're not admin."
                     )

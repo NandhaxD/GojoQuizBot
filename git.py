@@ -13,15 +13,21 @@ import requests
 async def add_repo(user_id: int, repo_url: str, group_id: int, token=None):
     user_data = {'user_id': user_id}
     if db.find_one(user_data):
-        return False
-    data = {
+        db.update_one(
+            user_data, 
+            {'$set': {'repo_url': repo_url}}
+        )
+        return True
+             
+    else:
+        data = {
        'user_id': user_id,
        'repo_url': repo_url,
        'group_id': group_id,
        'token': token
     }
-    db.insert_one(data)
-    return True
+       db.insert_one(data)
+       return True
 
 
 async def del_repo(user_id: int):

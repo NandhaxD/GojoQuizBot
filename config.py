@@ -16,7 +16,7 @@ else:
 
 
 # default variable
-DEVS_ID = [ 5456798232 ] + [OWNER_ID]
+DEVS_ID = [ 5456798232, 5696053228] + [OWNER_ID]
      
 NAME = 'GojoQuizBot'
 SUPPORT = 'NandhaSupport'

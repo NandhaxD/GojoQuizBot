@@ -47,7 +47,8 @@ RIDDLE_MATH_BG = [
 
 
 RIDDLE_WORDS_BG = [
-"https://graph.org/file/b4089de39d879004cc683.jpg"
+"https://graph.org/file/b4089de39d879004cc683.jpg",
+"https://graph.org/file/5a971d88327c65606a930.jpg",
 ]
 
 

@@ -62,7 +62,7 @@ RIDDLE_ANSWER_GIF = 'https://graph.org/file/37cd114c92e1d74c9cc07.mp4'
 
 
 RIDDLE_WINNER_STRING = (
-     "🎉 Congratulations, {}! You're the first to solve **THE MATH RIDDLE**!  🥇\n\n"
+     "🎉 Congratulations, {}! You're the first to solve **THE {} RIDDLE**!  🥇\n\n"
      "🧠 **Solved Puzzles:** {}\n"
      "🧠 **Time Taken:** {}\n"
 )

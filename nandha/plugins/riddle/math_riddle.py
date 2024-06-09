@@ -21,7 +21,7 @@ chats_id = {}
 @bot.on_message(filters.text & ~filters.private & ~filters.bot, group=-2 )
 async def check_user_rmath_ans(_, message):
         chat_id = message.chat.id
-        
+        chat_name = message.chat.title
         
         if not chat_id in chats_id:
                return
@@ -37,9 +37,10 @@ async def check_user_rmath_ans(_, message):
                          return
                                   
                  try:
-                    text = int(message.text)
-               
-                    if text == int(answer):
+                    text = message.text
+                    if not text.isdigit():
+                       return
+                    elif text == answer:
                          mention = message.from_user.mention
                          user_id = message.from_user.id
                          first_name = message.from_user.first_name
@@ -57,7 +58,8 @@ async def check_user_rmath_ans(_, message):
                                  emoji=random.choice(config.EMOJI), 
                                  big=True
                          )
-                         except: pass
+                         except: 
+                             pass
                          end_time = str(message.date).split()[1]
                          a_time = await taken_time(
                                 start_time=start_time, 
@@ -71,8 +73,12 @@ async def check_user_rmath_ans(_, message):
                                  caption=f"🥳 **Congratulation {mention}, You have answered first 🥇 THE MATH RIDDLE** 🥇.\n\n🧠 **Solved Puzzles**: {points}\n🧠 **Taken Time**: {a_time}"
                          ) 
                  except Exception as e:
-                       # await message.reply_text(str(e))
-                       pass
+                       print(
+                         f"chat_name: {chat_name}\n"
+                         f"chat_id: {chat_id}\n"
+                         f"prompt: {text}\n"
+                         f"Error: {e}\n"
+                       )
                  
 
 

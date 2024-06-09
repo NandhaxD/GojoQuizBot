@@ -11,7 +11,7 @@ async def save_chat_riddle(chat_id: int, text, msg_time):
         'data.riddle.words.text': text,
         'data.riddle.words.msg_time': msg_time}
              }
-    db.update_one(json, update)
+    db.update_one(json, update, upsert=True)
     return True
 
 async def get_chat_riddle(chat_id: int):
@@ -31,7 +31,7 @@ async def clear_chat_riddle(chat_id: int):
         'data.riddle.words.text': False,
         'data.riddle.words.msg_time': False}
              }
-    db.update_one(json, update)
+    db.update_one(json, update, upsert=True)
     return True
                        
 
@@ -48,7 +48,7 @@ async def off_chat(chat_id: int):
             'data.riddle.words.sleep': False,
             'data.riddle.words.switch': 'off',
             'data.riddle.words.msg_time': False}}
-    riddle = db.update_one(json, updated_json)
+    riddle = db.update_one(json, updated_json, upsert=True)
     return True
     
 async def on_chat(chat_id: int, time: int):
@@ -58,7 +58,7 @@ async def on_chat(chat_id: int, time: int):
             'data.riddle.words.sleep': time,
             'data.riddle.words.switch': 'on'
         }}
-    riddle = db.update_one(json, updated_json)
+    riddle = db.update_one(json, updated_json, upsert=True)
     return True
     
                         

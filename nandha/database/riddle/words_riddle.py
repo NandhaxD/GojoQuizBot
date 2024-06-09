@@ -5,11 +5,10 @@ from nandha import DATABASE
 
 db = DATABASE['CHATS']
 
-async def save_chat_riddle(chat_id: int, question, answer, msg_time):
+async def save_chat_riddle(chat_id: int, text, msg_time):
     json = {'chat_id': chat_id}
     update = {'$set': {
-        'data.riddle.words.question': question,
-        'data.riddle.words.answer': answer,
+        'data.riddle.words.text': text,
         'data.riddle.words.msg_time': msg_time}
              }
     db.update_one(json, update)
@@ -19,10 +18,9 @@ async def get_chat_riddle(chat_id: int):
        json = {'chat_id': chat_id}
        riddle = db.find_one(json)
        if riddle:
-           question = riddle['data']['riddle']['words']['question']
-           answer = riddle['data']['riddle']['words']['answer']
+           question = riddle['data']['riddle']['words']['text']
            taken_time = riddle['data']['riddle']['words']['msg_time']
-           return question, answer, taken_time
+           return text, taken_time
        else:
            return False
            
@@ -30,8 +28,7 @@ async def get_chat_riddle(chat_id: int):
 async def clear_chat_riddle(chat_id: int):
     json = {'chat_id': chat_id}
     update = {'$set': {
-        'data.riddle.words.question': False,
-        'data.riddle.words.answer': False,
+        'data.riddle.words.text': False,
         'data.riddle.words.msg_time': False}
              }
     db.update_one(json, update)

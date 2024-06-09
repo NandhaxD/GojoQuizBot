@@ -10,7 +10,7 @@ from nandha.database.riddle.words_riddle import is_chat_riddle, get_chat_sleep, 
 from nandha.database.points import add_points, get_points
 from nandha.database.users import update_name
 from nandha.database.chats import add_chat
-from nandha.helpers.func import get_question, ask_start_pm, make_math_riddle, taken_time
+from nandha.helpers.func import get_question, ask_start_pm, make_words_riddle, taken_time
 from nandha import bot
 
 chats_id = {}
@@ -154,7 +154,8 @@ async def off_riddle_chat(_, query):
              return await query.answer("🔐 Sorry this not for you. try you're own to customize.", show_alert=True)
        else:
             await off_chat(chat_id)
-            await clear_chat_riddle(chat_id)  
+            await clear_chat_riddle(chat_id)
+            time = await get_chat_sleep(chat_id)
             await query.message.edit(
                  f"Successfully turned off chat math riddle!\n\n<b>Chat riddle is</b>: `Disabled` 🛑\n<b>Chat riddle time</b>: `{time}` 🛑",
            )
@@ -208,7 +209,7 @@ async def send_words_riddle_tochat(chat_id: int):
                
                
 @bot.on_message(filters.all & ~filters.bot & ~filters.private, group=2)
-async def sends_math_riddle(_, message):
+async def sends_words_riddle(_, message):
       chat_id = message.chat.id
       if not chat_id in chats_id:
             riddle = await is_chat_riddle(chat_id)

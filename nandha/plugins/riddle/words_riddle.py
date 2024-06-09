@@ -67,9 +67,10 @@ async def check_user_rwords_ans(_, message):
                          await add_points(chat_id, user_id, 'riddle', 'words')
                          points = await get_points(chat_id, user_id, 'riddle', 'words')
                          
-                         await message.reply_animation(animation=config.RIDDLE_ANSWER_GIF,
-                                 caption=f"🥳 **Congratulation {mention}, You have answered first 🥇 THE WORDS RIDDLE** 🥇.\n\n🧠 **Solved Puzzles**: {points}\n🧠 **Taken Time**: {a_time}"
-                         ) 
+                         await message.reply_text(
+                           text=config.RIDDLE_WINNER_STRING.format(first_name, points, a_time)
+                         )
+                                 
                  except Exception as e:
                        print(
                          f"chat_name: {chat_name}\n"

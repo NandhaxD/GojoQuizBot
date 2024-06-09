@@ -179,11 +179,7 @@ async def send_words_riddle_tochat(chat_id: int):
        async with lock:
            while True:                                 
                sleep_time = int(await get_chat_sleep(chat_id))
-               riddle = await make_words_riddle(chat_id)
-
-               question = riddle[2]
-               answer = riddle[1]
-               photo = riddle[0]   
+               photo, text = await make_words_riddle(chat_id)   
                
                msg = await bot.send_photo(
                     chat_id=chat_id,
@@ -191,8 +187,7 @@ async def send_words_riddle_tochat(chat_id: int):
                     caption="<code>🔥 Solve the Riddle 🔥</code>")
                await save_chat_riddle(
                   chat_id=chat_id,
-                  question=question,
-                  answer=answer,
+                  text=text,
                   msg_time=str(msg.date).split()[1]
           )
                os.remove(photo)
@@ -200,7 +195,8 @@ async def send_words_riddle_tochat(chat_id: int):
                await clear_chat_riddle(chat_id)
                try:      
                  await msg.delete()
-               except: pass
+               except:
+                  pass
           
                
                

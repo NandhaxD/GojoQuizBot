@@ -18,7 +18,7 @@ async def get_chat_riddle(chat_id: int):
        json = {'chat_id': chat_id}
        riddle = db.find_one(json)
        if riddle:
-           question = riddle['data']['riddle']['words']['text']
+           text = riddle['data']['riddle']['words']['text']
            taken_time = riddle['data']['riddle']['words']['msg_time']
            return text, taken_time
        else:

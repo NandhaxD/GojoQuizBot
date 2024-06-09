@@ -42,7 +42,6 @@ async def is_chat_riddle(chat_id: int):
     return riddle.get('data', {}).get('riddle', {}).get('words', {}).get('switch', False)
 
 
-
 async def off_chat(chat_id: int):
     json = {'chat_id': chat_id}
     updated_json = {
@@ -67,9 +66,6 @@ async def on_chat(chat_id: int, time: int):
 async def get_chat_sleep(chat_id: int):
     json = {'chat_id': chat_id}
     riddle = db.find_one(json)
-    if riddle:
-        return riddle['data']['riddle']['words']['sleep']
-    else:
-        return False
+    return riddle.get('data', {}).get('riddle', {}).get('words', {}).get('sleep', False)
 
 

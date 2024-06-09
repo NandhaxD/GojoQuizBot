@@ -1,8 +1,6 @@
-import time
-import io
+
 import os
 import config
-import requests
 import asyncio
 import random
 
@@ -11,7 +9,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from nandha.database.riddle.math_riddle import is_chat_riddle, get_chat_sleep, off_chat, on_chat, save_chat_riddle, clear_chat_riddle, get_chat_riddle
 from nandha.database.points import add_points, get_points
 from nandha.database.chats import add_chat
-from nandha.helpers.func import get_question, taken_time, ask_start_pm, make_math_riddle
+from nandha.helpers.func import get_question, ask_start_pm, make_math_riddle
 from nandha import bot, DATABASE
 
 chats_id = {}

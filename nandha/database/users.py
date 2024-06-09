@@ -3,6 +3,13 @@ from nandha import DATABASE
 db = DATABASE['USERS']
 
 
+
+async def update_name(user_id: int, name: str):
+    db.update_one(
+           {'user_id': user_id},
+           {'$set': {'data.first_name': first_name}}
+     )
+
     
 async def get_users() -> list:
     users_id = [ user['user_id'] for user in db.find()]

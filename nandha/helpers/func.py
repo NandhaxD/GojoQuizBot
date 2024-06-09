@@ -159,7 +159,7 @@ def get_random_word():
    return random_word
 
 async def make_words_riddle(chat_id: int):
-       image_url = "https://graph.org/file/b4089de39d879004cc683.jpg"
+       image_url = random.choice(config.RIDDLE_WORDS_BG)
        img = Image.open(io.BytesIO(requests.get(image_url).content))
        draw = ImageDraw.Draw(img)
        url = "https://github.com/JulietaUla/Montserrat/raw/master/fonts/otf/Montserrat-ExtraBold.otf"

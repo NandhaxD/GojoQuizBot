@@ -3,7 +3,7 @@ import os
 
 if bool(os.getenv('ENV')) == True:
      OWNER_ID = int(os.getenv('OWNER_ID', 5696053228))
-     BOT_TOKEN = str(os.getenv('TOKEN'))
+     BOT_TOKEN = str(os.getenv('BOT_TOKEN'))
      API_ID = int(os.getenv('API_ID'))
      DB_URL = str(os.getenv('DB_URL'))
      API_HASH = str(os.getenv('API_HASH'))

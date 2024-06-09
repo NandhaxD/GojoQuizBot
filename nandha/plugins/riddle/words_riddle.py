@@ -30,7 +30,7 @@ async def check_user_rwords_ans(_, message):
             if riddle == False:
                     return
             else:
-                 answer = int(riddle[0])
+                 answer = riddle[0]
                  start_time = str(riddle[1])
                     
                  if message.sender_chat:
@@ -70,7 +70,7 @@ async def check_user_rwords_ans(_, message):
                          points = await get_points(chat_id, user_id, 'riddle', 'words')
                          
                          await message.reply_animation(animation=config.RIDDLE_ANSWER_GIF,
-                                 caption=f"🥳 **Congratulation {mention}, You have answered first 🥇 THE MATH RIDDLE** 🥇.\n\n🧠 **Solved Puzzles**: {points}\n🧠 **Taken Time**: {a_time}"
+                                 caption=f"🥳 **Congratulation {mention}, You have answered first 🥇 THE WORDS RIDDLE** 🥇.\n\n🧠 **Solved Puzzles**: {points}\n🧠 **Taken Time**: {a_time}"
                          ) 
                  except Exception as e:
                        print(
@@ -133,7 +133,7 @@ async def set_riddle_chat_time(_, query):
            riddle = await is_chat_riddle(chat_id) 
            time = await get_chat_sleep(chat_id) 
            button = [[
-                   InlineKeyboardButton('Back ⬅️', callback_data=f'rmath:{user_id}')
+                   InlineKeyboardButton('Back ⬅️', callback_data=f'rwords:{user_id}')
 
            ]]
            return await query.message.edit(
@@ -157,12 +157,12 @@ async def off_riddle_chat(_, query):
             await clear_chat_riddle(chat_id)
             time = await get_chat_sleep(chat_id)
             await query.message.edit(
-                 f"Successfully turned off chat math riddle!\n\n<b>Chat riddle is</b>: `Disabled` 🛑\n<b>Chat riddle time</b>: `{time}` 🛑",
+                 f"Successfully turned off chat words riddle!\n\n<b>Chat riddle is</b>: `Disabled` 🛑\n<b>Chat riddle time</b>: `{time}` 🛑",
            )
             if chat_id in chats_id:
                    await bot.send_message(
                        chat_id=chat_id,
-                          text='**Ok. R-M** 🔴'
+                          text='**Ok. R-W** 🔴'
                         )
                    chats_id[chat_id].cancel()
                    del chats_id[chat_id]

@@ -20,7 +20,7 @@ async def edit_points(chat_id: int, user_id: int, module: str, type: str, point:
                       {
                           f'data.{module}.{type}.{str(chat_id)}': point
                       }}
-            db.update_one(user, update)
+            db.update_one(user, update, upsert=True)
             return True
         else:
             return False
@@ -36,7 +36,7 @@ async def add_points(chat_id: int, user_id: int, module: str, type: str):
                       {
                           f'data.{module}.{type}.{str(chat_id)}': 1
                       }}
-                db.update_one(user, update)
+                db.update_one(user, update, upsert=True)
                 return True
                     
             point += 1
@@ -44,7 +44,7 @@ async def add_points(chat_id: int, user_id: int, module: str, type: str):
                       {
                           f'data.{module}.{type}.{str(chat_id)}': point
                       }}
-            db.update_one(user, update)
+            db.update_one(user, update, upsert=True)
             return True
         else:
              return False

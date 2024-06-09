@@ -71,7 +71,8 @@ async def check_user_rmath_ans(_, message):
                                  caption=f"🥳 **Congratulation {mention}, You have answered first 🥇 THE MATH RIDDLE** 🥇.\n\n🧠 **Solved Puzzles**: {points}\n🧠 **Taken Time**: {a_time}"
                          ) 
                  except Exception as e:
-                        await message.reply_text(str(e))
+                       # await message.reply_text(str(e))
+                       pass
                  
 
 

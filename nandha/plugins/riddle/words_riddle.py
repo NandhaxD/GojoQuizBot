@@ -38,9 +38,7 @@ async def check_user_rwords_ans(_, message):
                                   
                  try:
                     text = message.text
-                    if not text.isdigit():
-                       return
-                    elif text == answer:
+                    if text == answer:
                          mention = message.from_user.mention
                          user_id = message.from_user.id
                          first_name = message.from_user.first_name

@@ -68,7 +68,7 @@ async def check_user_rwords_ans(_, message):
                          points = await get_points(chat_id, user_id, 'riddle', 'words')
                          
                          await message.reply_text(
-                           text=config.RIDDLE_WINNER_STRING.format(first_name, points, a_time)
+                           text=config.RIDDLE_WINNER_STRING.format(first_name, 'WORDS', points, a_time)
                          )
                                  
                  except Exception as e:

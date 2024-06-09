@@ -18,7 +18,7 @@ chats_id = {}
 
 
 
-@bot.on_message(filters.text & ~filters.private & ~filters.bot, group=-2 )
+@bot.on_message(filters.text & ~filters.private & ~filters.bot, group=-3 )
 async def check_user_rwords_ans(_, message):
         chat_id = message.chat.id
         chat_name = message.chat.title
@@ -204,14 +204,15 @@ async def send_words_riddle_tochat(chat_id: int):
                
                
                
-@bot.on_message(filters.all & ~filters.bot & ~filters.private, group=2)
+@bot.on_message(filters.all & ~filters.bot & ~filters.private, group=4)
 async def sends_words_riddle(_, message):
       chat_id = message.chat.id
       if not chat_id in chats_id:
             riddle = await is_chat_riddle(chat_id)
             if riddle == 'on':
                   await clear_chat_riddle(chat_id)
-                  chats_id[chat_id] = asyncio.create_task(send_words_riddle_tochat(chat_id))                  
+                  chats_id[chat_id] = asyncio.create_task(send_words_riddle_tochat(chat_id))
+                  print(f"Words task added in {message.chat.title}")                 
       else:
          return 
       

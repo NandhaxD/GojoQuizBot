@@ -158,7 +158,7 @@ def get_random_word():
    random_word = random.choice(words)
    return random_word
 
-async def make_riddle_words(chat_id: int):
+async def make_words_riddle(chat_id: int):
        image_url = "https://graph.org/file/b4089de39d879004cc683.jpg"
        img = Image.open(io.BytesIO(requests.get(image_url).content))
        draw = ImageDraw.Draw(img)

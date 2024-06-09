@@ -159,8 +159,8 @@ def get_random_word():
    return random_word
 
 async def make_riddle_words(chat_id: int):
-       img_url = "https://raw.githubusercontent.com/NandhaxD/-GojoQuizBot/main/images/20240609_150801.jpg?token=GHSAT0AAAAAACRCT3MQGDCKKU7NCM6COPDEZTFPWMA"
-       img = Image.open(io.BytesIO(requests.get(img_url).content))
+       image_url = "https://graph.org/file/b4089de39d879004cc683.jpg"
+       img = Image.open(io.BytesIO(requests.get(image_url).content))
        draw = ImageDraw.Draw(img)
        url = "https://github.com/JulietaUla/Montserrat/raw/master/fonts/otf/Montserrat-ExtraBold.otf"
        k = requests.get(url)

@@ -173,7 +173,7 @@ async def make_riddle_words(chat_id: int):
        width, height = img.size
        position = (width // 2, height // 2)
        color = (0, 0, 0)  # Change to black
-       draw.text(((width-w)//2 + 180, (height-h)//2 + 40), config.NAME, font=font) #made by
+       draw.text(((width-w)//2 + 180, (height-h)//2 + 40), config.NAME, font=font) # made by @nandha
        draw.text(((width-w)//2 - 120, (height-h)//2 + 15), text, font=font, fill=color)
        img = img.resize((int(width*1.5), int(height*1.5)), Image.LANCZOS)
        path = f"{chat_id}rw.jpg"

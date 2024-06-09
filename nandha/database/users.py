@@ -4,7 +4,7 @@ db = DATABASE['USERS']
 
 
 
-async def update_name(user_id: int, name: str):
+async def update_name(user_id: int, first_name: str):
     db.update_one(
            {'user_id': user_id},
            {'$set': {'data.first_name': first_name}}

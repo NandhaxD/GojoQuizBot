@@ -70,7 +70,7 @@ async def check_user_rmath_ans(_, message):
                          points = await get_points(chat_id, user_id, 'riddle', 'math')
                          
                          await message.reply_text(
-                           text=config.RIDDLE_WINNER_STRING.format(first_name, points, a_time)
+                           text=config.RIDDLE_WINNER_STRING.format(first_name, 'MATH', points, a_time)
                          )
                  except Exception as e:
                        print(

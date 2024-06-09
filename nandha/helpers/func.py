@@ -165,16 +165,16 @@ async def make_riddle_words(chat_id: int):
        url = "https://github.com/JulietaUla/Montserrat/raw/master/fonts/otf/Montserrat-ExtraBold.otf"
        k = requests.get(url)
        open(url.split("/")[-1], "wb").write(k.content)
-       font = ImageFont.truetype(url.split("/")[-1], size=50)
-       tbox = font.getbbox('happy')
+       font = ImageFont.truetype(url.split("/")[-1], size=38)
+       text = get_random_word()
+       tbox = font.getbbox(text)
        w = tbox[2] - tbox[0]
        h = tbox[3] - tbox[1]
        width, height = img.size
        position = (width // 2, height // 2)
        color = (0, 0, 0)  # Change to black
-       text = get_random_word()
        draw.text(((width-w)//2 + 180, (height-h)//2 + 40), config.NAME, font=font) #made by
-       draw.text(((width-w)//2 - 90, (height-h)//2 + 15), text, font=font, fill=color)
+       draw.text(((width-w)//2 - 120, (height-h)//2 + 15), text, font=font, fill=color)
        img = img.resize((int(width*1.5), int(height*1.5)), Image.LANCZOS)
        path = f"{chat_id}rw.jpg"
        img.save(path)

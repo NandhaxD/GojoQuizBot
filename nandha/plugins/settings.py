@@ -44,6 +44,12 @@ async def cb_settings(_, query):
         , reply_markup=InlineKeyboardMarkup(button))
        
 
+
+
+################################################################################################################################
+
+
+# Quiz Codes
                                   
 @bot.on_callback_query(filters.regex('^cb_quiz'))
 async def customize_quize(_, query):
@@ -73,7 +79,9 @@ async def customize_quize(_, query):
 
 
 
-# BELOW CODES RELATED TO RIDDLE 
+################################################################################################################################
+
+# CODES RELATED TO RIDDLE 
 
 
         
@@ -87,7 +95,7 @@ async def customize_riddle(_, query):
       else:  
         button = [[
               InlineKeyboardButton(text='Math Riddle', callback_data=f'rmath:{user_id}'),
-              InlineKeyboardButton(text='Comming Soon', callback_data=f'cs:{user_id}'),
+              InlineKeyboardButton(text='Words Riddle', callback_data=f'rwords:{user_id}'),
         ],[
               InlineKeyboardButton(text='Comming Soon', callback_data=f'cs:{user_id}'),
               InlineKeyboardButton(text='Comming Soon', callback_data=f'cs:{user_id}')
@@ -103,8 +111,11 @@ async def customize_riddle(_, query):
         )
        
 
+
 @bot.on_callback_query(filters.regex('^cs'))
 async def comming_soon(_, query):
       return await query.answer('I have no idea about what i next add for riddle so please if you have some idea kindly share to @Nandha', show_alert=True)
-  
+
+################################################################################################################################
+
      

@@ -16,6 +16,18 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 
 
+
+async def ask_start_pm(user_id: int, message):
+    users = await get_users()    
+    if not user_id in users:
+         button = [[InlineKeyboardButton('Pm start', url=f'{config.NAME}.t.me?start=start')]]
+         await message.reply(
+             f'⛔ Hello, {message.from_user.mention} start the bot in private and then start answering in {message.chat.title} 💫',
+             reply_markup=InlineKeyboardMarkup(button))
+         return False
+    else:
+         return True
+
 anime_gif_key = [
        "lurk", "shoot", "sleep", "shrug", "stare", "wave", "poke", "smile", "peck",
        "wink", "blush", "smug", "tickle", "yeet", "think", "highfive", "feed",
@@ -32,36 +44,7 @@ async def get_anime_gif(key):
 
 async def change_text(text):
        return "Enabled" if text == True else "Disabled" if text == False else text
-              
-
-async def get_rmath_lb(chat_id: str):
-       db = DATABASE['USERS']
-       user_points = {}
-       for user_data in db.find():
-            user_id = user_data['user_id']
-            data = user_data['data']
-            if 'riddle' in data and 'math' in data['riddle'] and str(chat_id) in data['riddle']['math']:
-                  points = data['riddle']['math'][str(chat_id)]
-                  user_points[user_id] = points
-       sorted_user_points = sorted(user_points.items(), key=lambda x: x[1], reverse=True)
-       return sorted_user_points
-
-
-
-async def ask_start_pm(user_id: int, message):
-    users = await get_users()    
-    if not user_id in users:
-         button = [[InlineKeyboardButton('Pm start', url=f'{config.NAME}.t.me?start=start')]]
-         await message.reply(
-             f'⛔ Hello, {message.from_user.mention} start the bot in private and then start answering in {message.chat.title} 💫',
-             reply_markup=InlineKeyboardMarkup(button))
-         return False
-    else:
-         return True
-           
-     
-    
-    
+                
 async def restart():
     cmd = sys.argv #List of command-line arguments passed to the script.
     executable = sys.executable #Path to the current Python interpreter executable.
@@ -85,8 +68,15 @@ async def taken_time(start_time: str, end_time: str):
 
 
 
-async def get_question():  
-    
+
+
+
+################################################################################################################
+
+
+#Riddle #math #function
+
+async def get_question():     
      symbol = ['+','-','*']
      num1=random.randint(20, 44)
      syb1=random.choice(symbol)
@@ -143,6 +133,54 @@ async def make_math_riddle(chat_id: int):
      img.save(path)    
      return path, answer, question 
 
+async def get_rmath_lb(chat_id: str):
+       db = DATABASE['USERS']
+       user_points = {}
+       for user_data in db.find():
+            user_id = user_data['user_id']
+            data = user_data['data']
+            if 'riddle' in data and 'math' in data['riddle'] and str(chat_id) in data['riddle']['math']:
+                  points = data['riddle']['math'][str(chat_id)]
+                  user_points[user_id] = points
+       sorted_user_points = sorted(user_points.items(), key=lambda x: x[1], reverse=True)
+       return sorted_user_points
 
 
+################################################################################################################
+
+
+#riddle #words #function
+
+
+def get_random_word():
+   with open("./resources/words_alpha.txt", "r") as f:
+       words = [line.strip() for line in f.readlines()]
+   random_word = random.choice(words)
+   return random_word
+
+async def make_riddle_words(chat_id: int):
+       img_url = "https://raw.githubusercontent.com/NandhaxD/-GojoQuizBot/main/images/20240609_150801.jpg?token=GHSAT0AAAAAACRCT3MQGDCKKU7NCM6COPDEZTFPWMA"
+       img = Image.open(io.BytesIO(requests.get(img_url).content))
+       draw = ImageDraw.Draw(img)
+       url = "https://github.com/JulietaUla/Montserrat/raw/master/fonts/otf/Montserrat-ExtraBold.otf"
+       k = requests.get(url)
+       open(url.split("/")[-1], "wb").write(k.content)
+       font = ImageFont.truetype(url.split("/")[-1], size=50)
+       tbox = font.getbbox('happy')
+       w = tbox[2] - tbox[0]
+       h = tbox[3] - tbox[1]
+       width, height = img.size
+       position = (width // 2, height // 2)
+       color = (0, 0, 0)  # Change to black
+       text = get_random_word()
+       draw.text(((width-w)//2 + 180, (height-h)//2 + 40), config.NAME, font=font) #made by
+       draw.text(((width-w)//2 - 90, (height-h)//2 + 15), text, font=font, fill=color)
+       img = img.resize((int(width*1.5), int(height*1.5)), Image.LANCZOS)
+       path = f"{chat_id}rw.jpg"
+       img.save(path)
+       return path, text
+       
+
+       
+       
 

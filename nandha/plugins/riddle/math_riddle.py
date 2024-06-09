@@ -8,9 +8,10 @@ from pyrogram import filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from nandha.database.riddle.math_riddle import is_chat_riddle, get_chat_sleep, off_chat, on_chat, save_chat_riddle, clear_chat_riddle, get_chat_riddle
 from nandha.database.points import add_points, get_points
+from nandha.database.users import update_name
 from nandha.database.chats import add_chat
-from nandha.helpers.func import get_question, ask_start_pm, make_math_riddle
-from nandha import bot, DATABASE
+from nandha.helpers.func import get_question, ask_start_pm, make_math_riddle, taken_time
+from nandha import bot
 
 chats_id = {}
 
@@ -46,13 +47,9 @@ async def check_user_rmath_ans(_, message):
                             
                          if (await ask_start_pm(user_id, message)) == False:
                                 return 
-
-                         db = DATABASE['USERS']
-                           # for update the user name in db whenever he/she answered the riddle
-                         db.update_one(
-                                 {'user_id': user_id},
-                                 {'$set': {'data.first_name': first_name}}
-                         )
+                           
+                         await update_name(user_id, first_name) # update name of user
+                      
                          try:
                             await bot.send_reaction(
                                  chat_id=chat_id, 

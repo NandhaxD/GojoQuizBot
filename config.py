@@ -1,37 +1,42 @@
 import os
 
 
-if bool(os.getenv('ENV')) == True:
-     OWNER_ID = int(os.getenv('OWNER_ID', 5696053228))
-     BOT_TOKEN = str(os.getenv('BOT_TOKEN'))
-     API_ID = int(os.getenv('API_ID'))
-     DB_URL = str(os.getenv('DB_URL'))
-     API_HASH = str(os.getenv('API_HASH'))
-else:
-    API_ID = 1234567
-    API_HASH = '<youre hash>' # my.telegram.org
-    BOT_TOKEN = '<youre bot token>' # my.telegram.org
-    DB_URL = '<db url>' #mongodb.com
+####################################################################################################
 
 
+# required variable's
 
-# default variable
-DEVS_ID = [ 5456798232, 5696053228, 7132604388]
+OWNER_ID = int(os.getenv('OWNER_ID', 5696053228))
+BOT_TOKEN = str(os.getenv('BOT_TOKEN'))
+API_ID = int(os.getenv('API_ID'))
+DB_URL = str(os.getenv('DB_URL'))
+API_HASH = str(os.getenv('API_HASH'))
 
-if not OWNER_ID in DEVS_ID:
-    DEVS_ID.append(OWNER_ID)
-     
+
+####################################################################################################
+
+# infos
+
 NAME = 'GojoQuizBot'
 SUPPORT = 'NandhaSupport'
 CHANNEL = 'Nandhabots'
 GROUP_ID =  -1002039454048
+BOT_ID = int(BOT_TOKEN.split(':')[0])
+DEVS_ID = [ 5456798232, 5696053228, 7132604388]
+
+####################################################################################################
+
+
+# tools
+
+START_IMAGE = 'https://graph.org/file/15a7cc4a22cad1f6189f0.jpg'
 PREFIXES = ['/', '\\']
 EMOJI = ['❤️', '⚡️', '😈', '👍', '🔥']
-BOT_ID = int(BOT_TOKEN.split(':')[0])
+
+####################################################################################################
 
 
-
-
+# Images #bgs #game #riddle #quiz
 
 RIDDLE_MATH_BG = [
      "https://graph.org/file/9b165baf9de57406d76ca.jpg",
@@ -40,6 +45,10 @@ RIDDLE_MATH_BG = [
      "https://graph.org/file/010811dae00123d74ad41.jpg"
 ]
 
-START_IMAGE = 'https://graph.org/file/15a7cc4a22cad1f6189f0.jpg'
-RIDDLE_ANSWER_GIF = 'https://graph.org/file/37cd114c92e1d74c9cc07.mp4'
 
+RIDDLE_WORDS_BG = [
+"https://graph.org/file/b4089de39d879004cc683.jpg"
+]
+
+
+####################################################################################################

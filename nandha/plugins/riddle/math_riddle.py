@@ -40,7 +40,7 @@ async def check_user_rmath_ans(_, message):
                     text = message.text
                     if not text.isdigit():
                        return
-                    elif text == answer:
+                    elif int(text) == answer:
                          mention = message.from_user.mention
                          user_id = message.from_user.id
                          first_name = message.from_user.first_name

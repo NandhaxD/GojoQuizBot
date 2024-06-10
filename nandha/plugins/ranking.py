@@ -131,6 +131,7 @@ async def rwords_top(_, query):
            button = [[ InlineKeyboardButton('Back ⬅️', callback_data=f'riddletop:{admin_id}') ]]
            return await query.message.edit(text,
                                     reply_markup=InlineKeyboardMarkup(button)
+                                           )
 
 @bot.on_callback_query(filters.regex('^rwordsgtop'))
 async def rwords_gtop(_, query):
@@ -156,5 +157,6 @@ async def rwords_gtop(_, query):
            button = [[ InlineKeyboardButton('Back ⬅️', callback_data=f'riddletop:{admin_id}') ]]
            return await query.message.edit(text,
                                     reply_markup=InlineKeyboardMarkup(button)
+                                          )
 
        

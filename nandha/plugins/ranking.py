@@ -5,15 +5,16 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from nandha.helpers.decorator import admin_only
 from nandha.helpers.leaderboard import get_rmath_group, get_rmath_global
 from nandha.database.chats import add_chat
+from nandha.helpers.scripts import react
 from nandha import bot
 
 
 
-@bot.on_message(filters.command('tops', prefixes=config.PREFIXES) & ~filters.private)
+@bot.on_message(filters.command(['tops','top', 'leaderboard'], prefixes=config.PREFIXES) & ~filters.private)
 async def leaderboard(_, message):
          user_id = message.from_user.id
          chat_id = message.chat.id
-         
+         await react(message)
          button = [[
                 InlineKeyboardButton('🌟 Riddle', callback_data=f'riddletop:{user_id}'),
                 InlineKeyboardButton('💫 Quiz', callback_data=f'quiztop:{user_id}')

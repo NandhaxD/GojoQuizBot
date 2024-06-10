@@ -4,7 +4,7 @@ from pyrogram import filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from nandha.helpers.decorator import admin_only
 from nandha.helpers.leaderboard import (
-get_rmath_group, get_rmath_global, get_rwords_group, get_rwords_global
+get_riddle_group, get_riddle_global
 )
 from nandha.database.chats import add_chat
 from nandha.helpers.scripts import react
@@ -65,7 +65,7 @@ async def rmath_top(_, query):
        else:
            chat_id = query.message.chat.id
            name = query.message.chat.title
-           sorted_user_riddle_points = await get_rmath_group(chat_id)
+           sorted_user_riddle_points = await get_riddle_group(chat_id=chat_id, type='math')
            text = f'🏆 ** Chat Top R-M Users in {name}** 👥\n\n'
            for i, (user_id, points) in enumerate(sorted_user_riddle_points[:15]):
               if str(user_id).isdigit():                       
@@ -91,7 +91,7 @@ async def rmath_gtop(_, query):
        else:
            name = query.message.chat.title
            text = f'🏆 **Global Top R-M Users In {name}**\n\n'
-           sorted_leaderboard = await get_rmath_global()
+           sorted_leaderboard = await get_riddle_global(type='math')
            for i, (user_id, points) in enumerate(sorted_leaderboard.items()):
                   if i >= 15:
                      break
@@ -119,7 +119,7 @@ async def rwords_top(_, query):
        else:
            chat_id = query.message.chat.id
            name = query.message.chat.title
-           sorted_user_riddle_points = await get_rwords_group(chat_id)
+           sorted_user_riddle_points = await get_riddle_group(chat_id=chat_id, type='words')
            text = f'🏆 **Chat Top R-W Users In {name}** 👥\n\n'
            for i, (user_id, points) in enumerate(sorted_user_riddle_points[:15]):
               if str(user_id).isdigit():                       
@@ -143,7 +143,7 @@ async def rwords_gtop(_, query):
        else:
            name = query.message.chat.title
            text = f'🏆 **Global Top R-W Users in {name}**\n\n'
-           sorted_leaderboard = await get_rwords_global()
+           sorted_leaderboard = await get_riddle_global(type='words')
            for i, (user_id, points) in enumerate(sorted_leaderboard.items()):
                   if i >= 15:
                      break

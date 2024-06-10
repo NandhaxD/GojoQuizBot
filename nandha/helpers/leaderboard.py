@@ -8,7 +8,7 @@ from nandha import DATABASE
 
 #riddle 
 
-async def get_rmath_global(type: str):
+async def get_riddle_global(type: str):
      db = DATABASE['USERS']
      all_users = db.find({})
      leaderboard = defaultdict(int)
@@ -29,7 +29,7 @@ async def get_rmath_global(type: str):
      return sorted_leaderboard
   
 
-async def get_rmath_group(chat_id: str, type: str):
+async def get_riddle_group(chat_id: str, type: str):
        db = DATABASE['USERS']
        user_points = {}
        for user_data in db.find():

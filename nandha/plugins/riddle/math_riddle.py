@@ -10,7 +10,8 @@ from nandha.database.riddle.math_riddle import is_chat_riddle, get_chat_sleep, o
 from nandha.database.points import add_points, get_points
 from nandha.database.users import update_name
 from nandha.database.chats import add_chat
-from nandha.helpers.func import get_question, ask_start_pm, make_math_riddle, taken_time
+from nandha.helpers.func import get_question, make_math_riddle, taken_time
+from nandha.helpers.scripts import ask_start_pm, react
 from nandha import bot
 
 chats_id = {}
@@ -50,16 +51,8 @@ async def check_user_rmath_ans(_, message):
                                 return 
                            
                          await update_name(user_id, first_name) # update name of user
+                         await react(message)
                       
-                         try:
-                            await bot.send_reaction(
-                                 chat_id=chat_id, 
-                                 message_id=msg_id, 
-                                 emoji=random.choice(config.EMOJI), 
-                                 big=True
-                         )
-                         except: 
-                             pass
                          end_time = str(message.date).split()[1]
                          a_time = await taken_time(
                                 start_time=start_time, 

@@ -3,7 +3,27 @@ from nandha import DATABASE
 
 db = DATABASE['USERS']
 
-async def get_points(chat_id: int, user_id: int, module: str, type: str):
+
+
+async def get_user_points(user_id: str, module: str, type: str)
+    points = 0
+    user = db.find_one({'user_id': user_id})
+    data = user.get('data', {}).get(module, {}).get(type, {})
+    if not data:
+        return points
+    else:
+       for point in data.values():
+            points += point
+       return points
+    
+    
+
+      
+
+
+####################################################################################################
+
+async def get_user_chat_points(chat_id: int, user_id: int, module: str, type: str):
         filter = {'user_id': user_id}
         user = db.find_one(filter)
         if user:
@@ -12,7 +32,7 @@ async def get_points(chat_id: int, user_id: int, module: str, type: str):
         else:
             return False
     
-async def edit_points(chat_id: int, user_id: int, module: str, type: str, point: int):
+async def edit_user_chat_points(chat_id: int, user_id: int, module: str, type: str, point: int):
         filter = {'user_id': user_id}
         user = db.find_one(filter)
         if user:
@@ -25,7 +45,7 @@ async def edit_points(chat_id: int, user_id: int, module: str, type: str, point:
         else:
             return False
 
-async def add_points(chat_id: int, user_id: int, module: str, type: str):
+async def add_user_chat_points(chat_id: int, user_id: int, module: str, type: str):
         filter = {'user_id': user_id}
         user = db.find_one(filter)
         if user:
@@ -49,4 +69,4 @@ async def add_points(chat_id: int, user_id: int, module: str, type: str):
         else:
              return False
 
-
+####################################################################################################

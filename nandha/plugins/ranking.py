@@ -42,6 +42,7 @@ async def riddletop(_, query):
             button = [[
              InlineKeyboardButton('𝗖𝗵𝗮𝘁 𝗥-𝗠', callback_data=f'rmathtop:{admin_id}'),
              InlineKeyboardButton('𝗚𝗹𝗼𝗯𝗮𝗹 𝗥-𝗠', callback_data=f'rmathgtop:{admin_id}'),
+            ],[
              InlineKeyboardButton('𝗖𝗵𝗮𝘁 𝗥-𝗪', callback_data=f'rwordstop:{admin_id}'),
              InlineKeyboardButton('𝗚𝗹𝗼𝗯𝗮𝗹 𝗥-𝗪', callback_data=f'rwordsgtop:{admin_id}')       
                    
@@ -66,7 +67,7 @@ async def rmath_top(_, query):
            chat_id = query.message.chat.id
            name = query.message.chat.title
            sorted_user_riddle_points = await get_riddle_group(chat_id=chat_id, type='math')
-           text = f'🏆 ** Chat Top R-M Users in {name}** 👥\n\n'
+           text = f'🏆 ** Chat Top Riddle Math Users in {name}** ✨\n\n'
            for i, (user_id, points) in enumerate(sorted_user_riddle_points[:15]):
               if str(user_id).isdigit():                       
                  text += f'{i+1}. **[{user_id}](tg://user?id={user_id})**: `{points}`\n'
@@ -90,7 +91,7 @@ async def rmath_gtop(_, query):
               )
        else:
            name = query.message.chat.title
-           text = f'🏆 **Global Top R-M Users In {name}**\n\n'
+           text = f'🏆 **Global Top Riddle math Users In {name} ✨**\n\n'
            sorted_leaderboard = await get_riddle_global(type='math')
            for i, (user_id, points) in enumerate(sorted_leaderboard.items()):
                   if i >= 15:
@@ -120,7 +121,7 @@ async def rwords_top(_, query):
            chat_id = query.message.chat.id
            name = query.message.chat.title
            sorted_user_riddle_points = await get_riddle_group(chat_id=chat_id, type='words')
-           text = f'🏆 **Chat Top R-W Users In {name}** 👥\n\n'
+           text = f'🏆 **Chat Top Riddle Words Users In {name}** ✨\n\n'
            for i, (user_id, points) in enumerate(sorted_user_riddle_points[:15]):
               if str(user_id).isdigit():                       
                  text += f'{i+1}. **[{user_id}](tg://user?id={user_id})**: `{points}`\n'
@@ -143,7 +144,7 @@ async def rwords_gtop(_, query):
               )
        else:
            name = query.message.chat.title
-           text = f'🏆 **Global Top R-W Users in {name}**\n\n'
+           text = f'🏆 **Global Top Riddle Words Users in {name}**\n\n'
            sorted_leaderboard = await get_riddle_global(type='words')
            for i, (user_id, points) in enumerate(sorted_leaderboard.items()):
                   if i >= 15:

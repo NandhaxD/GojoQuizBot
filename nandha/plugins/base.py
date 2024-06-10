@@ -6,11 +6,11 @@ from nandha.database.users import add_user
 from nandha.database.chats import add_chat
 from pyrogram import filters, enums
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-
+from nandha.helpers.scripts import react
 
 
 async def start_message(name, message):
-    
+    await react(message)
     return await message.reply_photo(photo=config.START_IMAGE,
               caption="Welcome {name}! I'm Gojo Satoru, a quiz bot here to train you and boost your knowledge. Join our support channel. Thank you for using!".format(name=name),
        reply_markup=InlineKeyboardMarkup(

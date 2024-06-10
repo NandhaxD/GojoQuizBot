@@ -17,6 +17,8 @@ from nandha import bot
 
 
 
+THUMB_ID = "./resources/GojoQuiz.jpg"
+
 
 def p(*args, **kwargs):
     print(*args, **kwargs)
@@ -41,7 +43,8 @@ async def statics(_, message):
          f'<b>Chats</b>: <code>{chats}</code>\n\n'
          f'<b>By @{config.CHANNEL}</b>'
       )
-	
+
+
 @bot.on_message(filters.command('restart', prefixes=config.PREFIXES))
 @devs_only
 async def retart_script(_, message):

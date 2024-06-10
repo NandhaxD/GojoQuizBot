@@ -61,7 +61,7 @@ RIDDLE_ANSWER_GIF = 'https://graph.org/file/37cd114c92e1d74c9cc07.mp4'
 #String #game #riddle #quiz
 
 
-STATS = (
+STATS_STRING = (
      "**{} 𝗦𝘁𝗮𝘁𝘀**:\n\n"
      "𝗥𝗜𝗗𝗗𝗟𝗘:\n"
      "  ✪ Math points ➩ {}\n"

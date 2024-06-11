@@ -50,10 +50,10 @@ async def stats(bot, message):
      chat_name = m.chat.title
      
      if (await ask_start_pm(user_id, message)):
-          rmath_points = get_user_chat_points(
+          rmath_points = await get_user_chat_points(
               chat_id, user_id, 'riddle', 'math'
           )
-          rwords_points = get_user_chat_points(
+          rwords_points = await get_user_chat_points(
               chat_id, user_id, 'riddle', 'words'
           )
           text = config.STATS_STRING.format(

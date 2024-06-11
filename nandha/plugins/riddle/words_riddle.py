@@ -205,7 +205,7 @@ async def sends_words_riddle(_, message):
             if riddle == 'on':
                   await clear_chat_riddle(chat_id)
                   chats_id[chat_id] = asyncio.create_task(send_words_riddle_tochat(chat_id))
-                  print(f"{types.capitalize()} task added in {message.chat.title}")                 
+                  print(f"{type.capitalize()} task added in {message.chat.title}")                 
       else:
          return 
       

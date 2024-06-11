@@ -62,6 +62,14 @@ RIDDLE_ANSWER_GIF = 'https://graph.org/file/37cd114c92e1d74c9cc07.mp4'
 #String #game #riddle #quiz
 
 
+S_STICKERS = [
+ "CAACAgUAAxkBAALnzmZojaKJX4bDz51wnwOHGa3ZbO0EAAI8EAACn2JIV-lJWjkdlCApHgQ",
+ "CAACAgUAAxkBAALn02ZojpVCCYkJGQOCUjd7RUPi6EyqAAJpDwACim6xVg7ShW4Xm3hkHgQ",
+ "CAACAgUAAxkBAALn1mZojs4nrmgkGXmwYgj-wWkGEMfIAAJEFQACqvWoVoI0H5FDdmu8HgQ",
+ "CAACAgUAAxkBAALn4mZokTKQDIEIWe7wrony-YKTldqWAALZDAACpMtIV216Zo3l6fqYHgQ"
+]
+     
+
 STATS_STRING = (
      "**{name}'s 𝗦𝘁𝗮𝘁𝘀 in {chat_name}**:\n\n"
      "➤ 𝐑𝐢𝐝𝐝𝐥𝐞:\n"

@@ -20,6 +20,8 @@ type = 'words'
 
 
 
+
+
 @bot.on_message(filters.text & ~filters.private & ~filters.bot, group=-3 )
 async def check_user_rwords_ans(_, message):
         chat_id = message.chat.id
@@ -68,6 +70,7 @@ async def check_user_rwords_ans(_, message):
                  except Exception as e:
                        return await send_errors(message, e)
                  
+
 
 
 @bot.on_callback_query(filters.regex('^rwords'))
@@ -168,11 +171,16 @@ async def send_words_riddle_tochat(chat_id: int):
            while True:                                 
                sleep_time = int(await get_chat_sleep(chat_id))
                photo, text = await make_words_riddle(chat_id)   
-               
+               button = types.InlineKeyboardMarkup(
+                 [[types.InlineKeyboardButton('✨ Meaning ✨', callback_data=f"define:{text}")]]
+               )
+             
                msg = await bot.send_photo(
                     chat_id=chat_id,
                     photo=photo, 
-                    caption="<code>🔥 Solve the Riddle 🔥</code>")
+                    caption="<code>🔥 Solve the Riddle 🔥</code>",
+                    reply_markup=button
+               )
                await save_chat_riddle(
                   chat_id=chat_id,
                   text=text,
@@ -204,4 +212,21 @@ async def sends_words_riddle(_, message):
       
 
 
-
+@bot.on_callback_query(filters.regex("^define"))
+async def definition(bot, query: types.CallbackQuery):
+     word = query.data.split(':')[1]
+     from urllib.parse import quote
+     api_url = f"https://api.dictionaryapi.dev/api/v2/entries/en/{quote(word)}"
+     response = requests.get(url).json()
+     error = response.get('message')
+     if error:
+         meaning = error
+     else:
+         meaning = response[0]['meanings'][0]['definitions'][0]['definition']
+     text = (
+       f"**🔍 Definition for Word**: {word}\n\n"
+       f"**✨ Meaning**: {meaning}"
+     )
+     await query.answer(text=text, show_alert=True)
+     await asyncio.sleep(4)
+                             

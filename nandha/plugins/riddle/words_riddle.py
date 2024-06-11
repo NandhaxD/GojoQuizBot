@@ -172,7 +172,7 @@ async def send_words_riddle_tochat(chat_id: int):
                sleep_time = int(await get_chat_sleep(chat_id))
                photo, text = await make_words_riddle(chat_id)   
                button = types.InlineKeyboardMarkup(
-                 [[types.InlineKeyboardButton('✨ Meaning ✨', callback_data=f"define:{text}")]]
+                 [[types.InlineKeyboardButton('🔍 Meaning', callback_data=f"define:{text}")]]
                )
              
                msg = await bot.send_photo(
@@ -226,9 +226,8 @@ async def definition(bot, query: types.CallbackQuery):
          meaning = response[0]['meanings'][0]['definitions'][0]['definition']
        
      text = (
-       f"**🔍 Definition for Word**: {word}\n\n"
-       f"**✨ Meaning**: {meaning}"
+       f"🔍 Definition for Word: {word}\n\n"
+       f"✨ Meaning: {meaning}"
      )
      await query.answer(text=text, show_alert=True)
-     await asyncio.sleep(4)
                              

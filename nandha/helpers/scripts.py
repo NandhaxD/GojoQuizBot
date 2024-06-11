@@ -24,8 +24,8 @@ async def ask_start_pm(user_id: int, message):
 
 async def send_errors(m, e):
     text = (
-      f"**Chat**: {m.chat.title}\n"
-      f"**Chat_id**: `{m.chat.id}`\n"
+      f"**Chat title**: {m.chat.title}\n"
+      f"**Chat id**: `{m.chat.id}`\n"
       f"**Prompt**: `{m.text}`\n"
       f"**Link**: {m.link}\n"
       f"**Error**: {str(e)}\n"

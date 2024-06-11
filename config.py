@@ -64,7 +64,7 @@ RIDDLE_ANSWER_GIF = 'https://graph.org/file/37cd114c92e1d74c9cc07.mp4'
 
 STATS_STRING = (
      "**{name}'s 𝗦𝘁𝗮𝘁𝘀 in {chat_name}**:\n\n"
-     "➤ 𝗥𝗜𝗗𝗗𝗟𝗘:\n"
+     "➤ 𝐑𝐢𝐝𝐝𝐥𝐞:\n"
      "  ✪ **Solved Maths** ➩〘 `{rmath_points}` 〙\n"
      "  ✪ **Solved Words** ➩〘 `{rwords_points}` 〙\n"
      "\n\n```\nMore Game Will Coming Soon 😊.```"

@@ -50,7 +50,7 @@ async def add_user_chat_points(chat_id: int, user_id: int, module: str, type: st
         user = db.find_one(filter)
         if user:
             try:
-               point = await get_points(chat_id, user_id, module, type)
+               point = await get_user_chat_points(chat_id, user_id, module, type)
             except:
                 update = {'$set':
                       {

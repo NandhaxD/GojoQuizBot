@@ -49,7 +49,7 @@ async def stats(bot, message):
      name = m.from_user.first_name
      chat_name = m.chat.title
      
-     if (await ask_start_pm(user_id)):
+     if (await ask_start_pm(user_id, message)):
           rmath_points = get_user_chat_points(
               chat_id, user_id, 'riddle', 'math'
           )

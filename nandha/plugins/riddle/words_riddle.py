@@ -218,7 +218,7 @@ async def definition(bot, query: types.CallbackQuery):
      from urllib.parse import quote
      import requests
      api_url = f"https://api.dictionaryapi.dev/api/v2/entries/en/{quote(word)}"
-     response = requests.get(url).json()
+     response = requests.get(api_url).json()
      error = response.get('message')
      if error:
          meaning = error

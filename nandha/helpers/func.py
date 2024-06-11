@@ -17,29 +17,6 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 
 
-async def ask_start_pm(user_id: int, message):
-    users = await get_users()    
-    if not user_id in users:
-         button = [[InlineKeyboardButton('Pm start', url=f'{config.NAME}.t.me?start=start')]]
-         await message.reply(
-             f'⛔ Hello, {message.from_user.mention} start the bot in private and then start answering in {message.chat.title} 💫',
-             reply_markup=InlineKeyboardMarkup(button))
-         return False
-    else:
-         return True
-
-anime_gif_key = [
-       "lurk", "shoot", "sleep", "shrug", "stare", "wave", "poke", "smile", "peck",
-       "wink", "blush", "smug", "tickle", "yeet", "think", "highfive", "feed",
-       "bite", "bored", "nom", "yawn", "facepalm", "cuddle", "kick", "happy",
-       "hug", "baka", "pat", "nod", "nope", "kiss", "dance", "punch", "handshake",
-       "slap", "cry", "pout", "handhold", "thumbsup", "laugh"]
-
-async def get_anime_gif(key):
-    data = requests.get(f"https://nekos.best/api/v2/{key}").json()
-    img = data['results'][0]["url"]
-    return img
-
 
 
 async def change_text(text):
@@ -50,22 +27,27 @@ async def restart():
     executable = sys.executable #Path to the current Python interpreter executable.
     os.execvp(executable, [ executable, *cmd ]) # Executes the program using the given path and arguments.
     return True
-    
-async def taken_time(start_time: str, end_time: str):
+
+
+
+async def time_diffrence(start_time: str, end_time: str):
     time_format = "%H:%M:%S"
     time1 = datetime.strptime(start_time, time_format)
     time2 = datetime.strptime(end_time, time_format)
-    # Calculate the difference in seconds
     time_diff_seconds = (time2 - time1).total_seconds()
+    return time_diff_seconds
+  
+
+async def taken_time(start_time: str, end_time: str):
+    time_diff_seconds = await time_diffrence(start_time, end_time)
     time_diff_seconds = round(time_diff_seconds, 3)
     if time_diff_seconds > 60:
-            time_diff_minutes = time_diff_seconds / 60
-            time_diff_minutes = round(time_diff_minutes, 3)
-            return f"{time_diff_minutes}Min"
-    # Convert seconds to minutes
+          time_diff_minutes = time_diff_seconds / 60
+          time_diff_minutes = round(time_diff_minutes, 3)
+          return f"{time_diff_minutes:.2f} Min"
+          # Convert seconds to minutes
     else:
-         return f"{time_diff_seconds}Sec"
-
+          return f"{time_diff_seconds:.2f} Sec"
 
 
 

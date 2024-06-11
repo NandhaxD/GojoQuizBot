@@ -7,7 +7,7 @@ from nandha.database.chats import add_chat
 from pyrogram import filters, enums
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from nandha.helpers.scripts import react, ask_start_pm
-from nandha.database.points import get_user_points
+from nandha.database.points import get_user_chat_points
 
 
 async def start_message(name, message):
@@ -42,10 +42,25 @@ async def start(_, message):
 @bot.on_message(filters.command("stats", prefixes=config.PREFIXES))
 async def stats(bot, message):
      m = message
-     if m.from_user:
+     if m.chat.type == enums.ChatType.PRIVATE or not m.from_user:
          return
      user_id = m.from_user.id
+     chat_id = m.chat.id
+     name = m.from_user.first_name
+     chat_name = m.chat.title
+     
      if (await ask_start_pm(user_id)):
-          return
-
+          rmath_points = get_user_chat_points(
+              chat_id, user_id, 'riddle', 'math'
+          )
+          rwords_points = get_user_chat_points(
+              chat_id, user_id, 'riddle', 'words'
+          )
+          text = config.STATS_STRING(
+               name=name,
+               chat_name=chat_name,
+               rmath_points=rmath_points,
+               rwords_points=rwords_points
+          )
+          await m.reply_text(text)
   

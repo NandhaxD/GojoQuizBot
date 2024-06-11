@@ -219,11 +219,12 @@ async def definition(bot, query: types.CallbackQuery):
      import requests
      api_url = f"https://api.dictionaryapi.dev/api/v2/entries/en/{quote(word)}"
      response = requests.get(api_url).json()
-     error = response.get('message')
-     if error:
-         meaning = error
+     
+     if isinstance(response, dict):
+         meaning = response.get('message')
      else:
          meaning = response[0]['meanings'][0]['definitions'][0]['definition']
+       
      text = (
        f"**🔍 Definition for Word**: {word}\n\n"
        f"**✨ Meaning**: {meaning}"

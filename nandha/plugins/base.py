@@ -56,7 +56,7 @@ async def stats(bot, message):
           rwords_points = get_user_chat_points(
               chat_id, user_id, 'riddle', 'words'
           )
-          text = config.STATS_STRING(
+          text = config.STATS_STRING.format(
                name=name,
                chat_name=chat_name,
                rmath_points=rmath_points,

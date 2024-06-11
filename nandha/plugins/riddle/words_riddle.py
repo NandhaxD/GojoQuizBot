@@ -4,7 +4,7 @@ import config
 import asyncio
 import random
 
-from pyrogram import filters 
+from pyrogram import filters, types
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from nandha.database.riddle.words_riddle import is_chat_riddle, get_chat_sleep, off_chat, on_chat, save_chat_riddle, clear_chat_riddle, get_chat_riddle
 from nandha.database.points import add_user_chat_points, get_user_chat_points

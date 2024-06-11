@@ -7,17 +7,21 @@ import random
 from pyrogram import filters 
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from nandha.database.riddle.math_riddle import is_chat_riddle, get_chat_sleep, off_chat, on_chat, save_chat_riddle, clear_chat_riddle, get_chat_riddle
-from nandha.database.points import add_points, get_points
+from nandha.database.points import add_user_chat_points, get_user_chat_points
 from nandha.database.users import update_name
 from nandha.database.chats import add_chat
 from nandha.helpers.func import get_question, make_math_riddle, taken_time
 from nandha.helpers.scripts import ask_start_pm, react
 from nandha import bot
 
-chats_id = {}
+
+
+module = 'riddle'
+type = 'math'
 
 
 
+chats_id = {} # temp chat ids
 
 @bot.on_message(filters.text & ~filters.private & ~filters.bot, group=-2 )
 async def check_user_rmath_ans(_, message):
@@ -59,11 +63,11 @@ async def check_user_rmath_ans(_, message):
                                  end_time=end_time
                         ) 
                          await clear_chat_riddle(chat_id)
-                         await add_points(chat_id, user_id, 'riddle', 'math')
-                         points = await get_points(chat_id, user_id, 'riddle', 'math')
+                         await add_user_chat_points(chat_id, user_id, module, type)
+                         points = await get_user_chat_points(chat_id, user_id, module, type)
                          
                          await message.reply_text(
-                           text=config.RIDDLE_WINNER_STRING.format(first_name, 'MATH', points, a_time)
+                           text=config.RIDDLE_WINNER_STRING.format(first_name, type.upper(), points, a_time)
                          )
                  except Exception as e:
                        print(

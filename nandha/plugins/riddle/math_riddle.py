@@ -11,7 +11,7 @@ from nandha.database.points import add_user_chat_points, get_user_chat_points
 from nandha.database.users import update_name
 from nandha.database.chats import add_chat
 from nandha.helpers.func import get_question, make_math_riddle, taken_time
-from nandha.helpers.scripts import ask_start_pm, react
+from nandha.helpers.scripts import ask_start_pm, react, send_errors
 from nandha import bot
 
 
@@ -70,12 +70,7 @@ async def check_user_rmath_ans(_, message):
                            text=config.RIDDLE_WINNER_STRING.format(first_name, type.upper(), points, a_time)
                          )
                  except Exception as e:
-                       print(
-                         f"chat_name: {chat_name}\n"
-                         f"chat_id: {chat_id}\n"
-                         f"prompt: {text}\n"
-                         f"Error: {e}\n"
-                       )
+                       return await send_errors(message, e)
                  
 
 
@@ -195,9 +190,8 @@ async def send_math_riddle_tochat(chat_id: int):
                os.remove(photo)
                await asyncio.sleep(sleep_time)
                await clear_chat_riddle(chat_id)
-               try:      
-                 await msg.delete()
-               except: pass
+               await msg.delete()
+               
           
                
                

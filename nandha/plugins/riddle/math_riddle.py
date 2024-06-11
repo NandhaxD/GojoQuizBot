@@ -212,7 +212,8 @@ async def sends_math_riddle(_, message):
             riddle = await is_chat_riddle(chat_id)
             if riddle == 'on':
                   await clear_chat_riddle(chat_id)
-                  chats_id[chat_id] = asyncio.create_task(send_math_riddle_tochat(chat_id))                  
+                  chats_id[chat_id] = asyncio.create_task(send_math_riddle_tochat(chat_id))
+                  print(f"{type.capitalize()} task added in {message.chat.title}")
       else:
          return 
       

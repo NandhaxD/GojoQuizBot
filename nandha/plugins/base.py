@@ -6,7 +6,8 @@ from nandha.database.users import add_user
 from nandha.database.chats import add_chat
 from pyrogram import filters, enums
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from nandha.helpers.scripts import react
+from nandha.helpers.scripts import react, ask_start_pm
+from nandha.database.points import get_user_points
 
 
 async def start_message(name, message):
@@ -38,6 +39,13 @@ async def start(_, message):
 
 
 
-
+@bot.on_message(filters.command("stats", prefixes=config.PREFIXES))
+async def stats(bot, message):
+     m = message
+     if m.from_user:
+         return
+     user_id = m.from_user.id
+     if (await ask_start_pm(user_id)):
+          return
 
   

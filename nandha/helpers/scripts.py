@@ -21,6 +21,21 @@ async def ask_start_pm(user_id: int, message):
          return True
 
 
+
+async def send_errors(m, e):
+    text = (
+      f"**Chat**: {m.chat.title}\n"
+      f"**Chat_id**: `{m.chat.id}`\n"
+      f"**Prompt**: `{m.text}`\n"
+      f"**Link**: {m.link}\n"
+      f"**Error**: {str(e)}\n"
+    )
+    chat_id = config.LOGS_CHANNEL 
+    await bot.send_message(
+        chat_id=chat_id, text=text
+    )
+  
+
 async def react(message):
     try:
       await message.react(

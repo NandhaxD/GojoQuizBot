@@ -62,11 +62,11 @@ RIDDLE_ANSWER_GIF = 'https://graph.org/file/37cd114c92e1d74c9cc07.mp4'
 
 
 STATS_STRING = (
-     "**{} 𝗦𝘁𝗮𝘁𝘀**:\n\n"
+     "**{name} 𝗦𝘁𝗮𝘁𝘀 in {chat_name}**:\n\n"
      "𝗥𝗜𝗗𝗗𝗟𝗘:\n"
-     "  ✪ Math points ➩ {}\n"
-     "  ✪ Words points ➩ {}\n"
-     "\n\n```\nMore game will coming soon so share & support```"
+     "  ✪ Math points ➩ {math_points}\n"
+     "  ✪ Words points ➩ {words_points}\n"
+     "\n\n```\nMore Game Will Coming Soon.```"
 )
 
 RIDDLE_WINNER_STRING = (

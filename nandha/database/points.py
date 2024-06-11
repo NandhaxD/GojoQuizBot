@@ -5,7 +5,7 @@ db = DATABASE['USERS']
 
 
 
-async def get_user_points(user_id: str, module: str, type: str)
+async def get_user_points(user_id: str, module: str, type: str):
     points = 0
     user = db.find_one({'user_id': user_id})
     data = user.get('data', {}).get(module, {}).get(type, {})

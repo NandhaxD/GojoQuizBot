@@ -27,7 +27,7 @@ async def get_user_chat_points(chat_id: int, user_id: int, module: str, type: st
         filter = {'user_id': user_id}
         user = db.find_one(filter)
         if user:
-            point = user['data'][module][type][str(chat_id)]
+            point = user.get('data', {}).get(module, {}).get(type, {}).get(str(chat_id), 0)
             return int(point)
         else:
             return False

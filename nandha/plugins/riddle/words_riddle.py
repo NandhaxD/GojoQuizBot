@@ -15,7 +15,8 @@ from nandha.helpers.scripts import ask_start_pm, react
 from nandha import bot
 
 chats_id = {}
-
+module = 'riddle'
+type = 'words'
 
 
 
@@ -57,11 +58,11 @@ async def check_user_rwords_ans(_, message):
                                  end_time=end_time
                         ) 
                          await clear_chat_riddle(chat_id)
-                         await add_user_chat_points(chat_id, user_id, 'riddle', 'words')
-                         points = await get_user_chat_points(chat_id, user_id, 'riddle', 'words')
+                         await add_user_chat_points(chat_id, user_id, module, type)
+                         points = await get_user_chat_points(chat_id, user_id, module, type)
                          
                          await message.reply_text(
-                           text=config.RIDDLE_WINNER_STRING.format(first_name, 'WORDS', points, a_time)
+                           text=config.RIDDLE_WINNER_STRING.format(first_name, type.upper(), points, a_time)
                          )
                                  
                  except Exception as e:
@@ -204,7 +205,7 @@ async def sends_words_riddle(_, message):
             if riddle == 'on':
                   await clear_chat_riddle(chat_id)
                   chats_id[chat_id] = asyncio.create_task(send_words_riddle_tochat(chat_id))
-                  print(f"Words task added in {message.chat.title}")                 
+                  print(f"{types.capitalize()} task added in {message.chat.title}")                 
       else:
          return 
       

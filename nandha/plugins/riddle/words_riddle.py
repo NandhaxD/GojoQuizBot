@@ -7,7 +7,7 @@ import random
 from pyrogram import filters 
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from nandha.database.riddle.words_riddle import is_chat_riddle, get_chat_sleep, off_chat, on_chat, save_chat_riddle, clear_chat_riddle, get_chat_riddle
-from nandha.database.points import add_points, get_points
+from nandha.database.points import add_user_chat_points, get_user_chat_points
 from nandha.database.users import update_name
 from nandha.database.chats import add_chat
 from nandha.helpers.func import get_question, make_words_riddle, taken_time
@@ -57,8 +57,8 @@ async def check_user_rwords_ans(_, message):
                                  end_time=end_time
                         ) 
                          await clear_chat_riddle(chat_id)
-                         await add_points(chat_id, user_id, 'riddle', 'words')
-                         points = await get_points(chat_id, user_id, 'riddle', 'words')
+                         await add_user_chat_points(chat_id, user_id, 'riddle', 'words')
+                         points = await get_user_chat_points(chat_id, user_id, 'riddle', 'words')
                          
                          await message.reply_text(
                            text=config.RIDDLE_WINNER_STRING.format(first_name, 'WORDS', points, a_time)

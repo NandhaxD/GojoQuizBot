@@ -216,6 +216,7 @@ async def sends_words_riddle(_, message):
 async def definition(bot, query: types.CallbackQuery):
      word = query.data.split(':')[1]
      from urllib.parse import quote
+     import requests
      api_url = f"https://api.dictionaryapi.dev/api/v2/entries/en/{quote(word)}"
      response = requests.get(url).json()
      error = response.get('message')

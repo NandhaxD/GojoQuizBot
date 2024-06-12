@@ -21,7 +21,7 @@ NAME = 'GojoQuizBot'
 SUPPORT = 'NandhaSupport'
 CHANNEL = 'Nandhabots'
 GROUP_ID =  -1002039454048
-LOGS_CHANNEL = -1002247906850
+LOGS_CHANNEL = 'GojoQuizLogs'
 BOT_ID = int(BOT_TOKEN.split(':')[0])
 DEVS_ID = [5696053228, 5456798232]
 

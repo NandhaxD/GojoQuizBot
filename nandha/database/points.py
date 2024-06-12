@@ -45,28 +45,25 @@ async def edit_user_chat_points(chat_id: int, user_id: int, module: str, type: s
         else:
             return False
 
-async def add_user_chat_points(chat_id: int, user_id: int, module: str, type: str):
+async def add_user_chat_points(chat_id: int, user_id: int, module: str, type: str, point: int = 1):
         filter = {'user_id': user_id}
         user = db.find_one(filter)
         if user:
-            try:
-               point = await get_user_chat_points(chat_id, user_id, module, type)
-            except:
-                update = {'$set':
-                      {
-                          f'data.{module}.{type}.{str(chat_id)}': 1
-                      }}
-                db.update_one(user, update, upsert=True)
-                return True
-                    
-            point += 1
+            points = await get_user_chat_points(chat_id, user_id, module, type)
+            points += point
             update = {'$set':
                       {
-                          f'data.{module}.{type}.{str(chat_id)}': point
+                          f'data.{module}.{type}.{str(chat_id)}': points
                       }}
             db.update_one(user, update, upsert=True)
             return True
         else:
-             return False
+             update = {
+               '$set':
+                      {
+                          f'data.{module}.{type}.{str(chat_id)}': point
+                      }}
+             db.update_one(user, update, upsert=True)
+             return True
 
 ####################################################################################################

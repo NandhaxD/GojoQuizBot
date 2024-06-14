@@ -66,12 +66,12 @@ class S_STRING:
 async def get_special_points(start_time: str, end_time: str, name: str, message):
     time_diff = await time_diffrence(start_time, end_time)  # Assuming time_difference is defined elsewhere
   
-    if int(time_diff) <= 8:
-        points = random.randint(5, 10)
+    if int(time_diff) <= 15:
+        points = random.randint(6, 10)
         await message.reply_sticker(sticker=random.choice(config.S_STICKERS), quote=True)
         await message.reply_text(S_STRING.legend(name, points))
     elif int(time_diff) <= 60:
-        points = random.randint(2, 5)
+        points = random.randint(3, 5)
         await message.reply_sticker(sticker=random.choice(config.S_STICKERS), quote=True)
         await message.reply_text(S_STRING.pro(name, points))
     else:

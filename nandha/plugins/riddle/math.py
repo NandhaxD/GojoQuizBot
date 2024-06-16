@@ -11,7 +11,7 @@ from nandha.database.points import add_user_chat_points, get_user_chat_points
 from nandha.database.users import update_name
 from nandha.database.chats import add_chat
 from nandha.helpers.func import get_question, make_math_riddle, taken_time
-from nandha.helpers.scripts import ask_start_pm, react, send_errors, get_special_points
+from nandha.helpers.scripts import ask_start_pm, react, send_errors
 from nandha import bot
 
 
@@ -63,9 +63,8 @@ async def check_user_rmath_ans(_, message):
                                  end_time=end_time
                         ) 
                       
-                         await clear_chat_riddle(chat_id)
-                         point = await get_special_points(start_time, end_time, first_name, message)              
-                         await add_user_chat_points(chat_id, user_id, module, type, point)
+                         await clear_chat_riddle(chat_id)              
+                         await add_user_chat_points(chat_id, user_id, module, type)
                          points = await get_user_chat_points(chat_id, user_id, module, type)
                          
                          await message.reply_text(

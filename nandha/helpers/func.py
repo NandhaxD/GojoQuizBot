@@ -5,6 +5,7 @@ import random
 import sys
 import os
 import io
+import unicodedata
 
 from datetime import datetime
 from PIL import Image, ImageDraw, ImageFont
@@ -120,6 +121,58 @@ def change_font(text: str):
         for i, j in style.items():
             text = text.replace(i, j)
         return text
+
+
+def convert_unicode_to_normal(text):
+    return unicodedata.normalize('NFKD', text).encode('ascii', 'ignore').decode('utf-8')
+
+
+
+####################################################################################################
+
+#generate leaderboard
+
+
+async def generate_lb_image(chat_id: int, chat_name: str, sorted_user_riddle_points):
+    bg_image = Image.open("./resources/leaderboard.jpg")
+    image = Image.new('RGBA', bg_image.size, color=(0, 0, 0, 0))  # Transparent background
+    draw = ImageDraw.Draw(image)
+    font_path = './resources/nandha.otf'  # Path to the uploaded font file
+    fonts = {
+        'title': ImageFont.truetype(font_path, size=50),
+        'rank': ImageFont.truetype(font_path, size=30),
+        'username': ImageFont.truetype(font_path, size=20),
+        'points': ImageFont.truetype(font_path, size=30),
+    }
+    draw.text((30, 17), 'LEADER-BOARD:', font=fonts['title'], fill=(255, 255, 255))
+    leaderboard_data = []
+    for i, (user_id, points) in enumerate(sorted_user_riddle_points[:10]):
+        leaderboard_data.append({"rank": i + 1, "username": str(user_id), "points": points})
+    max_points = max(data["points"] for data in leaderboard_data)
+    bar_width = 500
+    bar_height = 30
+    for i, data in enumerate(leaderboard_data):
+        rank_text = f'#{data["rank"]}'
+        username_text = convert_unicode_to_normal(data["username"])
+        points_text = f'{data["points"]}'
+        bar_length = int(bar_width * data["points"] / max_points)
+
+        y_position = 160 + i * 40
+        draw.text((50, y_position), rank_text, font=fonts['rank'], fill=(255, 0, 0))  # Red text
+        draw.text((100, y_position), username_text, font=fonts['username'], fill=(255, 255, 255))  # White text
+
+        # Draw the rounded rectangle
+        corner_radius = 10
+        bar_box = (250, y_position - 5, 250 + bar_length, y_position + bar_height - 5)
+        draw.rounded_rectangle(bar_box, fill=(0, 255, 0), outline=(0, 255, 0), width=2, radius=corner_radius)  # Green rounded rectangle
+
+        # Adjust the points text position
+        draw.text((270 + bar_length, y_position), points_text, font=fonts['points'], fill=(255, 255, 255))  # white colour
+        
+    image_composite = Image.alpha_composite(bg_image.convert('RGBA'), image)
+    photo_path = f"leaderboard_{chat_name}.jpeg"
+    image_composite.save(photo_path)
+    return photo_path
 
 
 ################################################################################################################

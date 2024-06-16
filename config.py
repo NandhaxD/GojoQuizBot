@@ -71,6 +71,8 @@ S_STICKERS = [
      
 
 STATS_IMG = "https://graph.org/file/83c7b808673099eda0dc6.jpg"
+LB_IMG = "https://graph.org/file/2b465e523b49414688c61.jpg"
+
 
 STATS_STRING = (
      "**{name}'s Stats in {chat_name}**:\n\n"

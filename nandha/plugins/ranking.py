@@ -1,6 +1,6 @@
 
 import config
-from pyrogram import filters
+from pyrogram import filters, types
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from nandha.helpers.decorator import admin_only
 from nandha.helpers.leaderboard import (
@@ -23,8 +23,10 @@ async def leaderboard(_, message):
                 InlineKeyboardButton(change_font('💫 Quiz'), callback_data=f'quiztop:{user_id}')
          ]]
          await add_chat(chat_id)
-         return await message.reply(
-                text=change_font('To Check The Top Users In Chat Click Below Button.'),
+         photo_url = config.LB_IMG
+         return await message.reply_photo(
+                photo=photo_url,
+                caption=change_font('To Check The Top Users In Chat Click Below Button.'),
                 reply_markup=InlineKeyboardMarkup(button)
          )
 
@@ -50,7 +52,7 @@ async def riddletop(_, query):
                    
             ]]
             name = query.message.chat.title
-            return await query.message.edit(
+            return await query.message.edit_caption(
                    text=change_font(f'**Click Here to See Global Top Users & Group Top Users!**'),
                    reply_markup=InlineKeyboardMarkup(button)
             )
@@ -67,10 +69,15 @@ async def rmath_top(_, query):
               )
        else:
            chat_id = query.message.chat.id
-           name = query.message.chat.title
+           chat_name = query.message.chat.title
+           await query.message.edit_caption(
+                    text=change_font("⏳ Analyzing Leaderboard....")
+           )
+           
            sorted_user_riddle_points = await get_riddle_group(chat_id=chat_id, type='math')
-           text = change_font(f'🏆 ** Chat Top Riddle Math Users in {name}** ✨\n\n')
-           for i, (user_id, points) in enumerate(sorted_user_riddle_points[:15]):
+           photo_url = await generate_lb_image(chat_id, chat_name, sorted_user_riddle_points)
+           text = change_font(f'🏆 ** Chat Top Riddle Math Users in {chat_name}** ✨\n\n')
+           for i, (user_id, points) in enumerate(sorted_user_riddle_points[:10]):
               if str(user_id).isdigit():                       
                  text += f'{i+1}. **[{user_id}](tg://user?id={user_id})**: `{points}`\n'
               else:
@@ -78,10 +85,14 @@ async def rmath_top(_, query):
                        
 
            button = [[ InlineKeyboardButton(change_font('BACK ⬅️'), callback_data=f'riddletop:{admin_id}') ]]
-           return await query.message.edit(
-                    text=text,
-                                    reply_markup=InlineKeyboardMarkup(button)
-                                          )
+           return await query.message.edit_media(
+                    media=types.InputMedia(
+                     types.InputMediaPhoto(
+                           media=photo_url,
+                           caption=text
+                     )),
+                 reply_markup=InlineKeyboardMarkup(button)
+                     )
 
 
 @bot.on_callback_query(filters.regex('^rmathgtop'))
@@ -94,11 +105,17 @@ async def rmath_gtop(_, query):
                        , show_alert=True
               )
        else:
-           name = query.message.chat.title
-           text = change_font(f'🏆 **Global Top Riddle math Users In {name} ✨**\n\n')
+
+           await query.message.edit_caption(
+                    text=change_font("⏳ Analyzing Leaderboard....")
+           )
+           
            sorted_leaderboard = await get_riddle_global(type='math')
+           photo_url = await generate_lb_image(sorted_user_riddle_points=sorted_user_riddle_points)  
+           text = change_font(f'🏆 **Global Top Riddle math Users ✨**\n\n')
+           
            for i, (user_id, points) in enumerate(sorted_leaderboard.items()):
-                  if i >= 15:
+                  if i >= 10:
                      break
                   if str(user_id).isdigit():
                        text += f'{i+1}, **[{user_id}](tg://user?id={user_id})**: {points}\n'
@@ -107,10 +124,14 @@ async def rmath_gtop(_, query):
                        
 
            button = [[ InlineKeyboardButton(change_font('BACK ⬅️'), callback_data=f'riddletop:{admin_id}') ]]
-           return await query.message.edit(text,
-                                    reply_markup=InlineKeyboardMarkup(button)
-                                          )
-
+           return await query.message.edit_media(
+                    media=types.InputMedia(
+                     types.InputMediaPhoto(
+                           media=photo_url,
+                           caption=text
+                     )),
+                 reply_markup=InlineKeyboardMarkup(button)
+           )
 
        
 @bot.on_callback_query(filters.regex('^rwordstop'))
@@ -123,10 +144,17 @@ async def rwords_top(_, query):
               )
        else:
            chat_id = query.message.chat.id
-           name = query.message.chat.title
+           chat_name = query.message.chat.title
+
+           await query.message.edit_caption(
+                    text=change_font("⏳ Analyzing Leaderboard....")
+           )
+                
            sorted_user_riddle_points = await get_riddle_group(chat_id=chat_id, type='words')
-           text = change_font(f'🏆 **Chat Top Riddle Words Users In {name}** ✨\n\n')
-           for i, (user_id, points) in enumerate(sorted_user_riddle_points[:15]):
+           photo_url = await generate_lb_image(chat_id, chat_name, sorted_user_riddle_points)
+                
+           text = change_font(f'🏆 **Chat Top Riddle Words Users In {chat_name}** ✨\n\n')
+           for i, (user_id, points) in enumerate(sorted_user_riddle_points[:10]):
               if str(user_id).isdigit():                       
                  text += f'{i+1}. **[{user_id}](tg://user?id={user_id})**: `{points}`\n'
               else:
@@ -134,9 +162,14 @@ async def rwords_top(_, query):
                        
 
            button = [[ InlineKeyboardButton(change_font('BACK ⬅️'), callback_data=f'riddletop:{admin_id}') ]]
-           return await query.message.edit(text,
-                                    reply_markup=InlineKeyboardMarkup(button)
-                                           )
+           return await query.message.edit_media(
+                    media=types.InputMedia(
+                     types.InputMediaPhoto(
+                           media=photo_url,
+                           caption=text
+                     )),
+                 reply_markup=InlineKeyboardMarkup(button)
+           )
 
 @bot.on_callback_query(filters.regex('^rwordsgtop'))
 async def rwords_gtop(_, query):
@@ -147,11 +180,14 @@ async def rwords_gtop(_, query):
                      text=change_font('This command is not requested by you'), show_alert=True
               )
        else:
-           name = query.message.chat.title
-           text = change_font(f'🏆 **Global Top Riddle Words Users in {name}**\n\n')
+           
+           text = change_font(f'🏆 **Global Top Riddle Words Users ✨**\n\n')
            sorted_leaderboard = await get_riddle_global(type='words')
+           photo_url = await generate_lb_image(sorted_user_riddle_points=sorted_user_riddle_points)
+           
+                
            for i, (user_id, points) in enumerate(sorted_leaderboard.items()):
-                  if i >= 15:
+                  if i >= 10:
                      break
                   if str(user_id).isdigit():
                        text += f'{i+1}, **[{user_id}](tg://user?id={user_id})**: {points}\n'
@@ -160,8 +196,12 @@ async def rwords_gtop(_, query):
                        
 
            button = [[ InlineKeyboardButton(change_font('BACK ⬅️'), callback_data=f'riddletop:{admin_id}') ]]
-           return await query.message.edit(text,
-                                    reply_markup=InlineKeyboardMarkup(button)
-                                          )
-
+           return await query.message.edit_media(
+                    media=types.InputMedia(
+                     types.InputMediaPhoto(
+                           media=photo_url,
+                           caption=text
+                     )),
+                 reply_markup=InlineKeyboardMarkup(button)
+           )
        

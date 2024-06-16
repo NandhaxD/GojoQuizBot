@@ -148,14 +148,21 @@ async def generate_lb_image(data, type: str, chat_id: int = None, chat_name: str
         draw.text((30, 30), f'LEADER-BOARD: #{type} Globally', font=fonts['title'], fill=(255, 255, 255))
     draw.text((30, 30), f'LEADER-BOARD: #{type} {chat_name}', font=fonts['title'], fill=(255, 255, 255))
     leaderboard_data = []
-    for i, (user_id, points) in enumerate(data[:10]):
-        leaderboard_data.append({"rank": i + 1, "username": str(user_id), "points": points})
+    if isinstance(data, list):
+       for i, (user_id, points) in enumerate(data[:10]):
+            leaderboard_data.append({"rank": i + 1, "username": str(user_id), "points": points})
+    else:
+       for i, (user_id, points) in enumerate(sorted_leaderboard.items()):
+             if i >= 10:
+                break
+             leaderboard_data.append({"rank": i + 1, "username": str(user_id), "points": points})
+              
     max_points = max(data["points"] for data in leaderboard_data)
     bar_width = 500
     bar_height = 30
     for i, data in enumerate(leaderboard_data):
         rank_text = f'#{data["rank"]}'
-        username_text = convert_unicode_to_normal(data["username"])
+        username_text = convert_unicode_to_normal(str(data["username"]))
         points_text = f'{data["points"]}'
         bar_length = int(bar_width * data["points"] / max_points)
 

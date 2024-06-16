@@ -87,11 +87,10 @@ async def rmath_top(_, query):
 
            button = [[ InlineKeyboardButton(change_font('BACK ⬅️'), callback_data=f'riddletop:{admin_id}') ]]
            return await query.message.edit_media(
-                    media=types.InputMedia(
-                     types.InputMediaPhoto(
+                    media=types.types.InputMediaPhoto(
                            media=photo_url,
                            caption=text
-                     )),
+                     ),
                  reply_markup=InlineKeyboardMarkup(button)
                      )
 
@@ -126,11 +125,10 @@ async def rmath_gtop(_, query):
 
            button = [[ InlineKeyboardButton(change_font('BACK ⬅️'), callback_data=f'riddletop:{admin_id}') ]]
            return await query.message.edit_media(
-                    media=types.InputMedia(
-                     types.InputMediaPhoto(
+                    media=types.InputMediaPhoto(
                            media=photo_url,
                            caption=text
-                     )),
+                     ),
                  reply_markup=InlineKeyboardMarkup(button)
            )
 
@@ -164,11 +162,10 @@ async def rwords_top(_, query):
 
            button = [[ InlineKeyboardButton(change_font('BACK ⬅️'), callback_data=f'riddletop:{admin_id}') ]]
            return await query.message.edit_media(
-                    media=types.InputMedia(
-                     types.InputMediaPhoto(
+                    media=types.InputMediaPhoto(
                            media=photo_url,
                            caption=text
-                     )),
+                     ),
                  reply_markup=InlineKeyboardMarkup(button)
            )
 
@@ -202,11 +199,10 @@ async def rwords_gtop(_, query):
 
            button = [[ InlineKeyboardButton(change_font('BACK ⬅️'), callback_data=f'riddletop:{admin_id}') ]]
            return await query.message.edit_media(
-                    media=types.InputMedia(
-                     types.InputMediaPhoto(
+                    media=types.InputMediaPhoto(
                            media=photo_url,
                            caption=text
-                     )),
+                     ),
                  reply_markup=InlineKeyboardMarkup(button)
            )
        

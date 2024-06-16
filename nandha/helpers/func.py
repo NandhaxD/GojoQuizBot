@@ -133,7 +133,7 @@ def convert_unicode_to_normal(text):
 #generate leaderboard
 
 
-async def generate_lb_image(sorted_user_riddle_points, type: str, chat_id: int = None, chat_name: str = None):
+async def generate_lb_image(data, type: str, chat_id: int = None, chat_name: str = None):
     bg_image = Image.open("./resources/leaderboard.jpg")
     image = Image.new('RGBA', bg_image.size, color=(0, 0, 0, 0))  # Transparent background
     draw = ImageDraw.Draw(image)
@@ -148,7 +148,7 @@ async def generate_lb_image(sorted_user_riddle_points, type: str, chat_id: int =
         draw.text((30, 30), f'LEADER-BOARD: #{type} Globally', font=fonts['title'], fill=(255, 255, 255))
     draw.text((30, 30), f'LEADER-BOARD: #{type} {chat_name}', font=fonts['title'], fill=(255, 255, 255))
     leaderboard_data = []
-    for i, (user_id, points) in enumerate(sorted_user_riddle_points[:10]):
+    for i, (user_id, points) in enumerate(data[:10]):
         leaderboard_data.append({"rank": i + 1, "username": str(user_id), "points": points})
     max_points = max(data["points"] for data in leaderboard_data)
     bar_width = 500

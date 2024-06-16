@@ -70,18 +70,20 @@ S_STICKERS = [
 ]
      
 
+STATS_IMG = "https://graph.org/file/83c7b808673099eda0dc6.jpg"
+
 STATS_STRING = (
      "**{name}'s 𝗦𝘁𝗮𝘁𝘀 in {chat_name}**:\n\n"
      "➤ 𝐑𝐢𝐝𝐝𝐥𝐞:\n"
-     "  ✪ **Solved Maths** ➩〘 `{rmath_points}` 〙\n"
-     "  ✪ **Solved Words** ➩〘 `{rwords_points}` 〙\n"
-     "\n\n```\nMore Game Will Coming Soon 😊.```"
+     "  ✪ 𝐒𝐨𝐥𝐯𝐞𝐝 𝐌𝐚𝐭𝐡𝐬 ➩〘 `{rmath_points}` 〙\n"
+     "  ✪ 𝐒𝐨𝐥𝐯𝐞𝐝 𝐖𝐨𝐫𝐝𝐬 ➩〘 `{rwords_points}` 〙\n"
+     "\n\n```\n➡️ MORE GAME WILL COMING SOON.```"
 )
 
 RIDDLE_WINNER_STRING = (
-     "🎉 Congratulations, {}! You're the first to solve **THE {} RIDDLE**!  🥇\n\n"
-     "🧠 **Solved Puzzles:** {}\n"
-     "🧠 **Time Taken:** {}\n"
+     "🎉  𝐂𝐨𝐧𝐠𝐫𝐚𝐭𝐮𝐥𝐚𝐭𝐢𝐨𝐧𝐬, {}! 𝐘𝐨𝐮'𝐫𝐞 𝐭𝐡𝐞 𝐟𝐢𝐫𝐬𝐭 𝐭𝐨 𝐬𝐨𝐥𝐯𝐞 𝐓𝐇𝐄 {} 𝐑𝐈𝐃𝐃𝐋𝐄! 🥇\n\n"
+     "🧠 𝐓𝐨𝐭𝐚𝐥 𝐒𝐨𝐥𝐯𝐞𝐝: {}\n"
+     "🧠 𝐓𝐢𝐦𝐞 𝐓𝐚𝐤𝐞𝐧: {}\n"
 )
 
      

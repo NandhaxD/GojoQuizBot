@@ -171,7 +171,8 @@ async def generate_lb_image(chat_id: int, chat_name: str, sorted_user_riddle_poi
         
     image_composite = Image.alpha_composite(bg_image.convert('RGBA'), image)
     photo_path = f"leaderboard_{chat_name}.jpeg"
-    image_composite.save(photo_path)
+    rgb_image = image_composite.convert('RGB')  # Convert to RGB mode
+    rgb_image.save(photo_path)
     return photo_path
 
 

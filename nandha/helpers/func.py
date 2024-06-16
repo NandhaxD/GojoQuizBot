@@ -140,11 +140,11 @@ async def generate_lb_image(chat_id: int, chat_name: str, sorted_user_riddle_poi
     font_path = './resources/nandha.otf'  # Path to the uploaded font file
     fonts = {
         'title': ImageFont.truetype(font_path, size=50),
-        'rank': ImageFont.truetype(font_path, size=30),
-        'username': ImageFont.truetype(font_path, size=20),
+        'rank': ImageFont.truetype(font_path, size=20),
+        'username': ImageFont.truetype(font_path, size=10),
         'points': ImageFont.truetype(font_path, size=30),
     }
-    draw.text((30, 17), 'LEADER-BOARD:', font=fonts['title'], fill=(255, 255, 255))
+    draw.text((30, 30), 'LEADER-BOARD:', font=fonts['title'], fill=(255, 255, 255))
     leaderboard_data = []
     for i, (user_id, points) in enumerate(sorted_user_riddle_points[:10]):
         leaderboard_data.append({"rank": i + 1, "username": str(user_id), "points": points})

@@ -186,7 +186,9 @@ async def rwords_gtop(_, query):
                 
            text = change_font(f'🏆 **Global Top Riddle Words Users ✨**\n\n')
            sorted_leaderboard = await get_riddle_global(type='words')
-           photo_url = await generate_lb_image(data=sorted_user_riddle_points, type='Words')
+           photo_url = await generate_lb_image(
+                    data=sorted_leaderboard, type='Words'
+           )
            
                 
            for i, (user_id, points) in enumerate(sorted_leaderboard.items()):

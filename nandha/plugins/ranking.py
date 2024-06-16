@@ -53,7 +53,7 @@ async def riddletop(_, query):
             ]]
             name = query.message.chat.title
             return await query.message.edit_caption(
-                   text=change_font(f'**Click Here to See Global Top Users & Group Top Users!**'),
+                   caption=change_font(f'**Click Here to See Global Top Users & Group Top Users!**'),
                    reply_markup=InlineKeyboardMarkup(button)
             )
             
@@ -71,7 +71,7 @@ async def rmath_top(_, query):
            chat_id = query.message.chat.id
            chat_name = query.message.chat.title
            await query.message.edit_caption(
-                    text=change_font("⏳ Analyzing Leaderboard....")
+                    caption=change_font("⏳ Analyzing Leaderboard....")
            )
            
            sorted_user_riddle_points = await get_riddle_group(chat_id=chat_id, type='math')
@@ -107,7 +107,7 @@ async def rmath_gtop(_, query):
        else:
 
            await query.message.edit_caption(
-                    text=change_font("⏳ Analyzing Leaderboard....")
+                    caption=change_font("⏳ Analyzing Leaderboard....")
            )
            
            sorted_leaderboard = await get_riddle_global(type='math')
@@ -147,7 +147,7 @@ async def rwords_top(_, query):
            chat_name = query.message.chat.title
 
            await query.message.edit_caption(
-                    text=change_font("⏳ Analyzing Leaderboard....")
+                    caption=change_font("⏳ Analyzing Leaderboard....")
            )
                 
            sorted_user_riddle_points = await get_riddle_group(chat_id=chat_id, type='words')
@@ -180,7 +180,11 @@ async def rwords_gtop(_, query):
                      text=change_font('This command is not requested by you'), show_alert=True
               )
        else:
-           
+
+           await query.message.edit_caption(
+                    caption=change_font("⏳ Analyzing Leaderboard....")
+           )
+                
            text = change_font(f'🏆 **Global Top Riddle Words Users ✨**\n\n')
            sorted_leaderboard = await get_riddle_global(type='words')
            photo_url = await generate_lb_image(sorted_user_riddle_points=sorted_user_riddle_points, type='Words')

@@ -152,7 +152,7 @@ async def generate_lb_image(data, type: str, chat_id: int = None, chat_name: str
        for i, (user_id, points) in enumerate(data[:10]):
             leaderboard_data.append({"rank": i + 1, "username": str(user_id), "points": points})
     else:
-       for i, (user_id, points) in enumerate(sorted_leaderboard.items()):
+       for i, (user_id, points) in enumerate(data.items()):
              if i >= 10:
                 break
              leaderboard_data.append({"rank": i + 1, "username": str(user_id), "points": points})

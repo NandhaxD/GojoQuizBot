@@ -66,9 +66,10 @@ async def check_user_rmath_ans(_, message):
                          await clear_chat_riddle(chat_id)              
                          await add_user_chat_points(chat_id, user_id, module, type)
                          points = await get_user_chat_points(chat_id, user_id, module, type)
-                         
+
+                         txt = text=config.RIDDLE_WINNER_STRING.format(first_name, type.upper(), points, a_time)
                          await message.reply_text(
-                           text=config.RIDDLE_WINNER_STRING.format(first_name, change_font(type.upper()), points, a_time)
+                            text=change_font(txt)
                          )
                  except Exception as e:
                        return await send_errors(message, e)
@@ -98,8 +99,8 @@ async def riddle_math(_, query):
 ]]
             
          off_button = [[
-               InlineKeyboardButton(text='OFF 🛑', callback_data=f'rmoff:{user_id}'),
-               InlineKeyboardButton(text='Back ⬅️', callback_data=f'cb_riddle:{user_id}')
+               InlineKeyboardButton(text=change_font('OFF 🛑'), callback_data=f'rmoff:{user_id}'),
+               InlineKeyboardButton(text=change_font('BACK ⬅️'), callback_data=f'cb_riddle:{user_id}')
  ]]
          if riddle == 'on':
                txt = "This chat has already set up the timing for sending math riddles. To change the settings, turn them off and try again."
@@ -132,10 +133,11 @@ async def set_riddle_chat_time(_, query):
            riddle = await is_chat_riddle(chat_id) 
            time = await get_chat_sleep(chat_id) 
            button = [[
-                   InlineKeyboardButton('Back ⬅️', callback_data=f'rmath:{user_id}')
+                   InlineKeyboardButton(
+                     change_font('Back ⬅️'), callback_data=f'rmath:{user_id}')
 
            ]]
-           txt = f"Successfully set up chat math riddle!\n\n<b>Riddle is</b>: `Enabled` 📢\n<b>Riddle time</b>: `{time}` ⏰"
+           txt = f"Successfully set up chat math riddle!\n\nRiddle: `Enabled` 📢\nRiddle time: `{time}` ⏰"
            return await query.message.edit(
                    text=change_font(txt),
                    reply_markup=InlineKeyboardMarkup(button)
@@ -151,19 +153,21 @@ async def off_riddle_chat(_, query):
       
        admin_id = int(query.data.split(':')[1])
        if user_id != admin_id:
-             return await query.answer("🔐 Sorry this not for you. try you're own to customize.", show_alert=True)
+             return await query.answer(
+               text=change_font("🔐 Sorry this not for you. try you're own to customize.")
+               , show_alert=True)
        else:
             await off_chat(chat_id)
             await clear_chat_riddle(chat_id)
             time = await get_chat_sleep(chat_id)
-            txt = f"Successfully turned off chat math riddle!\n\n<b>Chat riddle is</b>: `Disabled` 🛑\n<b>Chat riddle time</b>: `{time}` 🛑"
+            txt = f"Successfully turned off chat math riddle!\n\nChat riddle: `Disabled` 🛑\nChat riddle time: `{time}` 🛑"
             await query.message.edit(
                       text=change_font(txt)  
             )
             if chat_id in chats_id:
                    await bot.send_message(
                        chat_id=chat_id,
-                          text=change_font('**Ok. R-M** 🔴')
+                          text=change_font('Ok. R-M 🔴')
                         )
                    chats_id[chat_id].cancel()
                    del chats_id[chat_id]
@@ -189,7 +193,7 @@ async def send_math_riddle_tochat(chat_id: int):
                msg = await bot.send_photo(
                     chat_id=chat_id,
                     photo=photo, 
-                    caption=change_font("<code>🔥 Solve the Riddle 🔥</code>"))
+                    caption=change_font("✨ Solve the Riddle ✨"))
                await save_chat_riddle(
                   chat_id=chat_id,
                   question=question,

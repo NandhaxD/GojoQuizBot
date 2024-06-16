@@ -6,7 +6,8 @@ from nandha.database.users import add_user
 from nandha.database.chats import add_chat
 from pyrogram import filters, enums
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from nandha.helpers.scripts import react, ask_start_pm, change_font
+from nandha.helpers.scripts import react, ask_start_pm
+from nandha.helpers.func import change_font
 from nandha.database.points import get_user_chat_points
 
 

@@ -47,8 +47,8 @@ async def riddletop(_, query):
              InlineKeyboardButton(change_font('Chat R-M'), callback_data=f'rmathtop:{admin_id}'),
              InlineKeyboardButton(change_font('Global R-M'), callback_data=f'rmathgtop:{admin_id}'),
             ],[
-             InlineKeyboardButton('𝗖𝗵𝗮𝘁 𝗥-𝗪', callback_data=f'rwordstop:{admin_id}'),
-             InlineKeyboardButton('𝗚𝗹𝗼𝗯𝗮𝗹 𝗥-𝗪', callback_data=f'rwordsgtop:{admin_id}')       
+             InlineKeyboardButton(change_font('Chat R-W'), callback_data=f'rwordstop:{admin_id}'),
+             InlineKeyboardButton(change_font('Global R-W'), callback_data=f'rwordsgtop:{admin_id}')       
                    
             ]]
             name = query.message.chat.title
@@ -75,7 +75,7 @@ async def rmath_top(_, query):
            )
            
            sorted_user_riddle_points = await get_riddle_group(chat_id=chat_id, type='math')
-           photo_url = await generate_lb_image(chat_id, chat_name, sorted_user_riddle_points)
+           photo_url = await generate_lb_image(chat_id=chat_id, chat_name=chat_name, sorted_user_riddle_points=sorted_user_riddle_points, type='Math')
            text = change_font(f'🏆 ** Chat Top Riddle Math Users in {chat_name}** ✨\n\n')
            for i, (user_id, points) in enumerate(sorted_user_riddle_points[:10]):
               if str(user_id).isdigit():                       
@@ -111,7 +111,7 @@ async def rmath_gtop(_, query):
            )
            
            sorted_leaderboard = await get_riddle_global(type='math')
-           photo_url = await generate_lb_image(sorted_user_riddle_points=sorted_user_riddle_points)  
+           photo_url = await generate_lb_image(sorted_user_riddle_points=sorted_user_riddle_points, type='Math')  
            text = change_font(f'🏆 **Global Top Riddle math Users ✨**\n\n')
            
            for i, (user_id, points) in enumerate(sorted_leaderboard.items()):
@@ -151,7 +151,7 @@ async def rwords_top(_, query):
            )
                 
            sorted_user_riddle_points = await get_riddle_group(chat_id=chat_id, type='words')
-           photo_url = await generate_lb_image(chat_id, chat_name, sorted_user_riddle_points)
+           photo_url = await generate_lb_image(chat_id=chat_id, chat_name=chat_name, sorted_user_riddle_points=sorted_user_riddle_points, type='Words')
                 
            text = change_font(f'🏆 **Chat Top Riddle Words Users In {chat_name}** ✨\n\n')
            for i, (user_id, points) in enumerate(sorted_user_riddle_points[:10]):
@@ -183,7 +183,7 @@ async def rwords_gtop(_, query):
            
            text = change_font(f'🏆 **Global Top Riddle Words Users ✨**\n\n')
            sorted_leaderboard = await get_riddle_global(type='words')
-           photo_url = await generate_lb_image(sorted_user_riddle_points=sorted_user_riddle_points)
+           photo_url = await generate_lb_image(sorted_user_riddle_points=sorted_user_riddle_points, type='Words')
            
                 
            for i, (user_id, points) in enumerate(sorted_leaderboard.items()):

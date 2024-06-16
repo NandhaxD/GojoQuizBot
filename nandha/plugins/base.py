@@ -65,7 +65,7 @@ async def statics(bot, message):
                rwords_points=rwords_points
           )
           await m.reply_photo(
-            photo=config.STATES_IMG,
+            photo=config.STATS_IMG,
             caption=change_font(text)
           )
   

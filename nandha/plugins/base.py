@@ -6,18 +6,19 @@ from nandha.database.users import add_user
 from nandha.database.chats import add_chat
 from pyrogram import filters, enums
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from nandha.helpers.scripts import react, ask_start_pm
+from nandha.helpers.scripts import react, ask_start_pm, change_font
 from nandha.database.points import get_user_chat_points
 
 
 async def start_message(name, message):
     await react(message)
+    txt = "Welcome {name}! I'm Gojo Satoru, a quiz bot here to train you and boost your knowledge. Join our support channel. Thank you for using!".format(name=name)
     return await message.reply_photo(photo=config.START_IMAGE,
-              caption="Welcome {name}! I'm Gojo Satoru, a quiz bot here to train you and boost your knowledge. Join our support channel. Thank you for using!".format(name=name),
+              caption=change_font(txt),
        reply_markup=InlineKeyboardMarkup(
               [[
-               InlineKeyboardButton(text='Support', url=f'{config.SUPPORT}.t.me'),
-               InlineKeyboardButton(text='Channel', url=f'{config.CHANNEL}.t.me')
+               InlineKeyboardButton(text=change_font('Support'), url=f'{config.SUPPORT}.t.me'),
+               InlineKeyboardButton(text=change_font('Channel'), url=f'{config.CHANNEL}.t.me')
               ]]), quote=True)
               
 
@@ -62,5 +63,7 @@ async def statics(bot, message):
                rmath_points=rmath_points,
                rwords_points=rwords_points
           )
-          await m.reply_text(text)
+          await m.reply_text(
+            text=change_font(text)
+          )
   

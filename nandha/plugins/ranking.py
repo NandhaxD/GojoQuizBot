@@ -6,9 +6,10 @@ from nandha.helpers.decorator import admin_only
 from nandha.helpers.leaderboard import (
 get_riddle_group, get_riddle_global
 )
+
 from nandha.database.chats import add_chat
 from nandha.helpers.scripts import react
-from nandha.helpers.func import change_font
+from nandha.helpers.func import change_font, generate_lb_image
 from nandha import bot
 
 

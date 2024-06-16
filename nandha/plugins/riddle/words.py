@@ -62,9 +62,10 @@ async def check_user_rwords_ans(_, message):
                          await clear_chat_riddle(chat_id)                       
                          await add_user_chat_points(chat_id, user_id, module, type)
                          points = await get_user_chat_points(chat_id, user_id, module, type)
-                         
+                         txt = text=config.RIDDLE_WINNER_STRING.format(first_name, type.upper(), points, a_time)
+                      
                          await message.reply_text(
-                           text=config.RIDDLE_WINNER_STRING.format(first_name, change_font(type.upper()), points, a_time)
+                           text=change_font(txt)
                          )
                                  
                  except Exception as e:
@@ -128,11 +129,11 @@ async def set_riddle_chat_time(_, query):
            riddle = await is_chat_riddle(chat_id) 
            time = await get_chat_sleep(chat_id) 
            button = [[
-                   InlineKeyboardButton('Back ⬅️', callback_data=f'rwords:{user_id}')
+                   InlineKeyboardButton(change_font('BACK ⬅️'), callback_data=f'rwords:{user_id}')
 
            ]]
            return await query.message.edit(
-                  text=change_font(f"Successfully set up chat words riddle!\n\n<b>Riddle is</b>: `Enabled` 📢\n<b>Riddle time</b>: `{time}` ⏰"),
+                  text=change_font(f"Successfully set up chat words riddle!\n\nRiddle: `Enabled` 📢\nRiddle time: `{time}` ⏰"),
                    reply_markup=InlineKeyboardMarkup(button)
            )
                                 
@@ -152,12 +153,12 @@ async def off_riddle_chat(_, query):
             await clear_chat_riddle(chat_id)
             time = await get_chat_sleep(chat_id)
             await query.message.edit(
-                 text=change_font(f"Successfully turned off chat words riddle!\n\n<b>Chat riddle is</b>: `Disabled` 🛑\n<b>Chat riddle time</b>: `{time}` 🛑"),
+                 text=change_font(f"Successfully turned off chat words riddle!\n\nChat riddle: `Disabled` 🛑\nChat riddle time: `{time}` 🛑"),
            )
             if chat_id in chats_id:
                    await bot.send_message(
                        chat_id=chat_id,
-                          text='**Ok. R-W** 🔴'
+                          text=change_font('Ok. R-W 🔴')
                         )
                    chats_id[chat_id].cancel()
                    del chats_id[chat_id]
@@ -176,13 +177,13 @@ async def send_words_riddle_tochat(chat_id: int):
                sleep_time = int(await get_chat_sleep(chat_id))
                photo, text = await make_words_riddle(chat_id)   
                button = types.InlineKeyboardMarkup(
-                 [[types.InlineKeyboardButton('🔍 Meaning', callback_data=f"define:{text}")]]
+                 [[types.InlineKeyboardButton(change_font('🔍 Meaning'), callback_data=f"define:{text}")]]
                )
              
                msg = await bot.send_photo(
                     chat_id=chat_id,
                     photo=photo, 
-                    caption=change_font("<code>🔥 Solve the Riddle 🔥</code>"),
+                    caption=change_font("✨ Solve the Riddle ✨"),
                     reply_markup=button
                )
                await save_chat_riddle(

@@ -51,39 +51,3 @@ async def react(message):
 
 
 
-class S_STRING:
-    @staticmethod
-    def legend(name, multiplier):
-        return f"**Hey {name}, that's really awesome 🎉! You're doing great 🥳. I will {multiplier}x your points ✨!**"
-    @staticmethod
-    def pro(name, multiplier):
-        return f"**Hey {name}, great job! I will {multiplier}x your points ✨!**"
-    @staticmethod
-    def player(name, multiplier):
-        return f"**Hey {name}, well done 😊! Try to be a bit faster next time to claim more points. For now, I'm {multiplier}x your points 🎉!**"
-
-
-async def get_special_points(start_time: str, end_time: str, name: str, message):
-    time_diff = await time_diffrence(start_time, end_time)  # Assuming time_difference is defined elsewhere
-  
-    if int(time_diff) <= 15:
-        points = random.randint(6, 10)
-        await message.reply_sticker(sticker=random.choice(config.S_STICKERS), quote=True)
-        await message.reply_text(S_STRING.legend(name, points))
-    elif int(time_diff) <= 60:
-        points = random.randint(3, 5)
-        await message.reply_sticker(sticker=random.choice(config.S_STICKERS), quote=True)
-        await message.reply_text(S_STRING.pro(name, points))
-    else:
-        points = 1
-        await message.reply_sticker(sticker=random.choice(config.S_STICKERS), quote=True)
-        await message.reply_text(S_STRING.player(name, points))
-    
-    return points
-
-
-
-
-
-
-

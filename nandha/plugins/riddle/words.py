@@ -10,7 +10,7 @@ from nandha.database.riddle.words_riddle import is_chat_riddle, get_chat_sleep, 
 from nandha.database.points import add_user_chat_points, get_user_chat_points
 from nandha.database.users import update_name
 from nandha.database.chats import add_chat
-from nandha.helpers.func import get_question, make_words_riddle, taken_time
+from nandha.helpers.func import get_question, make_words_riddle, taken_time, change_font
 from nandha.helpers.scripts import ask_start_pm, react, send_errors
 from nandha import bot
 
@@ -64,7 +64,7 @@ async def check_user_rwords_ans(_, message):
                          points = await get_user_chat_points(chat_id, user_id, module, type)
                          
                          await message.reply_text(
-                           text=config.RIDDLE_WINNER_STRING.format(first_name, type.upper(), points, a_time)
+                           text=config.RIDDLE_WINNER_STRING.format(first_name, change_font(type.upper()), points, a_time)
                          )
                                  
                  except Exception as e:
@@ -80,31 +80,33 @@ async def riddle_math(_, query):
         
       admin_id = int(query.data.split(':')[1])
       if user_id != admin_id:
-            return await query.answer("🔐 Sorry this not for you. try you're own to customize.", show_alert=True)
+            return await query.answer(
+                text=change_font("🔐 Sorry this not for you. try you're own to customize.")
+              , show_alert=True)
       else:
          riddle = await is_chat_riddle(chat_id)
          time = await get_chat_sleep(chat_id)
          button = [[
-           InlineKeyboardButton(text='60 Sec', callback_data=f'rwtime:{user_id}:60'),
-           InlineKeyboardButton(text='3 Min', callback_data=f'rwtime:{user_id}:90'),],
-                   [InlineKeyboardButton(text='10 Min', callback_data=f'rwtime:{user_id}:600'),
-                    InlineKeyboardButton(text='30 Min', callback_data=f'rwtime:{user_id}:1800'), ],
-                   [ InlineKeyboardButton(text='Back ⬅️', callback_data=f'cb_riddle:{user_id}')
+           InlineKeyboardButton(text=change_font('60 Sec'), callback_data=f'rwtime:{user_id}:60'),
+           InlineKeyboardButton(text=change_font('3 Min'), callback_data=f'rwtime:{user_id}:90'),],
+                   [InlineKeyboardButton(text=change_font('10 Min'), callback_data=f'rwtime:{user_id}:600'),
+                    InlineKeyboardButton(text=change_font('30 Min'), callback_data=f'rwtime:{user_id}:1800'), ],
+                   [ InlineKeyboardButton(text=change_font('Back ⬅️'), callback_data=f'cb_riddle:{user_id}')
            
 ]]
             
          off_button = [[
-               InlineKeyboardButton(text='OFF 🛑', callback_data=f'rwoff:{user_id}'),
-               InlineKeyboardButton(text='Back ⬅️', callback_data=f'cb_riddle:{user_id}')
+               InlineKeyboardButton(text=change_font('OFF 🛑'), callback_data=f'rwoff:{user_id}'),
+               InlineKeyboardButton(text=change_font('Back ⬅️'), callback_data=f'cb_riddle:{user_id}')
  ]]
          if riddle == 'on':
                return await query.message.edit(
-                     "This chat has already set up the timing for sending math riddles. To change the settings, turn them off and try again.",
+                     text=change_font("This chat has already set up the timing for sending math riddles. To change the settings, turn them off and try again."),
                      reply_markup=InlineKeyboardMarkup(off_button))
                      
          else:
              return await query.message.edit(
-                f"Hello! You can now set up a time for your chat. Click the button below to do so.\n\nChat Riddle: `Disabled` 🛑\nChat Riddle Time: `{time}` ⏰",
+                text=change_font(f"Hello! You can now set up a time for your chat. Click the button below to do so.\n\nChat Riddle: `Disabled` 🛑\nChat Riddle Time: `{time}` ⏰"),
                 reply_markup=InlineKeyboardMarkup(button)
              )
 
@@ -117,7 +119,9 @@ async def set_riddle_chat_time(_, query):
         
        admin_id = int(query.data.split(':')[1])
        if user_id != admin_id:
-             return await query.answer("🔐 Sorry this not for you. try your own to customize.", show_alert=True)
+             return await query.answer(
+               text=change_font("🔐 Sorry this not for you. try your own to customize.")
+             , show_alert=True)
        else:
            time = int(query.data.split(':')[2])
            await on_chat(chat_id, time)
@@ -128,7 +132,7 @@ async def set_riddle_chat_time(_, query):
 
            ]]
            return await query.message.edit(
-                  f"Successfully set up chat words riddle!\n\n<b>Riddle is</b>: `Enabled` 📢\n<b>Riddle time</b>: `{time}` ⏰",
+                  text=change_font(f"Successfully set up chat words riddle!\n\n<b>Riddle is</b>: `Enabled` 📢\n<b>Riddle time</b>: `{time}` ⏰"),
                    reply_markup=InlineKeyboardMarkup(button)
            )
                                 
@@ -148,7 +152,7 @@ async def off_riddle_chat(_, query):
             await clear_chat_riddle(chat_id)
             time = await get_chat_sleep(chat_id)
             await query.message.edit(
-                 f"Successfully turned off chat words riddle!\n\n<b>Chat riddle is</b>: `Disabled` 🛑\n<b>Chat riddle time</b>: `{time}` 🛑",
+                 text=change_font(f"Successfully turned off chat words riddle!\n\n<b>Chat riddle is</b>: `Disabled` 🛑\n<b>Chat riddle time</b>: `{time}` 🛑"),
            )
             if chat_id in chats_id:
                    await bot.send_message(
@@ -178,7 +182,7 @@ async def send_words_riddle_tochat(chat_id: int):
                msg = await bot.send_photo(
                     chat_id=chat_id,
                     photo=photo, 
-                    caption="<code>🔥 Solve the Riddle 🔥</code>",
+                    caption=change_font("<code>🔥 Solve the Riddle 🔥</code>"),
                     reply_markup=button
                )
                await save_chat_riddle(
@@ -229,5 +233,5 @@ async def definition(bot, query: types.CallbackQuery):
        f"🔍 Definition for Word: {word}\n\n"
        f"✨ Meaning: {meaning}"
      )
-     await query.answer(text=text, show_alert=True)
+     await query.answer(text=change_font(text), show_alert=True)
                              

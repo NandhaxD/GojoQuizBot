@@ -63,7 +63,8 @@ async def statics(bot, message):
                rmath_points=rmath_points,
                rwords_points=rwords_points
           )
-          await m.reply_text(
-            text=change_font(text)
+          await m.reply_photo(
+            photo=config.STATES_IMG,
+            caption=change_font(text)
           )
   

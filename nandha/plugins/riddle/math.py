@@ -82,16 +82,18 @@ async def riddle_math(_, query):
         
       admin_id = int(query.data.split(':')[1])
       if user_id != admin_id:
-            return await query.answer("🔐 Sorry this not for you. try you're own to customize.", show_alert=True)
+            return await query.answer(
+              text=change_font("🔐 Sorry this not for you. try you're own to customize.")
+              , show_alert=True)
       else:
          riddle = await is_chat_riddle(chat_id)
          time = await get_chat_sleep(chat_id)
          button = [[
-           InlineKeyboardButton(text='60 Sec', callback_data=f'rmtime:{user_id}:60'),
-           InlineKeyboardButton(text='3 Min', callback_data=f'rmtime:{user_id}:90'),],
-                   [InlineKeyboardButton(text='10 Min', callback_data=f'rmtime:{user_id}:600'),
-                    InlineKeyboardButton(text='30 Min', callback_data=f'rmtime:{user_id}:1800'), ],
-                   [ InlineKeyboardButton(text='Back ⬅️', callback_data=f'cb_riddle:{user_id}')
+           InlineKeyboardButton(text=change_font('60 Sec'), callback_data=f'rmtime:{user_id}:60'),
+           InlineKeyboardButton(text=change_font('3 Min'), callback_data=f'rmtime:{user_id}:90'),],
+                   [InlineKeyboardButton(text=change_font('10 Min'), callback_data=f'rmtime:{user_id}:600'),
+                    InlineKeyboardButton(text=change_font('30 Min'), callback_data=f'rmtime:{user_id}:1800'), ],
+                   [ InlineKeyboardButton(text=change_font('Back ⬅️'), callback_data=f'cb_riddle:{user_id}')
            
 ]]
             
@@ -121,7 +123,9 @@ async def set_riddle_chat_time(_, query):
         
        admin_id = int(query.data.split(':')[1])
        if user_id != admin_id:
-             return await query.answer("🔐 Sorry this not for you. try your own to customize.", show_alert=True)
+             return await query.answer(
+               text=change_font("🔐 Sorry this not for you. try your own to customize.")
+               , show_alert=True)
        else:
            time = int(query.data.split(':')[2])
            await on_chat(chat_id, time)

@@ -8,6 +8,7 @@ get_riddle_group, get_riddle_global
 )
 from nandha.database.chats import add_chat
 from nandha.helpers.scripts import react
+from nandha.helpers.func import change_font
 from nandha import bot
 
 
@@ -18,12 +19,12 @@ async def leaderboard(_, message):
          chat_id = message.chat.id
          await react(message)
          button = [[
-                InlineKeyboardButton('🌟 Riddle', callback_data=f'riddletop:{user_id}'),
-                InlineKeyboardButton('💫 Quiz', callback_data=f'quiztop:{user_id}')
+                InlineKeyboardButton(change_font('🌟 Riddle'), callback_data=f'riddletop:{user_id}'),
+                InlineKeyboardButton(change_font('💫 Quiz'), callback_data=f'quiztop:{user_id}')
          ]]
          await add_chat(chat_id)
          return await message.reply(
-                'To Check The Top Users In Chat Click Below Button.',
+                text=change_font('To Check The Top Users In Chat Click Below Button.'),
                 reply_markup=InlineKeyboardMarkup(button)
          )
 
@@ -35,13 +36,14 @@ async def riddletop(_, query):
 
        if user_id != admin_id:
               return await query.answer(
-                     'This command is not requested by you', show_alert=True
+                     text=('This command is not requested by you')
+                       , show_alert=True
               )
        else:
                 
             button = [[
-             InlineKeyboardButton('𝗖𝗵𝗮𝘁 𝗥-𝗠', callback_data=f'rmathtop:{admin_id}'),
-             InlineKeyboardButton('𝗚𝗹𝗼𝗯𝗮𝗹 𝗥-𝗠', callback_data=f'rmathgtop:{admin_id}'),
+             InlineKeyboardButton(change_font('Chat R-M'), callback_data=f'rmathtop:{admin_id}'),
+             InlineKeyboardButton(change_font('Global R-M'), callback_data=f'rmathgtop:{admin_id}'),
             ],[
              InlineKeyboardButton('𝗖𝗵𝗮𝘁 𝗥-𝗪', callback_data=f'rwordstop:{admin_id}'),
              InlineKeyboardButton('𝗚𝗹𝗼𝗯𝗮𝗹 𝗥-𝗪', callback_data=f'rwordsgtop:{admin_id}')       
@@ -49,7 +51,7 @@ async def riddletop(_, query):
             ]]
             name = query.message.chat.title
             return await query.message.edit(
-                   f'**Click Here to See Global Top Users & Group Top Users!**',
+                   text=change_font(f'**Click Here to See Global Top Users & Group Top Users!**'),
                    reply_markup=InlineKeyboardMarkup(button)
             )
             
@@ -61,13 +63,13 @@ async def rmath_top(_, query):
        admin_id = int(query.data.split(':')[1])
        if user_id != admin_id:
               return await query.answer(
-                     'This command is not requested by you', show_alert=True
+                     text=change_font('This command is not requested by you'), show_alert=True
               )
        else:
            chat_id = query.message.chat.id
            name = query.message.chat.title
            sorted_user_riddle_points = await get_riddle_group(chat_id=chat_id, type='math')
-           text = f'🏆 ** Chat Top Riddle Math Users in {name}** ✨\n\n'
+           text = change_font(f'🏆 ** Chat Top Riddle Math Users in {name}** ✨\n\n')
            for i, (user_id, points) in enumerate(sorted_user_riddle_points[:15]):
               if str(user_id).isdigit():                       
                  text += f'{i+1}. **[{user_id}](tg://user?id={user_id})**: `{points}`\n'
@@ -75,8 +77,9 @@ async def rmath_top(_, query):
                  text += f'{i+1}, **{user_id}**: `{points}`\n'
                        
 
-           button = [[ InlineKeyboardButton('Back ⬅️', callback_data=f'riddletop:{admin_id}') ]]
-           return await query.message.edit(text,
+           button = [[ InlineKeyboardButton(change_font('BACK ⬅️'), callback_data=f'riddletop:{admin_id}') ]]
+           return await query.message.edit(
+                    text=text,
                                     reply_markup=InlineKeyboardMarkup(button)
                                           )
 
@@ -87,11 +90,12 @@ async def rmath_gtop(_, query):
        admin_id = int(query.data.split(':')[1])
        if user_id != admin_id:
               return await query.answer(
-                     'This command is not requested by you', show_alert=True
+                     text=change_font('This command is not requested by you')
+                       , show_alert=True
               )
        else:
            name = query.message.chat.title
-           text = f'🏆 **Global Top Riddle math Users In {name} ✨**\n\n'
+           text = change_font(f'🏆 **Global Top Riddle math Users In {name} ✨**\n\n')
            sorted_leaderboard = await get_riddle_global(type='math')
            for i, (user_id, points) in enumerate(sorted_leaderboard.items()):
                   if i >= 15:
@@ -102,7 +106,7 @@ async def rmath_gtop(_, query):
                        text += f'{i+1}, **{user_id}**: `{points}`\n'
                        
 
-           button = [[ InlineKeyboardButton('Back ⬅️', callback_data=f'riddletop:{admin_id}') ]]
+           button = [[ InlineKeyboardButton(change_font('BACK ⬅️'), callback_data=f'riddletop:{admin_id}') ]]
            return await query.message.edit(text,
                                     reply_markup=InlineKeyboardMarkup(button)
                                           )
@@ -115,13 +119,13 @@ async def rwords_top(_, query):
        admin_id = int(query.data.split(':')[1])
        if user_id != admin_id:
               return await query.answer(
-                     'This command is not requested by you', show_alert=True
+                     text=change_font('This command is not requested by you'), show_alert=True
               )
        else:
            chat_id = query.message.chat.id
            name = query.message.chat.title
            sorted_user_riddle_points = await get_riddle_group(chat_id=chat_id, type='words')
-           text = f'🏆 **Chat Top Riddle Words Users In {name}** ✨\n\n'
+           text = change_font(f'🏆 **Chat Top Riddle Words Users In {name}** ✨\n\n')
            for i, (user_id, points) in enumerate(sorted_user_riddle_points[:15]):
               if str(user_id).isdigit():                       
                  text += f'{i+1}. **[{user_id}](tg://user?id={user_id})**: `{points}`\n'
@@ -129,7 +133,7 @@ async def rwords_top(_, query):
                  text += f'{i+1}, **{user_id}**: `{points}`\n'
                        
 
-           button = [[ InlineKeyboardButton('Back ⬅️', callback_data=f'riddletop:{admin_id}') ]]
+           button = [[ InlineKeyboardButton(change_font('BACK ⬅️'), callback_data=f'riddletop:{admin_id}') ]]
            return await query.message.edit(text,
                                     reply_markup=InlineKeyboardMarkup(button)
                                            )
@@ -140,11 +144,11 @@ async def rwords_gtop(_, query):
        admin_id = int(query.data.split(':')[1])
        if user_id != admin_id:
               return await query.answer(
-                     'This command is not requested by you', show_alert=True
+                     text=change_font('This command is not requested by you'), show_alert=True
               )
        else:
            name = query.message.chat.title
-           text = f'🏆 **Global Top Riddle Words Users in {name}**\n\n'
+           text = change_font(f'🏆 **Global Top Riddle Words Users in {name}**\n\n')
            sorted_leaderboard = await get_riddle_global(type='words')
            for i, (user_id, points) in enumerate(sorted_leaderboard.items()):
                   if i >= 15:
@@ -155,7 +159,7 @@ async def rwords_gtop(_, query):
                        text += f'{i+1}, **{user_id}**: `{points}`\n'
                        
 
-           button = [[ InlineKeyboardButton('Back ⬅️', callback_data=f'riddletop:{admin_id}') ]]
+           button = [[ InlineKeyboardButton(change_font('BACK ⬅️'), callback_data=f'riddletop:{admin_id}') ]]
            return await query.message.edit(text,
                                     reply_markup=InlineKeyboardMarkup(button)
                                           )

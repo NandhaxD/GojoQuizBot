@@ -10,7 +10,7 @@ from nandha.database.riddle.math_riddle import is_chat_riddle, get_chat_sleep, o
 from nandha.database.points import add_user_chat_points, get_user_chat_points
 from nandha.database.users import update_name
 from nandha.database.chats import add_chat
-from nandha.helpers.func import get_question, make_math_riddle, taken_time
+from nandha.helpers.func import get_question, make_math_riddle, taken_time, change_font
 from nandha.helpers.scripts import ask_start_pm, react, send_errors
 from nandha import bot
 
@@ -68,7 +68,7 @@ async def check_user_rmath_ans(_, message):
                          points = await get_user_chat_points(chat_id, user_id, module, type)
                          
                          await message.reply_text(
-                           text=config.RIDDLE_WINNER_STRING.format(first_name, type.upper(), points, a_time)
+                           text=config.RIDDLE_WINNER_STRING.format(first_name, change_font(type.upper()), points, a_time)
                          )
                  except Exception as e:
                        return await send_errors(message, e)
@@ -100,14 +100,16 @@ async def riddle_math(_, query):
                InlineKeyboardButton(text='Back ⬅️', callback_data=f'cb_riddle:{user_id}')
  ]]
          if riddle == 'on':
+               txt = "This chat has already set up the timing for sending math riddles. To change the settings, turn them off and try again."
                return await query.message.edit(
-                     "This chat has already set up the timing for sending math riddles. To change the settings, turn them off and try again.",
+                     change_font(txt),
                      reply_markup=InlineKeyboardMarkup(off_button))
                      
          else:
+             txt = f"Hello! You can now set up a time for your chat. Click the button below to do so.\n\nChat Riddle: `Disabled` 🛑\nChat Riddle Time: `{time}` ⏰"
              return await query.message.edit(
-                f"Hello! You can now set up a time for your chat. Click the button below to do so.\n\nChat Riddle: `Disabled` 🛑\nChat Riddle Time: `{time}` ⏰",
-                reply_markup=InlineKeyboardMarkup(button)
+                       text=change_font(txt),
+                       reply_markup=InlineKeyboardMarkup(button)
              )
 
 
@@ -129,8 +131,9 @@ async def set_riddle_chat_time(_, query):
                    InlineKeyboardButton('Back ⬅️', callback_data=f'rmath:{user_id}')
 
            ]]
+           txt = f"Successfully set up chat math riddle!\n\n<b>Riddle is</b>: `Enabled` 📢\n<b>Riddle time</b>: `{time}` ⏰"
            return await query.message.edit(
-                  f"Successfully set up chat math riddle!\n\n<b>Riddle is</b>: `Enabled` 📢\n<b>Riddle time</b>: `{time}` ⏰",
+                   text=change_font(txt),
                    reply_markup=InlineKeyboardMarkup(button)
            )
                                 
@@ -149,13 +152,14 @@ async def off_riddle_chat(_, query):
             await off_chat(chat_id)
             await clear_chat_riddle(chat_id)
             time = await get_chat_sleep(chat_id)
+            txt = f"Successfully turned off chat math riddle!\n\n<b>Chat riddle is</b>: `Disabled` 🛑\n<b>Chat riddle time</b>: `{time}` 🛑"
             await query.message.edit(
-                 f"Successfully turned off chat math riddle!\n\n<b>Chat riddle is</b>: `Disabled` 🛑\n<b>Chat riddle time</b>: `{time}` 🛑",
-           )
+                      text=change_font(txt)  
+            )
             if chat_id in chats_id:
                    await bot.send_message(
                        chat_id=chat_id,
-                          text='**Ok. R-M** 🔴'
+                          text=change_font('**Ok. R-M** 🔴')
                         )
                    chats_id[chat_id].cancel()
                    del chats_id[chat_id]
@@ -181,7 +185,7 @@ async def send_math_riddle_tochat(chat_id: int):
                msg = await bot.send_photo(
                     chat_id=chat_id,
                     photo=photo, 
-                    caption="<code>🔥 Solve the Riddle 🔥</code>")
+                    caption=change_font("<code>🔥 Solve the Riddle 🔥</code>"))
                await save_chat_riddle(
                   chat_id=chat_id,
                   question=question,

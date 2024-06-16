@@ -141,7 +141,7 @@ async def generate_lb_image(chat_id: int, chat_name: str, sorted_user_riddle_poi
     fonts = {
         'title': ImageFont.truetype(font_path, size=50),
         'rank': ImageFont.truetype(font_path, size=20),
-        'username': ImageFont.truetype(font_path, size=10),
+        'username': ImageFont.truetype(font_path, size=25),
         'points': ImageFont.truetype(font_path, size=30),
     }
     draw.text((30, 30), 'LEADER-BOARD:', font=fonts['title'], fill=(255, 255, 255))

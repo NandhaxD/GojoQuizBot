@@ -1,5 +1,5 @@
 
-pyrofork== 2.3.24
+git+https://github.com/KurimuzonAkuma/pyrogram.git@v2.1.21
 TgCrypto==1.2.5
 requests==2.31.0
 pillow==10.2.0

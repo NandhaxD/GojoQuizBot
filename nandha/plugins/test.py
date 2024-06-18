@@ -75,7 +75,7 @@ async def fetch_naruto_profile(char_name):
 
     return stats, image_list
 
-@Client.on_message(filters.command("naruto"))
+@bot.on_message(filters.command("naruto"))
 async def naruto(_, m: Message):
     db = await get_db()
     char_name = m.text.split()[1]

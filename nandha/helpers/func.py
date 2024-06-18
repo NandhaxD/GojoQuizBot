@@ -141,7 +141,7 @@ async def generate_lb_image(data, type: str, chat_id: int = None, chat_name: str
     fonts = {
         'title': ImageFont.truetype(font_path, size=40),
         'rank': ImageFont.truetype(font_path, size=20),
-        'username': ImageFont.truetype(font_path, size=20),
+        'username': ImageFont.truetype('./resources/classic.otf', size=25),
         'points': ImageFont.truetype(font_path, size=30),
     }
     if None in (chat_id, chat_name):

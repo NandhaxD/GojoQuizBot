@@ -68,7 +68,7 @@ def fetch_naruto_profile(char_name: str):
 
     image_list = []
     for img in images:
-        image_list.append(InputMediaPhoto(img['src'], caption=img['alt']))
+        image_list.append(InputMediaPhoto(img['src'].split(".png")[0] + ".png", caption=img['alt'].replace("File:", "")))
 
     return stats, image_list
     

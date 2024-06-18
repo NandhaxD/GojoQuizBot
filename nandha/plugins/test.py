@@ -86,17 +86,27 @@ async def naruto(_, m: Message):
         return await m.reply_photo("https://graph.org/file/9f4ae15b8c0d57b528963.jpg", caption=text)
         
     char_name = m.text.split(None, 1)[1]
+    char_name = char_name.replace('ū', 'u').replace('ō', 'o')
     found = False
-    for num in range(len(db)-1):
-        if char_name.lower().replace('ū', 'u').replace('ō', 'o') in db[num].lower().replace('ū', 'u').replace('ō', 'o'):
-            char_name = db[num]
+    for name in db:
+        name_lower = name.lower().replace('ū', 'u').replace('ō', 'o')
+        if char_name.lower() in name_lower:
+            char_name = name
             found = True
             break
     if not found:
+        for name in db:
+            name_lower = name.lower().replace('ū', 'u').replace('ō', 'o')
+            words = char_name.lower().split()
+            if all(word in name_lower for word in words):
+                char_name = name
+                found = True
+                break
+    if not found:
         similar_names = []
-        for num in range(len(db)):
-            if char_name.lower() in db[num].lower() and db[num].lower()!= char_name.lower():
-                similar_names.append(db[num])
+        for name in db:
+            if char_name.lower() in name.lower() and name.lower()!= char_name.lower():
+                similar_names.append(name)
         if similar_names:
             if len(similar_names) == 1:
                 await m.reply_text(f"**Did You Mean** `{similar_names[0]}` **?**")

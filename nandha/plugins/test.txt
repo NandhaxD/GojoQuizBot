@@ -85,26 +85,29 @@ async def naruto(_, m: Message):
         text += "\n**Do** `/naruto name` **For Their Stats**"
         return await m.reply_photo("https://graph.org/file/9f4ae15b8c0d57b528963.jpg", caption=text)
         
-    char_name = m.text.split()[1]
+    char_name = m.text.split(None, 1)[1]
+    found = False
     for num in range(len(db)):
-        if char_name.lower() == db[num].split()[0].lower() or char_name.lower() == db[num].lower():
+        if char_name.lower().split() in db[num].lower():
             char_name = db[num]
-    similar_names = []
-    for num in range(len(db)):
-        if char_name.lower() in db[num].lower():
-            similar_names.append(db[num])
-    if similar_names:
-        if len(similar_names) == 1:
-            await m.reply_text(f"**Did You Mean** `{similar_names[0]}` **?**")
+            found = True
+            break
+    if not found:
+        similar_names = []
+        for num in range(len(db)):
+            if char_name.lower() in db[num].lower() and db[num].lower()!= char_name.lower():
+                similar_names.append(db[num])
+        if similar_names:
+            if len(similar_names) == 1:
+                await m.reply_text(f"**Did You Mean** `{similar_names[0]}` **?**")
+            else:
+                await m.reply_text(f"**Did You Mean One Of These:** `{', '.join(similar_names)}` **?**")
         else:
-            await m.reply_text(f"**Did You Mean One Of These:** `{', '.join(similar_names)}` **?**")
+            await m.reply_text(f"`{char_name}` **Not Found In The Database.**")
     else:
-        await m.reply_text(f"`{char_name}` **Not Found In The Database.**")
-
-    stats, image_list = await fetch_naruto_profile(char_name)
-
-    if stats:
-        await bot.send_media_group(m.chat.id, media=image_list, reply_to_message_id=m.id)
-        await m.reply_text(profile_stats.format(char_name, stats.get("Ninjutsu"), stats.get("Taijutsu"), stats.get("Genjutsu"), stats.get("Intelligence"), stats.get("Strength"), stats.get("Speed"), stats.get("Stamina"), stats.get("Hand seals"), stats.get("Total")))
-    else:
-        await m.reply_text("`Error Occured`")
+        stats, image_list = await fetch_naruto_profile(char_name)
+        if stats:
+            await bot.send_media_group(m.chat.id, media=image_list, reply_to_message_id=m.id)
+            await m.reply_text(profile_stats.format(char_name, stats.get("Ninjutsu"), stats.get("Taijutsu"), stats.get("Genjutsu"), stats.get("Intelligence"), stats.get("Strength"), stats.get("Speed"), stats.get("Stamina"), stats.get("Hand seals"), stats.get("Total")))
+        else:
+            await m.reply_text("`Error Occured`")

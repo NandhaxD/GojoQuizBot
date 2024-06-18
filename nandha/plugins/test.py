@@ -87,8 +87,8 @@ async def naruto(_, m: Message):
         
     char_name = m.text.split(None, 1)[1]
     found = False
-    for num in range(len(db)):
-        if char_name.lower().split() in db[num].lower():
+    for num in range(len(db)-1):
+        if char_name.lower().replace('ū', 'u').replace('ō', 'o') in db[num].lower().replace('ū', 'u').replace('ō', 'o'):
             char_name = db[num]
             found = True
             break

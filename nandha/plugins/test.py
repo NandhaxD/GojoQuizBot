@@ -29,10 +29,10 @@ async def get_db():
 
     names = []
     for link in soup.find_all('a', href=True):
-        if link['href'].startswith("/wiki/Infobox:"):
-            name = link.text.strip()
-            names.append(name.replace("Infobox:", "").replace(" Stats", ""))
-    return names
+        if link['href'].startswith("/wiki/Infobox:"):
+            name = link.text.strip()
+            names.append(name.replace("Infobox:", "").replace(" Stats", ""))
+        return names
 
 async def fetch_naruto_profile(char_name):
     url = f"https://naruto.fandom.com/wiki/Infobox:{char_name.replace('ō', '%C5%8D').replace('ū', '%C5%AB').replace(' ', '_')}_Stats"

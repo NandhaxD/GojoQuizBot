@@ -78,6 +78,11 @@ async def fetch_naruto_profile(char_name):
 @bot.on_message(filters.command("naruto"))
 async def naruto(_, m: Message):
     db = await get_db()
+    if len(m.command) < 2:
+        text = "**🔥 Available Naruto Characters:-**\n\n"
+        text += "\n\n**Do** `/naruto name` **For Their Stats**"
+        return await m.reply_photo("https://graph.org/file/9f4ae15b8c0d57b528963.jpg", caption=text)
+        
     char_name = m.text.split()[1]
     for num in range(len(db)):
         if char_name.lower() == db[num].split()[0].lower() or char_name.lower() == db[num].lower():

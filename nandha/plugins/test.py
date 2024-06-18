@@ -34,36 +34,33 @@ async def get_db():
             names.append(name.replace("Infobox:", "").replace(" Stats", ""))
     return names
 
-async def fetch_naruto_profile(char_name):
+def fetch_naruto_profile(char_name: str):
     url = f"https://naruto.fandom.com/wiki/Infobox:{char_name.replace('ō', '%C5%8D').replace('ū', '%C5%AB').replace(' ', '_')}_Stats"
     response = requests.get(url)
 
-    if response.status_code!= 200:
+    if response.status_code != 200:
         return None
 
     soup = BeautifulSoup(response.text, 'html.parser')
-    stats = {}
-    table = soup.find("table")
+    stats_table = soup.find('table')
 
-    if not table:
+    if stats_table is None:
         return None
 
-    headers = [th.text.strip() for th in table.find_all("th")]
-    data_rows = table.find_all("tr")[1:]
+    rows = stats_table.find_all('tr')
+    if len(rows) < 2:
+        return None
 
+    headers = [th.text.strip() for th in rows[0].find_all('th')]
+    data_rows = rows[1:]
+
+    stats = {}
     for row in data_rows:
-        data = [td.text.strip() for td in row.find_all(["th", "td"])]
-
-        if len(headers)!= len(data):
+        data = [td.text.strip() for td in row.find_all(['th', 'td'])]
+        if len(headers) != len(data):
             return None
+        stats.update({header: value for header, value in zip(headers, data)})
 
-        stats_dict = {}
-        for i, header in enumerate(headers):
-            stats_dict[header] = data[i]
-
-        stats.update(stats_dict)
-
-    images = []
     img_link = f"https://naruto.fandom.com/wiki/{char_name.replace('ō', '%C5%8D').replace('ū', '%C5%AB').replace(' ', '_')}"
     response = requests.get(img_link)
     soup = BeautifulSoup(response.content, 'html.parser')
@@ -74,7 +71,7 @@ async def fetch_naruto_profile(char_name):
         image_list.append(InputMediaPhoto(img['src'], caption=img['alt']))
 
     return stats, image_list
-
+    
 @bot.on_message(filters.command("naruto"))
 async def naruto(_, m: Message):
     db = await get_db()

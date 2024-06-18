@@ -112,7 +112,7 @@ async def naruto(_, m: Message):
         else:
             await m.reply_text(f"`{char_name}` **Not Found In The Database.**")
     else:
-        stats, image_list = await fetch_naruto_profile(char_name)
+        stats, image_list = fetch_naruto_profile(char_name)
         if stats:
             await bot.send_media_group(m.chat.id, media=image_list, reply_to_message_id=m.id)
             await m.reply_text(profile_stats.format(char_name, stats.get("Ninjutsu"), stats.get("Taijutsu"), stats.get("Genjutsu"), stats.get("Intelligence"), stats.get("Strength"), stats.get("Speed"), stats.get("Stamina"), stats.get("Hand seals"), stats.get("Total")))

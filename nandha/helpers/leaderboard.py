@@ -8,13 +8,13 @@ from nandha import DATABASE
 
 #riddle 
 
-async def get_riddle_global(type: str):
+async def get_leaderboard_global(mode: str type: str):
      db = DATABASE['USERS']
      all_users = db.find({})
      leaderboard = defaultdict(int)
      for user in all_users:
-         if 'data' in user and 'riddle' in user['data'] and type in user['data']['riddle']:
-              for chat_id, points in user['data']['riddle'][type].items():
+         if 'data' in user and mode in user['data'] and type in user['data'][mode]:
+              for chat_id, points in user['data'][mode][type].items():
                    try:
                       name = user['data']['first_name']
                       leaderboard[name] += points
@@ -29,14 +29,14 @@ async def get_riddle_global(type: str):
      return sorted_leaderboard
   
 
-async def get_riddle_group(chat_id: str, type: str):
+async def get_leaderboard_group(chat_id: str, type: str):
        db = DATABASE['USERS']
        user_points = {}
        for user_data in db.find():
             user_id = user_data['user_id']
             data = user_data['data']
-            if 'riddle' in data and type in data['riddle'] and str(chat_id) in data['riddle'][type]:
-                  points = data['riddle'][type][str(chat_id)]
+            if mode in data and type in data[mode] and str(chat_id) in data[mode][type]:
+                  points = data[mode][type][str(chat_id)]
                   try:
                      name = data['first_name']
                      user_points[name] = points

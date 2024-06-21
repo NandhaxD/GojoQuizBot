@@ -7,7 +7,7 @@ from nandha.database.chats import add_chat
 from pyrogram import filters, enums
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from nandha.helpers.scripts import react, ask_start_pm
-from nandha.helpers.func import change_font
+from nandha.helpers.func import change_font, ordinal_suffix
 from nandha.database.points import get_user_chat_points
 from nandha.helpers.ranks import get_user_rank
 
@@ -49,7 +49,7 @@ async def statics(bot, message):
          return
      user_id = m.from_user.id
      chat_id = m.chat.id
-     name = m.from_user.mention
+     name = m.from_user.first_name
      chat_name = m.chat.title
      
      m_rank, m_points = await get_user_rank(user_id, 'riddle', 'math')
@@ -68,8 +68,8 @@ f"""
 
 🌐 **Global Ranks**:
 
-Maths Score ➾ {m_rank}th -〚 {m_points} 〛
-Words Score ➾ {w_rank}th -〚 {w_points} 〛
+Maths Score ➾ {ordinal_suffix(m_rank)} -〚 {m_points} 〛
+Words Score ➾ {ordinal_suffix(w_rank)} -〚 {w_points} 〛
 
 More amazing updates coming soon.
 """)

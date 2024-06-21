@@ -6,7 +6,7 @@ import random
 
 from pyrogram import filters 
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from nandha.database.riddle.math_riddle import is_chat_riddle, get_chat_sleep, off_chat, on_chat, save_chat_riddle, clear_chat_riddle, get_chat_riddle
+from nandha.database.db import is_chat, get_chat_sleep, off_chat, on_chat, save_chat_data, clear_chat_data, get_chat_data
 from nandha.database.points import add_user_chat_points, get_user_chat_points
 from nandha.database.users import update_name
 from nandha.database.chats import add_chat
@@ -16,7 +16,7 @@ from nandha import bot
 
 
 
-module = 'riddle'
+mode = 'riddle'
 type = 'math'
 
 
@@ -31,7 +31,7 @@ async def check_user_rmath_ans(_, message):
         if not chat_id in chats_id:
                return
         else:
-            riddle = list(await get_chat_riddle(chat_id))
+            riddle = list(await get_chat_data(chat_id, mode, type))
             if riddle == False:
                     return
             else:
@@ -47,7 +47,7 @@ async def check_user_rmath_ans(_, message):
                        return
                     elif int(text) == answer:
                       
-                         await clear_chat_riddle(chat_id)
+                         await clear_chat_data(chat_id, mode, type)
                          mention = message.from_user.mention
                          user_id = message.from_user.id
                          first_name = message.from_user.first_name
@@ -88,8 +88,8 @@ async def riddle_math(_, query):
               text=change_font("🔐 Sorry this not for you. try you're own to customize.")
               , show_alert=True)
       else:
-         riddle = await is_chat_riddle(chat_id)
-         time = await get_chat_sleep(chat_id)
+         riddle = await is_chat(chat_id, mode, type)
+         time = await get_chat_sleep(chat_id, mode, type)
          button = [[
            InlineKeyboardButton(text=change_font('60 Sec'), callback_data=f'rmtime:{user_id}:60'),
            InlineKeyboardButton(text=change_font('3 Min'), callback_data=f'rmtime:{user_id}:90'),],
@@ -103,7 +103,7 @@ async def riddle_math(_, query):
                InlineKeyboardButton(text=change_font('OFF 🛑'), callback_data=f'rmoff:{user_id}'),
                InlineKeyboardButton(text=change_font('BACK ⬅️'), callback_data=f'cb_riddle:{user_id}')
  ]]
-         if riddle == 'on':
+         if riddle:
                txt = "This chat has already set up the timing for sending math riddles. To change the settings, turn them off and try again."
                return await query.message.edit(
                      change_font(txt),
@@ -130,9 +130,9 @@ async def set_riddle_chat_time(_, query):
                , show_alert=True)
        else:
            time = int(query.data.split(':')[2])
-           await on_chat(chat_id, time)
-           riddle = await is_chat_riddle(chat_id) 
-           time = await get_chat_sleep(chat_id) 
+           await on_chat(chat_id, mode, type, time)
+           riddle = await is_chat(chat_id, mode, type) 
+           time = await get_chat_sleep(chat_id, mode, type) 
            button = [[
                    InlineKeyboardButton(
                      change_font('Back ⬅️'), callback_data=f'rmath:{user_id}')
@@ -158,9 +158,9 @@ async def off_riddle_chat(_, query):
                text=change_font("🔐 Sorry this not for you. try you're own to customize.")
                , show_alert=True)
        else:
-            await off_chat(chat_id)
-            await clear_chat_riddle(chat_id)
-            time = await get_chat_sleep(chat_id)
+            await off_chat(chat_id, mode, type)
+            await clear_chat_data(chat_id, mode, type)
+            time = await get_chat_sleep(chat_id, mode, type)
             txt = f"Successfully turned off chat math riddle!\n\nChat riddle: `Disabled` 🛑\nChat riddle time: `{time}` 🛑"
             await query.message.edit(
                       text=change_font(txt)  
@@ -172,7 +172,7 @@ async def off_riddle_chat(_, query):
                         )
                    chats_id[chat_id].cancel()
                    del chats_id[chat_id]
-                   return await clear_chat_riddle(chat_id)
+                   return await clear_chat_data(chat_id, mode, type)
              
 
 
@@ -184,7 +184,7 @@ async def send_math_riddle_tochat(chat_id: int):
        lock = asyncio.Lock()
        async with lock:
            while True:                                 
-               sleep_time = int(await get_chat_sleep(chat_id))
+               sleep_time = int(await get_chat_sleep(chat_id, mode, type))
                riddle = await make_math_riddle(chat_id)
 
                question = riddle[2]
@@ -194,16 +194,19 @@ async def send_math_riddle_tochat(chat_id: int):
                msg = await bot.send_photo(
                     chat_id=chat_id,
                     photo=photo, 
-                    caption=change_font("✨ Solve the Riddle ✨"))
-               await save_chat_riddle(
+                    caption=change_font("✨ Solve the Riddle ✨")
+               )
+               await save_chat_data(
                   chat_id=chat_id,
+                  mode=mode,
+                  type=type,
                   question=question,
                   answer=answer,
                   msg_time=str(msg.date).split()[1]
           )
                os.remove(photo)
                await asyncio.sleep(sleep_time)
-               await clear_chat_riddle(chat_id)
+               await clear_chat_data(chat_id, mode, type)
                await msg.delete()
                
           
@@ -217,9 +220,9 @@ async def send_math_riddle_tochat(chat_id: int):
 async def sends_math_riddle(_, message):
       chat_id = message.chat.id
       if not chat_id in chats_id:
-            riddle = await is_chat_riddle(chat_id)
+            riddle = await is_chat(chat_id, mode, type)
             if riddle == 'on':
-                  await clear_chat_riddle(chat_id)
+                  await clear_chat_data(chat_id, mode, type)
                   chats_id[chat_id] = asyncio.create_task(send_math_riddle_tochat(chat_id))
                   print(f"{type.capitalize()} task added in {message.chat.title}")
       else:

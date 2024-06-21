@@ -75,11 +75,11 @@ LB_IMG = "https://graph.org/file/2b465e523b49414688c61.jpg"
 
 
 STATS_STRING = (
-     "**{name}'s Stats in {chat_name}**:\n\n"
-     "➤ Riddle:\n"
-     "  ✪ Solved Maths ➩〘 `{rmath_points}` 〙\n"
-     "  ✪ Solved Words ➩〘 `{rwords_points}` 〙\n"
-     "\n\n```\n➡️ MORE GAME WILL COMING SOON.```"
+     "**{name}'s Stats*:\n\n"
+     "Global Rank:\n"
+     "Maths ➩〘 `{math_rank}` 〙\n"
+     "Words ➩〘 `{word_rank}` 〙\n"
+     "\n\n```\n➡️ More Game Will Coming Soon...```"
 )
 
 RIDDLE_WINNER_STRING = (

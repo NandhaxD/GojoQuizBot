@@ -6,7 +6,10 @@ import random
 
 from pyrogram import filters, types
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from nandha.database.riddle.words_riddle import is_chat_riddle, get_chat_sleep, off_chat, on_chat, save_chat_riddle, clear_chat_riddle, get_chat_riddle
+from nandha.database.db import (
+is_chat, get_chat_sleep, off_chat, on_chat, save_chat_data, clear_chat_data, get_chat_data
+
+)
 from nandha.database.points import add_user_chat_points, get_user_chat_points
 from nandha.database.users import update_name
 from nandha.database.chats import add_chat
@@ -15,7 +18,7 @@ from nandha.helpers.scripts import ask_start_pm, react, send_errors
 from nandha import bot
 
 chats_id = {}
-module = 'riddle'
+mode = 'riddle'
 type = 'words'
 
 
@@ -30,7 +33,7 @@ async def check_user_rwords_ans(_, message):
         if not chat_id in chats_id:
                return
         else:
-            riddle = list(await get_chat_riddle(chat_id))
+            riddle = list(await get_chat_data(chat_id, mode, type))
             if riddle == False:
                     return
             else:
@@ -45,7 +48,7 @@ async def check_user_rwords_ans(_, message):
                     
                     if text == answer:
                       
-                         await clear_chat_riddle(chat_id)
+                         await clear_chat_data(chat_id, mode, type)
                          mention = message.from_user.mention
                          user_id = message.from_user.id
                          first_name = message.from_user.first_name
@@ -63,8 +66,8 @@ async def check_user_rwords_ans(_, message):
                                  end_time=end_time
                         ) 
                                                 
-                         await add_user_chat_points(chat_id, user_id, module, type)
-                         points = await get_user_chat_points(chat_id, user_id, module, type)
+                         await add_user_chat_points(chat_id, user_id, mode, type)
+                         points = await get_user_chat_points(chat_id, user_id, mode, type)
                          txt = text=config.RIDDLE_WINNER_STRING.format(first_name, type.upper(), points, a_time)
                       
                          await message.reply_text(
@@ -88,8 +91,8 @@ async def riddle_math(_, query):
                 text=change_font("🔐 Sorry this not for you. try you're own to customize.")
               , show_alert=True)
       else:
-         riddle = await is_chat_riddle(chat_id)
-         time = await get_chat_sleep(chat_id)
+         riddle = await is_chat(chat_id, mode, type)
+         time = await get_chat_sleep(chat_id, mode, type)
          button = [[
            InlineKeyboardButton(text=change_font('60 Sec'), callback_data=f'rwtime:{user_id}:60'),
            InlineKeyboardButton(text=change_font('3 Min'), callback_data=f'rwtime:{user_id}:90'),],
@@ -103,7 +106,7 @@ async def riddle_math(_, query):
                InlineKeyboardButton(text=change_font('OFF 🛑'), callback_data=f'rwoff:{user_id}'),
                InlineKeyboardButton(text=change_font('Back ⬅️'), callback_data=f'cb_riddle:{user_id}')
  ]]
-         if riddle == 'on':
+         if riddle:
                return await query.message.edit(
                      text=change_font("This chat has already set up the timing for sending math riddles. To change the settings, turn them off and try again."),
                      reply_markup=InlineKeyboardMarkup(off_button))
@@ -128,9 +131,9 @@ async def set_riddle_chat_time(_, query):
              , show_alert=True)
        else:
            time = int(query.data.split(':')[2])
-           await on_chat(chat_id, time)
-           riddle = await is_chat_riddle(chat_id) 
-           time = await get_chat_sleep(chat_id) 
+           await on_chat(chat_id, mode, type, time)
+           riddle = await is_chat(chat_id, mode, type) 
+           time = await get_chat_sleep(chat_id, mode, type) 
            button = [[
                    InlineKeyboardButton(change_font('BACK ⬅️'), callback_data=f'rwords:{user_id}')
 
@@ -153,8 +156,8 @@ async def off_riddle_chat(_, query):
              return await query.answer("🔐 Sorry this not for you. try you're own to customize.", show_alert=True)
        else:
             await off_chat(chat_id)
-            await clear_chat_riddle(chat_id)
-            time = await get_chat_sleep(chat_id)
+            await clear_chat_data(chat_id, mode, type)
+            time = await get_chat_sleep(chat_id, mode, type)
             await query.message.edit(
                  text=change_font(f"Successfully turned off chat words riddle!\n\nChat riddle: `Disabled` 🛑\nChat riddle time: `{time}` 🛑"),
            )
@@ -165,7 +168,7 @@ async def off_riddle_chat(_, query):
                         )
                    chats_id[chat_id].cancel()
                    del chats_id[chat_id]
-                   return await clear_chat_riddle(chat_id)
+                   return await clear_chat_data(chat_id, mode, type)
              
 
 
@@ -177,8 +180,8 @@ async def send_words_riddle_tochat(chat_id: int):
        lock = asyncio.Lock()
        async with lock:
            while True:                                 
-               sleep_time = int(await get_chat_sleep(chat_id))
-               photo, text = await make_words_riddle(chat_id)   
+               sleep_time = int(await get_chat_sleep(chat_id, mode, type))
+               photo, text = await make_words_data(chat_id, mode, type)   
                button = types.InlineKeyboardMarkup(
                  [[types.InlineKeyboardButton(change_font('🔍 Meaning'), callback_data=f"define:{text}")]]
                )
@@ -189,14 +192,16 @@ async def send_words_riddle_tochat(chat_id: int):
                     caption=change_font("✨ Solve the Riddle ✨"),
                     reply_markup=button
                )
-               await save_chat_riddle(
+               await save_chat_data(
                   chat_id=chat_id,
+                  mode=mode, 
+                  type=type,
                   text=text,
                   msg_time=str(msg.date).split()[1]
           )
                os.remove(photo)
                await asyncio.sleep(sleep_time)
-               await clear_chat_riddle(chat_id)
+               await clear_chat_data(chat_id, mode, type)
                await msg.delete()
 
           
@@ -210,9 +215,9 @@ async def send_words_riddle_tochat(chat_id: int):
 async def sends_words_riddle(_, message):
       chat_id = message.chat.id
       if not chat_id in chats_id:
-            riddle = await is_chat_riddle(chat_id)
+            riddle = await is_chat(chat_id, mode, type)
             if riddle == 'on':
-                  await clear_chat_riddle(chat_id)
+                  await clear_chat_data(chat_id, mode, type)
                   chats_id[chat_id] = asyncio.create_task(send_words_riddle_tochat(chat_id))
                   print(f"{type.capitalize()} task added in {message.chat.title}")                 
       else:

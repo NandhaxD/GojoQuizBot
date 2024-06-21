@@ -8,7 +8,7 @@ from nandha import DATABASE
 
 #riddle 
 
-async def get_leaderboard_global(mode: str type: str):
+async def get_leaderboard_global(mode: str, type: str):
      db = DATABASE['USERS']
      all_users = db.find({})
      leaderboard = defaultdict(int)

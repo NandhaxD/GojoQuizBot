@@ -4,7 +4,7 @@ from pyrogram import filters, types
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from nandha.helpers.decorator import admin_only
 from nandha.helpers.leaderboard import (
-get_riddle_group, get_riddle_global
+get_leaderboard_group, get_leaderboard_global
 )
 
 from nandha.database.chats import add_chat
@@ -75,7 +75,7 @@ async def rmath_top(_, query):
                     caption=change_font("⏳ Analyzing Leaderboard....")
            )
            
-           sorted_user_riddle_points = await get_riddle_group(chat_id=chat_id, type='math')
+           sorted_user_riddle_points = await get_leaderboard_group(chat_id=chat_id, mode='riddle', type='math')
            photo_url = await generate_lb_image(chat_id=chat_id, chat_name=chat_name, data=sorted_user_riddle_points, type='Maths')
            text = change_font(f'🏆 ** Chat Top Riddle Math Users in {chat_name}** ✨\n\n')
            for i, (user_id, points) in enumerate(sorted_user_riddle_points[:10]):
@@ -110,7 +110,7 @@ async def rmath_gtop(_, query):
                     caption=change_font("⏳ Analyzing Leaderboard....")
            )
            
-           sorted_leaderboard = await get_riddle_global(type='math')
+           sorted_leaderboard = await get_leaderboard_global(mode='riddle', type='math')
                 
            photo_url = await generate_lb_image(data=sorted_leaderboard, type='Maths')  
            text = change_font(f'🏆 **Global Top Riddle math Users ✨**\n\n')
@@ -150,7 +150,7 @@ async def rwords_top(_, query):
                     caption=change_font("⏳ Analyzing Leaderboard....")
            )
                 
-           sorted_user_riddle_points = await get_riddle_group(chat_id=chat_id, type='words')
+           sorted_user_riddle_points = await get_leaderboard_group(chat_id=chat_id, mode='riddle', type='words')
            photo_url = await generate_lb_image(chat_id=chat_id, chat_name=chat_name, data=sorted_user_riddle_points, type='Words')
                 
            text = change_font(f'🏆 **Chat Top Riddle Words Users In {chat_name}** ✨\n\n')
@@ -185,7 +185,7 @@ async def rwords_gtop(_, query):
            )
                 
            text = change_font(f'🏆 **Global Top Riddle Words Users ✨**\n\n')
-           sorted_leaderboard = await get_riddle_global(type='words')
+           sorted_leaderboard = await get_leaderboard_global(mode='riddle', type='words')
            photo_url = await generate_lb_image(
                     data=sorted_leaderboard, type='Words'
            )

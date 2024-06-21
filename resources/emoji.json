@@ -1,4 +1,4 @@
-[
+
     {'emoji': '😂', 'unicode': 'U0001F602', 'name': 'Face with Tears of Joy'},
     {'emoji': '💀', 'unicode': 'U0001F480', 'name': 'Skull'},
     {'emoji': '⚡', 'unicode': 'u26A1', 'name': 'High Voltage'},
@@ -29,4 +29,4 @@
     {'emoji': '⏰', 'unicode': 'u23F0', 'name': 'Alarm Clock'},
     {'emoji': '🎵', 'unicode': 'U0001F3B5', 'name': 'Musical Note'},
     {'emoji': '📚', 'unicode': 'U0001F4DA', 'name': 'Books'}
-]
+

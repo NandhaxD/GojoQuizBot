@@ -32,7 +32,8 @@ async def clear_chat_data(chat_id: int, mode: str, type: str):
     update = {'$set': {
         f'data.{mode}.{type}.question': False,
         f'data.{mode}.{type}.answer': False,
-        f'data.{mode}.{type}.msg_time': False}
+        f'data.{mode}.{type}.msg_time': False
+    }
              }
     db.update_one(json, update)
     return True
@@ -41,8 +42,9 @@ async def clear_chat_data(chat_id: int, mode: str, type: str):
 async def is_chat(chat_id: int, mode: str, type: str):
     json = {'chat_id': chat_id}
     chat = db.find_one(json)
-    if bool(chat): return chat['data'][mode][type]['switch']
+    if bool(chat): return chat.get('data', {}).get(mode, {}).get(type, {]).get('switch', False)
     else: return False
+
 
 async def off_chat(chat_id: int, mode: str, type: str):
     json = {'chat_id': chat_id}
@@ -50,7 +52,9 @@ async def off_chat(chat_id: int, mode: str, type: str):
         '$set': {
             f'data.{mode}.{type}.sleep': False,
             f'data.{mode}.{type}.switch': False,
-            f'data.{mode}.{type}.msg_time': False}}
+            f'data.{mode}.{type}.msg_time': False
+        }
+    }
     db.update_one(json, updated_json)
     return True
     
@@ -69,7 +73,7 @@ async def get_chat_sleep(chat_id: int, mode: str, type: str):
     json = {'chat_id': chat_id}
     chat = db.find_one(json)
     if chat:
-        return chat['data'][mode][type]['sleep']
+        return chat.get('data', {}).get(mode, {}).get(type, {}).get('sleep', False)
     else:
         return False
 

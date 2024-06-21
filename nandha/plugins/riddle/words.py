@@ -181,7 +181,7 @@ async def send_words_riddle_tochat(chat_id: int):
        async with lock:
            while True:                                 
                sleep_time = int(await get_chat_sleep(chat_id, mode, type))
-               photo, text = await make_words_data(chat_id, mode, type)   
+               photo, text = await make_words_riddle(chat_id)   
                button = types.InlineKeyboardMarkup(
                  [[types.InlineKeyboardButton(change_font('🔍 Meaning'), callback_data=f"define:{text}")]]
                )

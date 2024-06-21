@@ -1,33 +1,32 @@
-
 {
-    '😂': '\U0001F602',  # Face with Tears of Joy
-    '💀': '\U0001F480',  # Skull
-    '⚡': '\u26A1',      # High Voltage
-    '😊': '\U0001F60A',  # Smiling Face with Smiling Eyes
-    '❤️': '\u2764',     # Red Heart
-    '🔥': '\U0001F525',  # Fire
-    '🌟': '\U0001F31F',  # Glowing Star
-    '🎉': '\U0001F389',  # Party Popper
-    '👍': '\U0001F44D',  # Thumbs Up
-    '👏': '\U0001F44F',  # Clapping Hands
-    '😎': '\U0001F60E',  # Smiling Face with Sunglasses
-    '🥳': '\U0001F973',  # Partying Face
-    '🤔': '\U0001F914',  # Thinking Face
-    '😢': '\U0001F622',  # Crying Face
-    '🤖': '\U0001F916',  # Robot Face
-    '🎂': '\U0001F382',  # Birthday Cake
-    '🌈': '\U0001F308',  # Rainbow
-    '🚀': '\U0001F680',  # Rocket
-    '🌍': '\U0001F30D',  # Earth Globe Europe-Africa
-    '🌞': '\U0001F31E',  # Sun with Face
-    '🐱': '\U0001F431',  # Cat Face
-    '🐶': '\U0001F436',  # Dog Face
-    '🍕': '\U0001F355',  # Pizza
-    '🍔': '\U0001F354',  # Hamburger
-    '🍣': '\U0001F363',  # Sushi
-    '🚗': '\U0001F697',  # Car
-    '✈️': '\u2708',     # Airplane
-    '⏰': '\u23F0',     # Alarm Clock
-    '🎵': '\U0001F3B5',  # Musical Note
-    '📚': '\U0001F4DA'   # Books
+    "😂": "\\U0001F602",  # Face with Tears of Joy
+    "💀": "\\U0001F480",  # Skull
+    "⚡": "\\u26A1",      # High Voltage
+    "😊": "\\U0001F60A",  # Smiling Face with Smiling Eyes
+    "❤️": "\\u2764",     # Red Heart
+    "🔥": "\\U0001F525",  # Fire
+    "🌟": "\\U0001F31F",  # Glowing Star
+    "🎉": "\\U0001F389",  # Party Popper
+    "👍": "\\U0001F44D",  # Thumbs Up
+    "👏": "\\U0001F44F",  # Clapping Hands
+    "😎": "\\U0001F60E",  # Smiling Face with Sunglasses
+    "🥳": "\\U0001F973",  # Partying Face
+    "🤔": "\\U0001F914",  # Thinking Face
+    "😢": "\\U0001F622",  # Crying Face
+    "🤖": "\\U0001F916",  # Robot Face
+    "🎂": "\\U0001F382",  # Birthday Cake
+    "🌈": "\\U0001F308",  # Rainbow
+    "🚀": "\\U0001F680",  # Rocket
+    "🌍": "\\U0001F30D",  # Earth Globe Europe-Africa
+    "🌞": "\\U0001F31E",  # Sun with Face
+    "🐱": "\\U0001F431",  # Cat Face
+    "🐶": "\\U0001F436",  # Dog Face
+    "🍕": "\\U0001F355",  # Pizza
+    "🍔": "\\U0001F354",  # Hamburger
+    "🍣": "\\U0001F363",  # Sushi
+    "🚗": "\\U0001F697",  # Car
+    "✈️": "\\u2708",     # Airplane
+    "⏰": "\\u23F0",     # Alarm Clock
+    "🎵": "\\U0001F3B5",  # Musical Note
+    "📚": "\\U0001F4DA"   # Books
 }

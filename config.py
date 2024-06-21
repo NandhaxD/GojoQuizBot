@@ -74,13 +74,6 @@ STATS_IMG = "https://graph.org/file/83c7b808673099eda0dc6.jpg"
 LB_IMG = "https://graph.org/file/2b465e523b49414688c61.jpg"
 
 
-STATS_STRING = (
-     "**{name}'s Stats*:\n\n"
-     "Global Rank:\n"
-     "Maths ➩〘 `{math_rank}` 〙\n"
-     "Words ➩〘 `{word_rank}` 〙\n"
-     "\n\n```\n➡️ More Game Will Coming Soon...```"
-)
 
 RIDDLE_WINNER_STRING = (
      "🎉  Congratulations, {}! You're the first to solve THE {} RIDDLE! 🥇\n\n"

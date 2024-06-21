@@ -29,7 +29,7 @@ async def get_leaderboard_global(mode: str type: str):
      return sorted_leaderboard
   
 
-async def get_leaderboard_group(chat_id: str, type: str):
+async def get_leaderboard_group(chat_id: str, mode: str, type: str):
        db = DATABASE['USERS']
        user_points = {}
        for user_data in db.find():

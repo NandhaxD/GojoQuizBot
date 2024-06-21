@@ -38,10 +38,10 @@ async def clear_chat_data(chat_id: int, mode: str, type: str):
     return True
                        
 
-async def is_chat_data(chat_id: int):
+async def is_chat_data(chat_id: int, mode: str, type: str):
     json = {'chat_id': chat_id}
     chat = db.find_one(json)
-    if bool(chat): return riddle['data']['riddle']['math']['switch']
+    if bool(chat): return chat['data'][mode][type]['switch']
     else: return False
 
 async def off_chat(chat_id: int, mode: str, type: str):
@@ -51,7 +51,7 @@ async def off_chat(chat_id: int, mode: str, type: str):
             f'data.{mode}.{type}.sleep': False,
             f'data.{mode}.{type}.switch': False,
             f'data.{mode}.{type}.msg_time': False}}
-    riddle = db.update_one(json, updated_json)
+    db.update_one(json, updated_json)
     return True
     
 async def on_chat(chat_id: int, mode: str, type: str, time: int):
@@ -61,13 +61,13 @@ async def on_chat(chat_id: int, mode: str, type: str, time: int):
             f'data.{mode}.{type}.sleep': time,
             f'data.{mode}.{type}.switch': True
         }}
-    riddle = db.update_one(json, updated_json)
+    db.update_one(json, updated_json)
     return True
     
                         
 async def get_chat_sleep(chat_id: int, mode: str, type: str):
     json = {'chat_id': chat_id}
-    riddle = db.find_one(json)
+    chat = db.find_one(json)
     if chat:
         return chat['data'][mode][type]['sleep']
     else:

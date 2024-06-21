@@ -21,11 +21,11 @@ async def get_user_rank(user_id: int, mode: str, type: str):
     rank = 1
     for user, points in sorted_leaderboard.items():
         if int(user) == user_id:
-            return rank
+            return rank, points
         rank += 1
     
     # If the user is not found in the leaderboard
-    return None
+    return None, None
 
 # Example usage:
 # user_rank = await get_user_rank(12345, 'math')

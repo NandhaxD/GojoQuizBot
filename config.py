@@ -70,7 +70,7 @@ S_STICKERS = [
 ]
      
 
-STATS_IMG = "https://graph.org/file/83c7b808673099eda0dc6.jpg"
+STATS_IMG = "https://i.imgur.com/A8kjpZF.jpeg"
 LB_IMG = "https://graph.org/file/2b465e523b49414688c61.jpg"
 
 

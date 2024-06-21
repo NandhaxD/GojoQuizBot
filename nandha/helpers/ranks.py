@@ -25,7 +25,7 @@ async def get_user_rank(user_id: int, mode: str, type: str):
         rank += 1
     
     # If the user is not found in the leaderboard
-    return None, None
+    return 0, 0
 
 # Example usage:
 # user_rank = await get_user_rank(12345, 'math')

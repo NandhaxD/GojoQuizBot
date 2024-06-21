@@ -9,6 +9,7 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from nandha.helpers.scripts import react, ask_start_pm
 from nandha.helpers.func import change_font
 from nandha.database.points import get_user_chat_points
+from nandha.helpers.ranks import get_user_rank
 
 
 async def start_message(name, message):
@@ -48,9 +49,12 @@ async def statics(bot, message):
          return
      user_id = m.from_user.id
      chat_id = m.chat.id
-     name = m.from_user.first_name
+     name = m.from_user.mention
      chat_name = m.chat.title
      
+     m_rank, m_points = await get_user_rank(user_id, 'riddle', 'math')
+     w_rank, w_points = await get_user_rank(user_id, 'riddle', 'words')
+  
      if (await ask_start_pm(user_id, message)):
           rmath_points = await get_user_chat_points(
               chat_id, user_id, 'riddle', 'math'
@@ -58,12 +62,17 @@ async def statics(bot, message):
           rwords_points = await get_user_chat_points(
               chat_id, user_id, 'riddle', 'words'
           )
-          text = config.STATS_STRING.format(
-               name=name,
-               chat_name=chat_name,
-               rmath_points=rmath_points,
-               rwords_points=rwords_points
-          )
+          text = (
+f"""
+⚡ **{mention}'s Profile**:
+
+🌐 **Global Ranks**:
+
+Maths Score ➾ {m_rank}th -〚 {m_points} 〛
+Words Score ➾ {w_rank}th -〚 {w_points} 〛
+
+More amazing updates coming soon.
+""")
           await m.reply_photo(
             photo=config.STATS_IMG,
             caption=change_font(text)

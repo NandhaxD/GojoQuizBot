@@ -65,8 +65,8 @@ async def check_user_rmath_ans(_, message):
                                  end_time=end_time
                         ) 
                                     
-                         await add_user_chat_points(chat_id, user_id, module, type)
-                         points = await get_user_chat_points(chat_id, user_id, module, type)
+                         await add_user_chat_points(chat_id, user_id, mode, type)
+                         points = await get_user_chat_points(chat_id, user_id, mode, type)
 
                          txt = text=config.RIDDLE_WINNER_STRING.format(first_name, type.upper(), points, a_time)
                          await message.reply_text(

@@ -64,7 +64,7 @@ async def statics(bot, message):
           )
           text = (
 f"""
-⚡ **{mention}'s Profile**:
+⚡ **{name}'s Profile**:
 
 🌐 **Global Ranks**:
 

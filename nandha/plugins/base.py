@@ -41,7 +41,7 @@ async def start(_, message):
 
 
 
-@bot.on_message(filters.command(["stats","statics"], prefixes=config.PREFIXES))
+@bot.on_message(filters.command("profile", prefixes=config.PREFIXES))
 async def statics(bot, message):
      m = message
      if m.chat.type == enums.ChatType.PRIVATE or not m.from_user:

@@ -42,7 +42,7 @@ async def clear_chat_data(chat_id: int, mode: str, type: str):
 async def is_chat(chat_id: int, mode: str, type: str):
     json = {'chat_id': chat_id}
     chat = db.find_one(json)
-    if bool(chat): return chat.get('data', {}).get(mode, {}).get(type, {]).get('switch', False)
+    if bool(chat): return chat.get('data', {}).get(mode, {}).get(type, {}).get('switch', False)
     else: return False
 
 

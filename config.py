@@ -30,7 +30,7 @@ DEVS_ID = [5696053228, 5456798232]
 
 # tools
 
-START_IMAGE = 'https://graph.org/file/15a7cc4a22cad1f6189f0.jpg'
+START_IMAGE = 'https://i.imgur.com/A8kjpZF.jpeg'
 PREFIXES = ['/', '\\']
 EMOJI = ['❤️', '⚡️', '😈', '👍', '🔥']
 
@@ -70,7 +70,7 @@ S_STICKERS = [
 ]
      
 
-STATS_IMG = "https://i.imgur.com/A8kjpZF.jpeg"
+STATS_IMG = "https://graph.org/file/83c7b808673099eda0dc6.jpg"
 LB_IMG = "https://graph.org/file/2b465e523b49414688c61.jpg"
 
 

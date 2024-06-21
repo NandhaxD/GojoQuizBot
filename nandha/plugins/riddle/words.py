@@ -155,7 +155,7 @@ async def off_riddle_chat(_, query):
        if user_id != admin_id:
              return await query.answer("🔐 Sorry this not for you. try you're own to customize.", show_alert=True)
        else:
-            await off_chat(chat_id)
+            await off_chat(chat_id, mode, type)
             await clear_chat_data(chat_id, mode, type)
             time = await get_chat_sleep(chat_id, mode, type)
             await query.message.edit(

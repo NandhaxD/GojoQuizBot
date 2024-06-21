@@ -18,10 +18,16 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 
 
-
+def ordinal_suffix(n):
+    if 11 <= n % 100 <= 13:
+        suffix = 'th'
+    else:
+        suffix = {1: 'st', 2: 'nd', 3: 'rd'}.get(n % 10, 'th')
+    return f"{n}{suffix}"
 
 async def change_text(text):
        return "Enabled" if text == True else "Disabled" if text == False else text
+       
                 
 async def restart():
     cmd = sys.argv #List of command-line arguments passed to the script.

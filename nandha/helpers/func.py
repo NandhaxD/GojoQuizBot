@@ -315,11 +315,11 @@ async def generate_emoji_riddle(chat_id: int):
      im = Image.open(image_path)
      draw = ImageDraw.Draw(im)
      data = get_random_emoji()
-     unicode_text = '\' + data['unicode'][1:]
+     unicode_text = '\\' + data['unicode']
      emoji = data['emoji']
      name = data['name'] #maybe useful
      unicode_font = ImageFont.truetype(r"./resources/emoji.ttf", 137)
-     draw.text((800, 235), unicode_text, font=unicode_font, embedded_color=True)
+     draw.text((800, 235), unicode_text.encode().decode('unicode-escape'), font=unicode_font, embedded_color=True)
      path = f'remoji_{chat_id}.jpeg'
      im.save(path)
      return path, emoji

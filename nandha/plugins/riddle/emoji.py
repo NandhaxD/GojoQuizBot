@@ -13,7 +13,7 @@ is_chat, get_chat_sleep, off_chat, on_chat, save_chat_data, clear_chat_data, get
 from nandha.database.points import add_user_chat_points, get_user_chat_points
 from nandha.database.users import update_name
 from nandha.database.chats import add_chat
-from nandha.helpers.func import get_question, make_words_riddle, taken_time, change_font
+from nandha.helpers.func import get_question, make_emoji_riddle, taken_time, change_font
 from nandha.helpers.scripts import ask_start_pm, react, send_errors
 from nandha import bot
 

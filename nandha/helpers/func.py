@@ -310,7 +310,7 @@ def get_random_emoji():
     return random.choice(data)
 
 
-async def generate_emoji_riddle(chat_id: int):
+async def make_emoji_riddle(chat_id: int):
      image_path = './resources/emoji.jpeg'
      im = Image.open(image_path)
      draw = ImageDraw.Draw(im)

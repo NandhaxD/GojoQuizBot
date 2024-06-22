@@ -17,7 +17,7 @@ async def save_chat_data(chat_id: int, mode: str, type: str, answer, msg_time, q
     if question is not None:
         update['$set'][f'data.{mode}.{type}.question'] = question
     
-    await db.update_one(json, update)
+    db.update_one(json, update)
     return True
 
 
@@ -52,7 +52,7 @@ async def clear_chat_data(chat_id: int, mode: str, type: str):
     if chat and 'question' in chat['data'][mode][type]:
         update['$set'][f'data.{mode}.{type}.question'] = False
 
-    await db.update_one(json, update)
+    db.update_one(json, update)
     return True
   
                        

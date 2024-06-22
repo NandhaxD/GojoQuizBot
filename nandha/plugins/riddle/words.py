@@ -200,7 +200,7 @@ async def send_words_riddle_tochat(chat_id: int):
                   chat_id=chat_id,
                   mode=mode, 
                   type=type,
-                  text=text,
+                  answer=text,
                   msg_time=str(msg.date).split()[1]
           )
                os.remove(photo)

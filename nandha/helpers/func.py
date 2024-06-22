@@ -305,7 +305,7 @@ async def make_words_riddle(chat_id: int):
 
 
 def get_random_emoji():
-    with open("/resources/emoji.json", "r", encoding='utf-8') as file:
+    with open("./resources/emoji.json", "r", encoding='utf-8') as file:
          data = json.load(file)
     return random.choice(data)
 

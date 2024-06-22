@@ -23,7 +23,7 @@ async def save_chat_data(chat_id: int, mode: str, type: str, answer, msg_time, q
 
 async def get_chat_data(chat_id: int, mode: str, type: str):
     json = {'chat_id': chat_id}
-    chat = await db.find_one(json)  # Assuming this is an async call
+    chat = db.find_one(json)  # Assuming this is an async call
     if chat:
         data = chat['data'][mode][type]
         question = data.get('question')
@@ -48,7 +48,7 @@ async def clear_chat_data(chat_id: int, mode: str, type: str):
     }
 
     # Fetch the chat data to check if the question exists
-    chat = await db.find_one(json)
+    chat = db.find_one(json)
     if chat and 'question' in chat['data'][mode][type]:
         update['$set'][f'data.{mode}.{type}.question'] = False
 

@@ -5,38 +5,56 @@ from nandha import DATABASE
 
 db = DATABASE['CHATS']
 
-async def save_chat_data(chat_id: int, mode: str, type: str, question, answer, msg_time):
+
+async def save_chat_data(chat_id: int, mode: str, type: str, answer, msg_time, question=None):
     json = {'chat_id': chat_id}
+  
     update = {'$set': {
-        f'data.{mode}.{type}.question': question,
         f'data.{mode}.{type}.answer': answer,
-        f'data.{mode}.{type}.msg_time': msg_time}
-             }
-    db.update_one(json, update)
+        f'data.{mode}.{type}.msg_time': msg_time
+    }}
+    
+    if question is not None:
+        update['$set'][f'data.{mode}.{type}.question'] = question
+    
+    await db.update_one(json, update)
     return True
 
+
 async def get_chat_data(chat_id: int, mode: str, type: str):
-       json = {'chat_id': chat_id}
-       chat = db.find_one(json)
-       if chat:
-           question = chat['data'][mode][type]['question']
-           answer = chat['data'][mode][type]['answer']
-           taken_time = chat['data'][mode][type]['msg_time']
-           return question, answer, taken_time
-       else:
-           return False
-           
-    
+    json = {'chat_id': chat_id}
+    chat = await db.find_one(json)  # Assuming this is an async call
+    if chat:
+        data = chat['data'][mode][type]
+        question = data.get('question')
+        answer = data['answer']
+        taken_time = data['msg_time']
+        if question is not None:
+            return question, answer, taken_time
+        else:
+            return answer, taken_time
+    else:
+        return False
+
+
+
 async def clear_chat_data(chat_id: int, mode: str, type: str):
     json = {'chat_id': chat_id}
-    update = {'$set': {
-        f'data.{mode}.{type}.question': False,
-        f'data.{mode}.{type}.answer': False,
-        f'data.{mode}.{type}.msg_time': False
+    update = {
+        '$set': {
+            f'data.{mode}.{type}.answer': False,
+            f'data.{mode}.{type}.msg_time': False
+        }
     }
-             }
-    db.update_one(json, update)
+
+    # Fetch the chat data to check if the question exists
+    chat = await db.find_one(json)
+    if chat and 'question' in chat['data'][mode][type]:
+        update['$set'][f'data.{mode}.{type}.question'] = False
+
+    await db.update_one(json, update)
     return True
+  
                        
 
 async def is_chat(chat_id: int, mode: str, type: str):

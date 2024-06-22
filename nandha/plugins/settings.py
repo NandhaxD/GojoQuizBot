@@ -94,10 +94,10 @@ async def customize_riddle(_, query):
             return await query.answer("🔐 Sorry this not for you. try you're own to customize.", show_alert=True)
       else:  
         button = [[
-              InlineKeyboardButton(text='Math Riddle', callback_data=f'rmath:{user_id}'),
-              InlineKeyboardButton(text='Words Riddle', callback_data=f'rwords:{user_id}'),
+              InlineKeyboardButton(text='Maths', callback_data=f'rmath:{user_id}'),
+              InlineKeyboardButton(text='Words', callback_data=f'rwords:{user_id}'),
         ],[
-              InlineKeyboardButton(text='Comming Soon', callback_data=f'cs:{user_id}'),
+              InlineKeyboardButton(text='Emoji', callback_data=f'remoji:{user_id}'),
               InlineKeyboardButton(text='Comming Soon', callback_data=f'cs:{user_id}')
         ] , [
                     InlineKeyboardButton(text='𝗕𝗔𝗖𝗞 ⬅️', callback_data=f'settings:{user_id}')

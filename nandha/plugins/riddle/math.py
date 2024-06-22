@@ -130,6 +130,10 @@ async def set_riddle_chat_time(_, query):
                , show_alert=True)
        else:
            time = int(query.data.split(':')[2])
+           if time <= 90:
+              return await query.answer(
+                text=change_font("Sorry only some authority can set up 1/3 minutes try changing more."), show_alert=True
+                )
            await on_chat(chat_id, mode, type, time)
            riddle = await is_chat(chat_id, mode, type) 
            time = await get_chat_sleep(chat_id, mode, type) 

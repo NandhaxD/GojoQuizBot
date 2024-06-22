@@ -300,6 +300,28 @@ async def make_words_riddle(chat_id: int):
        return path, text
        
 
-       
+ ####################################################################################################
+
+
+def get_random_emoji():
+    with open("/resources/emoji.json", "r", encoding='utf-8') as f:
+         data = f.read()
+    return random.choice(data)
+
+
+async def generate_emoji_riddle(chat_id: int):
+     image_path = './resources/emoji.jpeg'
+     im = Image.open(image_path)
+     draw = ImageDraw.Draw(im)
+     data = get_random_emoji()
+     unicode_font = data['unicode']
+     emoji = data['emoji']
+     name = data['name'] #maybe useful
+     unicode_font = ImageFont.truetype(r"./resources/emoji.ttf", 137)
+     draw.text((800, 235), unicode_text, font=unicode_font, embedded_color=True)
+     path = f'remoji_{chat_id}.jpeg'
+     im.save(path)
+     return path, emoji
+
        
 

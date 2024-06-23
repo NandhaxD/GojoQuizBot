@@ -209,3 +209,80 @@ async def rwords_gtop(_, query):
                  reply_markup=InlineKeyboardMarkup(button)
            )
        
+
+
+@bot.on_callback_query(filters.regex('^remojitop'))
+async def remoji_top(_, query):
+       user_id = query.from_user.id
+       admin_id = int(query.data.split(':')[1])
+       if user_id != admin_id:
+              return await query.answer(
+                     text=change_font('This command is not requested by you'), show_alert=True
+              )
+       else:
+           chat_id = query.message.chat.id
+           chat_name = query.message.chat.title
+
+           await query.message.edit_caption(
+                    caption=change_font("⏳ Analyzing Leaderboard....")
+           )
+                
+           sorted_user_riddle_points = await get_leaderboard_group(chat_id=chat_id, mode='riddle', type='emoji')
+           photo_url = await generate_lb_image(chat_id=chat_id, chat_name=chat_name, data=sorted_user_riddle_points, type='emoji')
+                
+           text = change_font(f'🏆 **Chat Top Riddle Emoji Users In {chat_name}** ✨\n\n')
+           for i, (user_id, points) in enumerate(sorted_user_riddle_points[:10]):
+              if str(user_id).isdigit():                       
+                 text += f'{i+1}. **[{user_id}](tg://user?id={user_id})**: `{points}`\n'
+              else:
+                 text += f'{i+1}, **{user_id}**: `{points}`\n'
+                       
+
+           button = [[ InlineKeyboardButton(change_font('BACK ⬅️'), callback_data=f'riddletop:{admin_id}') ]]
+           return await query.message.edit_media(
+                    media=types.InputMediaPhoto(
+                           media=photo_url,
+                           caption=text
+                     ),
+                 reply_markup=InlineKeyboardMarkup(button)
+           )
+
+@bot.on_callback_query(filters.regex('^remojigtop'))
+async def remoji_gtop(_, query):
+       user_id = query.from_user.id
+       admin_id = int(query.data.split(':')[1])
+       if user_id != admin_id:
+              return await query.answer(
+                     text=change_font('This command is not requested by you'), show_alert=True
+              )
+       else:
+
+           await query.message.edit_caption(
+                    caption=change_font("⏳ Analyzing Leaderboard....")
+           )
+                
+           text = change_font(f'🏆 **Global Top Riddle Emoji Users ✨**\n\n')
+           sorted_leaderboard = await get_leaderboard_global(mode='riddle', type='emoji')
+           photo_url = await generate_lb_image(
+                    data=sorted_leaderboard, type='emoji'
+           )
+           
+                
+           for i, (user_id, points) in enumerate(sorted_leaderboard.items()):
+                  if i >= 10:
+                     break
+                  if str(user_id).isdigit():
+                       text += f'{i+1}, **[{user_id}](tg://user?id={user_id})**: {points}\n'
+                  else:
+                       text += f'{i+1}, **{user_id}**: `{points}`\n'
+                       
+
+           button = [[ InlineKeyboardButton(change_font('BACK ⬅️'), callback_data=f'riddletop:{admin_id}') ]]
+           return await query.message.edit_media(
+                    media=types.InputMediaPhoto(
+                           media=photo_url,
+                           caption=text
+                     ),
+                 reply_markup=InlineKeyboardMarkup(button)
+           )
+       

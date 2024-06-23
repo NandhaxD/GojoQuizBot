@@ -35,7 +35,7 @@ async def check_user_rmath_ans(_, message):
             if riddle == False:
                     return
             else:
-                 answer = int(riddle[1])
+                 answer = riddle[1]
                  start_time = str(riddle[2])
                     
                  if message.sender_chat:
@@ -43,9 +43,9 @@ async def check_user_rmath_ans(_, message):
                                   
                  try:
                     text = message.text
-                    if not text.isdigit():
-                       return
-                    elif int(text) == answer:
+                    if not text.isdigit() or not answer.isdigit():
+                          return
+                    elif int(text) == int(answer):
                       
                          await clear_chat_data(chat_id, mode, type)
                          mention = message.from_user.mention

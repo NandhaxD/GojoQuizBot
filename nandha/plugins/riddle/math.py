@@ -43,7 +43,7 @@ async def check_user_rmath_ans(_, message):
                                   
                  try:
                     text = message.text
-                    if not text.isdigit() or not answer.isdigit():
+                    if not text.isdigit() and not answer.isdigit():
                           return
                     elif int(text) == int(answer):
                       

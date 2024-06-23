@@ -49,7 +49,10 @@ async def riddletop(_, query):
              InlineKeyboardButton(change_font('Global R-M'), callback_data=f'rmathgtop:{admin_id}'),
             ],[
              InlineKeyboardButton(change_font('Chat R-W'), callback_data=f'rwordstop:{admin_id}'),
-             InlineKeyboardButton(change_font('Global R-W'), callback_data=f'rwordsgtop:{admin_id}')       
+             InlineKeyboardButton(change_font('Global R-W'), callback_data=f'rwordsgtop:{admin_id}')
+            ],[
+               InlineKeyboardButton(change_font('Chat R-E'), callback_data=f'remojitop:{admin_id}'),
+             InlineKeyboardButton(change_font('Global R-E'), callback_data=f'remojigtop:{admin_id}')       
                    
             ]]
             name = query.message.chat.title

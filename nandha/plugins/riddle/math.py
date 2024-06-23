@@ -43,8 +43,10 @@ async def check_user_rmath_ans(_, message):
                                   
                  try:
                     text = message.text
-                    if not text.isdigit() and not answer.isdigit():
-                          return
+                    if not text.isdigit():
+                         return
+                    elif not answer.isdigit():
+                         return
                     elif int(text) == int(answer):
                       
                          await clear_chat_data(chat_id, mode, type)

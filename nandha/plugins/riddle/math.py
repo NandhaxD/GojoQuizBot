@@ -42,7 +42,7 @@ async def check_user_rmath_ans(_, message):
                          return
                                   
                  try:
-                    text = message.text
+                    text = str(message.text)
                     if not text.isdigit():
                          return
                     elif not answer.isdigit():

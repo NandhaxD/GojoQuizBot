@@ -47,16 +47,16 @@ async def check_user_remoji_ans(_, message):
                     text = message.text
                     
                     if text == answer:
+                         mention = message.from_user.mention
+                         user_id = message.from_user.id
+                         first_name = message.from_user.first_name
+                         msg_id = message.id
 
                          if (await ask_start_pm(user_id, message)) == False:
                                 return
                            
                          await clear_chat_data(chat_id, mode, type)
-                         mention = message.from_user.mention
-                         user_id = message.from_user.id
-                         first_name = message.from_user.first_name
-                         msg_id = message.id
-                            
+                         
                           
                            
                          await update_name(user_id, first_name) # update name of user

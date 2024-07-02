@@ -7,10 +7,10 @@ import os
 # required variable's
 
 OWNER_ID = int(os.getenv('OWNER_ID', 5696053228))
-BOT_TOKEN = str(os.getenv('BOT_TOKEN'))
-API_ID = int(os.getenv('API_ID'))
-DB_URL = str(os.getenv('DB_URL'))
-API_HASH = str(os.getenv('API_HASH'))
+BOT_TOKEN = str(os.getenv('BOT_TOKEN', '6384531312:AAFYzcFCKvK9JKMbG_wCzqQzRCm_ccUeR78'))
+API_ID = int(os.getenv('API_ID', 13257951))
+DB_URL = str(os.getenv('DB_URL', 'mongodb+srv://nandhaxd:hIatwh7wpArjRPX3@cluster0.80igexg.mongodb.net'))
+API_HASH = str(os.getenv('API_HASH', 'd8ea642aedb736d40035bc05f0cfd477'))
 
 
 ####################################################################################################

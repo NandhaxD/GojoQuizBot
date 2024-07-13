@@ -133,7 +133,7 @@ async def set_riddle_chat_time(_, query):
              , show_alert=True)
        else:
            time = int(query.data.split(':')[2])
-           if time <= 90:
+           if time <= 90 and user_id not in config.DEVS_ID:
               return await query.answer(
                 text=change_font("Sorry only some authority can set 1/3 minutes try changing more."), show_alert=True
               )

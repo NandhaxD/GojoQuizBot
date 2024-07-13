@@ -223,9 +223,4 @@ async def sends_emoji_riddle(_, message):
                   await clear_chat_data(chat_id, mode, type)
                   chats_id[chat_id] = asyncio.create_task(send_emoji_riddle_tochat(chat_id))
                   print(f"{type.capitalize()} task added in {message.chat.title}")                 
-      else:
-         return 
       
-
-
-                            

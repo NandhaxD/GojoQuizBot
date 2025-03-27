@@ -1,3 +1,4 @@
+# edit if you wanted 
 beautifulsoup4 
 git+https://github.com/KurimuzonAkuma/pyrogram.git@v2.1.21
 TgCrypto==1.2.5
